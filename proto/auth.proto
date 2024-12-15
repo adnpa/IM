@@ -1,0 +1,37 @@
+syntax = "proto3";
+//option go_package = "../pb/pb_auth;pb_auth";
+option go_package = "../pb;pb";
+
+
+service Auth{
+  rpc Register(RegisterReq) returns(RegisterResp);
+  rpc Token(TokenReq) returns(TokenResp);
+}
+
+//注册
+message RegisterReq{
+  string UID = 1;
+  string Name = 2;
+  string Icon = 3;
+  int32  Gender = 4;
+  string Mobile = 5;
+  string Birth = 6;
+  string Email = 7;
+  string Ex = 8;
+}
+message RegisterResp{
+  bool Success = 1;
+}
+
+
+//获取token
+message TokenReq{
+  int32  Platform = 1;
+  string UID = 2;
+}
+message TokenResp{
+  int32  ErrCode = 1;
+  string ErrMsg = 2;
+  string Token = 3;
+  int64  ExpiredTime = 4;
+}

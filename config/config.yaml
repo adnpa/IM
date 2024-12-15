@@ -1,0 +1,30 @@
+etcd:
+  etcdSchema: goIM
+  etcdAddr: [ 192.168.1.129:2379 ]
+
+
+mysql:
+  dbMysqlAddress: [ 192.168.1.129:3306 ]
+  dbMysqlUserName: root
+  dbMysqlPassword: root
+  dbMysqlDatabaseName: goim
+  dbTableName: eMsg
+  dbMsgTableNum: 1
+  dbMaxOpenConns: 20
+  dbMaxIdleConns: 10
+  dbMaxLifeTime: 120
+
+mongo:
+  dbAddress: [ 192.168.1.129:27017 ]
+  dbDirect: false
+  dbTimeout: 10
+  dbDatabase: openIM
+  dbSource: admin
+  dbUserName:
+  dbPassword:
+  dbMaxPoolSize: 20
+  dbRetainChatRecords: 7
+
+jwt:
+  secret: im
+  expire: 7*24*60*60

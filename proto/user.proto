@@ -1,0 +1,85 @@
+syntax = "proto3";
+//option go_package = "../pb/pb_user;pb_user";
+option go_package = "../pb;pb";
+
+service user {
+  //获取用户信息
+  rpc GetUserInfo(GetUserInfoReq) returns(GetUserInfoResp);
+  // 批量获取用户信息
+  rpc GetAllUsersUid(GetAllUsersUidReq)returns(GetAllUsersUidResp);
+  //更新用户信息
+  rpc UpdateUserInfo(UpdateUserInfoReq) returns(CommonResp);
+  //manager批量删除
+  rpc DeleteUsers(DeleteUsersReq) returns(DeleteUsersResp);
+}
+
+
+message GetUserInfoReq{
+  repeated string userIDList = 1;
+  string token = 2;
+  string OperationID = 3;
+}
+message GetUserInfoResp{
+  int32  errorCode = 1;
+  string errorMsg = 2;
+  repeated UserInfo Data = 3;
+}
+
+message GetAllUsersUidReq{
+  string token = 2;
+  string operationID = 3;
+}
+message GetAllUsersUidResp{
+  CommonResp  commonResp = 1;
+  repeated string uidList = 2;
+}
+
+message DeleteUsersReq{
+  repeated string  deleteUidList = 2;
+  string token = 3;
+  string OperationID = 4;
+}
+message DeleteUsersResp{
+  CommonResp  commonResp = 1;
+  repeated string failedUidList = 2;
+}
+
+
+// 离线
+message LogoutReq{
+  string  OperationID = 1;
+  string  token = 2;
+}
+
+//更新用户信息
+message UpdateUserInfoReq{
+  string icon = 1;
+  string name = 2;
+  int32  gender = 3;
+  string mobile = 4;
+  string birth = 5;
+  string email = 6;
+  string ex = 7;
+  string token = 8;
+  string  OperationID = 9;
+  string Uid = 10;
+}
+
+
+// ============================= 中间结构 =============================
+
+message CommonResp{
+  int32  errorCode = 1;
+  string errorMsg = 2;
+}
+
+message UserInfo{
+  string uid = 1;
+  string name = 2;
+  string icon = 3;
+  int32 gender = 4;
+  string mobile = 5;
+  string birth = 6;
+  string email = 7;
+  string ex = 8;
+}
