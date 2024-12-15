@@ -27,14 +27,11 @@ func newFriend(db *gorm.DB, opts ...gen.DOOption) friend {
 
 	tableName := _friend.friendDo.TableName()
 	_friend.ALL = field.NewAsterisk(tableName)
-	_friend.ID = field.NewInt32(tableName, "id")
-	_friend.OwnerUID = field.NewString(tableName, "owner_uid")
-	_friend.FriendUID = field.NewString(tableName, "friend_uid")
+	_friend.OwnerID = field.NewString(tableName, "owner_id")
+	_friend.FriendID = field.NewString(tableName, "friend_id")
 	_friend.Comment = field.NewString(tableName, "comment")
 	_friend.FriendFlag = field.NewInt32(tableName, "friend_flag")
-	_friend.CreatedAt = field.NewTime(tableName, "created_at")
-	_friend.UpdatedAt = field.NewTime(tableName, "updated_at")
-	_friend.DeletedAt = field.NewField(tableName, "deleted_at")
+	_friend.CreateTime = field.NewTime(tableName, "create_time")
 
 	_friend.fillFieldMap()
 
@@ -45,14 +42,11 @@ type friend struct {
 	friendDo
 
 	ALL        field.Asterisk
-	ID         field.Int32
-	OwnerUID   field.String
-	FriendUID  field.String
+	OwnerID    field.String
+	FriendID   field.String
 	Comment    field.String
 	FriendFlag field.Int32
-	CreatedAt  field.Time
-	UpdatedAt  field.Time
-	DeletedAt  field.Field
+	CreateTime field.Time
 
 	fieldMap map[string]field.Expr
 }
@@ -69,14 +63,11 @@ func (f friend) As(alias string) *friend {
 
 func (f *friend) updateTableName(table string) *friend {
 	f.ALL = field.NewAsterisk(table)
-	f.ID = field.NewInt32(table, "id")
-	f.OwnerUID = field.NewString(table, "owner_uid")
-	f.FriendUID = field.NewString(table, "friend_uid")
+	f.OwnerID = field.NewString(table, "owner_id")
+	f.FriendID = field.NewString(table, "friend_id")
 	f.Comment = field.NewString(table, "comment")
 	f.FriendFlag = field.NewInt32(table, "friend_flag")
-	f.CreatedAt = field.NewTime(table, "created_at")
-	f.UpdatedAt = field.NewTime(table, "updated_at")
-	f.DeletedAt = field.NewField(table, "deleted_at")
+	f.CreateTime = field.NewTime(table, "create_time")
 
 	f.fillFieldMap()
 
@@ -93,15 +84,12 @@ func (f *friend) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (f *friend) fillFieldMap() {
-	f.fieldMap = make(map[string]field.Expr, 8)
-	f.fieldMap["id"] = f.ID
-	f.fieldMap["owner_uid"] = f.OwnerUID
-	f.fieldMap["friend_uid"] = f.FriendUID
+	f.fieldMap = make(map[string]field.Expr, 5)
+	f.fieldMap["owner_id"] = f.OwnerID
+	f.fieldMap["friend_id"] = f.FriendID
 	f.fieldMap["comment"] = f.Comment
 	f.fieldMap["friend_flag"] = f.FriendFlag
-	f.fieldMap["created_at"] = f.CreatedAt
-	f.fieldMap["updated_at"] = f.UpdatedAt
-	f.fieldMap["deleted_at"] = f.DeletedAt
+	f.fieldMap["create_time"] = f.CreateTime
 }
 
 func (f friend) clone(db *gorm.DB) friend {

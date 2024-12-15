@@ -2,12 +2,13 @@ package friend
 
 import (
 	"context"
-	"github.com/adnpa/IM/common/config"
-	"github.com/adnpa/IM/common/db/mysql/dao"
-	"github.com/adnpa/IM/common/db/mysql/model"
-	"github.com/adnpa/IM/discovery"
 	utils2 "github.com/adnpa/IM/internal/utils"
-	"github.com/adnpa/IM/pb/pb_friend"
+	"github.com/adnpa/IM/pkg/common/config"
+	"github.com/adnpa/IM/pkg/common/db/mysql/dao"
+	"github.com/adnpa/IM/pkg/common/db/mysql/model"
+	"github.com/adnpa/IM/pkg/discovery"
+	"github.com/adnpa/IM/pkg/pb/pb_friend"
+	"github.com/adnpa/IM/pkg/pb/pb_ws"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -66,25 +67,25 @@ func (rpc *RpcFriendServer) Run() {
 //}
 
 func (rpc *RpcFriendServer) GetFriendList(ctx context.Context, req *pb_friend.GetFriendListReq) (*pb_friend.GetFriendListResp, error) {
-	var data []*pb_friend.UserInfo
-	claims, _ := utils2.ParseToken(req.Token)
-	friends, err := dao.GetFriendsByUserUid(claims.UID)
-	if err != nil {
-		return nil, err
-	}
-	for _, f := range friends {
-		friend := &pb_friend.UserInfo{
-			Uid:     f.FriendUID,
-			Comment: f.Comment,
-		}
-		data = append(data, friend)
-	}
+	//var data []*pb_friend.UserInfo
+	//claims, _ := utils2.ParseToken(req.Token)
+	//friends, err := dao.GetFriendsByUserUid(claims.UID)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//for _, f := range friends {
+	//	friend := &pb_friend.UserInfo{
+	//		//Uid:     f.FriendUID,
+	//		//Comment: f.Comment,
+	//	}
+	//	data = append(data, friend)
+	//}
 	return &pb_friend.GetFriendListResp{
-		Data: data,
+		//Data: data,
 	}, nil
 }
 
-func (rpc *RpcFriendServer) AddFriend(ctx context.Context, req *pb_friend.AddFriendReq) (*pb_friend.CommonResp, error) {
+func (rpc *RpcFriendServer) AddFriend(ctx context.Context, req *pb_friend.AddFriendReq) (*pb_ws.CommonResp, error) {
 
 	if _, err := dao.GetUserByUid(req.Uid); err != nil {
 		return nil, err
@@ -102,17 +103,17 @@ func (rpc *RpcFriendServer) AddFriend(ctx context.Context, req *pb_friend.AddFri
 	}
 
 	//todo 推送被申请者
-	return &pb_friend.CommonResp{ErrorMsg: "", ErrorCode: 0}, nil
+	return &pb_ws.CommonResp{ErrorMsg: "", ErrorCode: 0}, nil
 }
 
 // AddFriendResponse 添加好友回复
-func (rpc *RpcFriendServer) AddFriendResponse(ctx context.Context, req *pb_friend.AddFriendResponseReq) (*pb_friend.CommonResp, error) {
-	userid, _ := utils2.GetUserId(req.Token)
-	fq, err := dao.GetFriendReq(req.Uid, userid)
-	if err != nil {
-		return nil, err
-	}
-	fq.Flag = req.Flag
+func (rpc *RpcFriendServer) AddFriendResponse(ctx context.Context, req *pb_friend.AddFriendResponseReq) (*pb_ws.CommonResp, error) {
+	//userid, _ := utils2.GetUserId(req.Token)
+	//fq, err := dao.GetFriendReq(req.Uid, userid)
+	//if err != nil {
+	//	return nil, err
+	//}
+	//fq.Flag = req.Flag
 	//todo 推送好友
 
 	//if req.Flag ==
@@ -120,7 +121,7 @@ func (rpc *RpcFriendServer) AddFriendResponse(ctx context.Context, req *pb_frien
 	return nil, nil
 }
 
-func (rpc *RpcFriendServer) DeleteFriend(context.Context, *pb_friend.DeleteFriendReq) (*pb_friend.CommonResp, error) {
+func (rpc *RpcFriendServer) DeleteFriend(context.Context, *pb_friend.DeleteFriendReq) (*pb_ws.CommonResp, error) {
 	return nil, nil
 }
 
@@ -131,10 +132,10 @@ func (rpc *RpcFriendServer) DeleteFriend(context.Context, *pb_friend.DeleteFrien
 //	return nil, nil
 //}
 
-//func (rpc *RpcFriendServer) AddBlacklist(context.Context, *pb_friend.AddBlacklistReq) (*pb_friend.CommonResp, error) {
+//func (rpc *RpcFriendServer) AddBlacklist(context.Context, *pb_friend.AddBlacklistReq) (*pb_ws.CommonResp, error) {
 //	return nil, nil
 //}
-//func (rpc *RpcFriendServer) RemoveBlacklist(context.Context, *pb_friend.RemoveBlacklistReq) (*pb_friend.CommonResp, error) {
+//func (rpc *RpcFriendServer) RemoveBlacklist(context.Context, *pb_friend.RemoveBlacklistReq) (*pb_ws.CommonResp, error) {
 //	return nil, nil
 //}
 //func (rpc *RpcFriendServer) IsFriend(context.Context, *pb_friend.IsFriendReq) (*pb_friend.IsFriendResp, error) {
@@ -147,7 +148,7 @@ func (rpc *RpcFriendServer) DeleteFriend(context.Context, *pb_friend.DeleteFrien
 //	return nil, nil
 //}
 
-//func (rpc *RpcFriendServer) SetFriendComment(context.Context, *pb_friend.SetFriendCommentReq) (*pb_friend.CommonResp, error) {
+//func (rpc *RpcFriendServer) SetFriendComment(context.Context, *pb_friend.SetFriendCommentReq) (*pb_ws.CommonResp, error) {
 //	return nil, nil
 //}
 //func (rpc *RpcFriendServer) ImportFriend(context.Context, *pb_friend.ImportFriendReq) (*pb_friend.ImportFriendResp, error) {

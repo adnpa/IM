@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/adnpa/IM/pkg/discovery"
-	"github.com/adnpa/IM/pkg/pb"
+	"github.com/adnpa/IM/pkg/pb/pb_auth"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -15,8 +15,8 @@ type paramsToken struct {
 	UID      string `json:"uid" binding:"required,min=1,max=64"`
 }
 
-func tokenParams2Pb(params *paramsToken) *pb.TokenReq {
-	pbData := pb.TokenReq{
+func tokenParams2Pb(params *paramsToken) *pb_auth.TokenReq {
+	pbData := pb_auth.TokenReq{
 		Platform: params.Platform,
 		UID:      params.UID,
 	}
@@ -25,7 +25,7 @@ func tokenParams2Pb(params *paramsToken) *pb.TokenReq {
 
 func UserToken(c *gin.Context) {
 	conn := discovery.GetSrvConn(config.Config.RpcRegisterName.AuthName)
-	cli := pb.NewAuthClient(conn)
+	cli := pb_auth.NewAuthClient(conn)
 
 	params := &paramsToken{}
 	if err := c.ShouldBind(params); err != nil {

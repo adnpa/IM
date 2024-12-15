@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/adnpa/IM/common/config"
+	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/golang-jwt/jwt/v5"
 	"time"
 )

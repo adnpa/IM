@@ -2,12 +2,13 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v5.27.0
-// source: user.proto
+// source: pb_user.proto
 
-package pb
+package pb_user
 
 import (
 	context "context"
+	pb_ws "github.com/adnpa/IM/pkg/pb/pb_ws"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -27,7 +28,7 @@ type UserClient interface {
 	// 批量获取用户信息
 	GetAllUsersUid(ctx context.Context, in *GetAllUsersUidReq, opts ...grpc.CallOption) (*GetAllUsersUidResp, error)
 	// 更新用户信息
-	UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*CommonResp, error)
+	UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error)
 	// manager批量删除
 	DeleteUsers(ctx context.Context, in *DeleteUsersReq, opts ...grpc.CallOption) (*DeleteUsersResp, error)
 }
@@ -58,8 +59,8 @@ func (c *userClient) GetAllUsersUid(ctx context.Context, in *GetAllUsersUidReq, 
 	return out, nil
 }
 
-func (c *userClient) UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*CommonResp, error) {
-	out := new(CommonResp)
+func (c *userClient) UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error) {
+	out := new(pb_ws.CommonResp)
 	err := c.cc.Invoke(ctx, "/user/UpdateUserInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -85,7 +86,7 @@ type UserServer interface {
 	// 批量获取用户信息
 	GetAllUsersUid(context.Context, *GetAllUsersUidReq) (*GetAllUsersUidResp, error)
 	// 更新用户信息
-	UpdateUserInfo(context.Context, *UpdateUserInfoReq) (*CommonResp, error)
+	UpdateUserInfo(context.Context, *UpdateUserInfoReq) (*pb_ws.CommonResp, error)
 	// manager批量删除
 	DeleteUsers(context.Context, *DeleteUsersReq) (*DeleteUsersResp, error)
 	mustEmbedUnimplementedUserServer()
@@ -101,7 +102,7 @@ func (UnimplementedUserServer) GetUserInfo(context.Context, *GetUserInfoReq) (*G
 func (UnimplementedUserServer) GetAllUsersUid(context.Context, *GetAllUsersUidReq) (*GetAllUsersUidResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllUsersUid not implemented")
 }
-func (UnimplementedUserServer) UpdateUserInfo(context.Context, *UpdateUserInfoReq) (*CommonResp, error) {
+func (UnimplementedUserServer) UpdateUserInfo(context.Context, *UpdateUserInfoReq) (*pb_ws.CommonResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserInfo not implemented")
 }
 func (UnimplementedUserServer) DeleteUsers(context.Context, *DeleteUsersReq) (*DeleteUsersResp, error) {
@@ -217,5 +218,5 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "user.proto",
+	Metadata: "pb_user.proto",
 }

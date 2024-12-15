@@ -1,6 +1,5 @@
 syntax = "proto3";
-//option go_package = "../pb/pb_auth;pb_auth";
-option go_package = "../pb;pb";
+option go_package = "github.com/adnpa/IM/pkg/pb/pb_auth";
 
 
 service Auth{

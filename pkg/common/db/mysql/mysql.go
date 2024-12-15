@@ -3,7 +3,7 @@ package mysql
 import (
 	"context"
 	"fmt"
-	"github.com/adnpa/IM/common/config"
+	"github.com/adnpa/IM/pkg/common/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"time"

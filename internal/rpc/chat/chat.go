@@ -1,11 +1,11 @@
 package chat
 
 import (
-	"github.com/adnpa/IM/common/config"
-	"github.com/adnpa/IM/common/kafka"
-	"github.com/adnpa/IM/discovery"
 	"github.com/adnpa/IM/internal/utils"
-	"github.com/adnpa/IM/pkg/pb"
+	"github.com/adnpa/IM/pkg/common/config"
+	"github.com/adnpa/IM/pkg/common/kafka"
+	"github.com/adnpa/IM/pkg/discovery"
+	"github.com/adnpa/IM/pkg/pb/pb_chat"
 	"google.golang.org/grpc"
 	"net"
 	"strconv"
@@ -13,7 +13,7 @@ import (
 )
 
 type RpcChatServer struct {
-	*pb.UnimplementedChatServer
+	*pb_chat.UnimplementedChatServer
 
 	rpcPort         int
 	rpcRegisterName string
@@ -47,7 +47,7 @@ func (rpc *RpcChatServer) Run() {
 
 	//service registers with etcd
 
-	pb.RegisterChatServer(srv, rpc)
+	pb_chat.RegisterChatServer(srv, rpc)
 	err = discovery.Register(rpc.etcdSchema, strings.Join(rpc.etcdAddr, ","), utils.ServerIP, rpc.rpcPort, rpc.rpcRegisterName, 10)
 	if err != nil {
 		return

@@ -6,26 +6,21 @@ package model
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 const TableNameUser = "user"
 
 // User mapped from table <user>
 type User struct {
-	ID        int32          `gorm:"column:id;primaryKey" json:"id"`
-	UID       string         `gorm:"column:uid" json:"uid"`
-	Name      string         `gorm:"column:name" json:"name"`
-	Icon      string         `gorm:"column:icon" json:"icon"`
-	Gender    int32          `gorm:"column:gender" json:"gender"`
-	Mobile    string         `gorm:"column:mobile" json:"mobile"`
-	Birth     string         `gorm:"column:birth" json:"birth"`
-	Email     string         `gorm:"column:email" json:"email"`
-	Ex        string         `gorm:"column:ex" json:"ex"`
-	CreatedAt time.Time      `gorm:"column:created_at;not null;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt time.Time      `gorm:"column:updated_at;not null;default:CURRENT_TIMESTAMP" json:"updated_at"`
-	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;not null" json:"deleted_at"`
+	UID        string    `gorm:"column:uid;primaryKey" json:"uid"`
+	Name       string    `gorm:"column:name" json:"name"`
+	Icon       string    `gorm:"column:icon" json:"icon"`
+	Gender     int32     `gorm:"column:gender" json:"gender"`
+	Mobile     string    `gorm:"column:mobile" json:"mobile"`
+	Birth      string    `gorm:"column:birth" json:"birth"`
+	Email      string    `gorm:"column:email" json:"email"`
+	Ex         string    `gorm:"column:ex" json:"ex"`
+	CreateTime time.Time `gorm:"column:create_time" json:"create_time"`
 }
 
 // TableName User's table name

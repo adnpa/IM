@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v5.27.0
-// source: relay.proto
+// source: pb_relay.proto
 
-package pb
+package pb_relay
 
 import (
 	context "context"
@@ -138,5 +138,5 @@ var OnlineMessageRelayService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "relay.proto",
+	Metadata: "pb_relay.proto",
 }

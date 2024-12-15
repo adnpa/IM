@@ -2,12 +2,13 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v5.27.0
-// source: friend.proto
+// source: pb_friend.proto
 
-package pb
+package pb_friend
 
 import (
 	context "context"
+	pb_ws "github.com/adnpa/IM/pkg/pb/pb_ws"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -25,7 +26,7 @@ type FriendClient interface {
 	// 获取好友信息
 	GetFriendsInfo(ctx context.Context, in *GetFriendsInfoReq, opts ...grpc.CallOption) (*GetFriendInfoResp, error)
 	// 申请添加好友
-	AddFriend(ctx context.Context, in *AddFriendReq, opts ...grpc.CallOption) (*CommonResp, error)
+	AddFriend(ctx context.Context, in *AddFriendReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error)
 	// 获取申请列表
 	GetFriendApplyList(ctx context.Context, in *GetFriendApplyReq, opts ...grpc.CallOption) (*GetFriendApplyResp, error)
 	// 获取自己的申请列表
@@ -33,9 +34,9 @@ type FriendClient interface {
 	// 获取好友列表
 	GetFriendList(ctx context.Context, in *GetFriendListReq, opts ...grpc.CallOption) (*GetFriendListResp, error)
 	// 拉入黑名单
-	AddBlacklist(ctx context.Context, in *AddBlacklistReq, opts ...grpc.CallOption) (*CommonResp, error)
+	AddBlacklist(ctx context.Context, in *AddBlacklistReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error)
 	// 移除黑名单
-	RemoveBlacklist(ctx context.Context, in *RemoveBlacklistReq, opts ...grpc.CallOption) (*CommonResp, error)
+	RemoveBlacklist(ctx context.Context, in *RemoveBlacklistReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error)
 	// 是否是好友
 	IsFriend(ctx context.Context, in *IsFriendReq, opts ...grpc.CallOption) (*IsFriendResp, error)
 	// 是否在黑名单
@@ -43,11 +44,11 @@ type FriendClient interface {
 	// 获取黑名单
 	GetBlacklist(ctx context.Context, in *GetBlacklistReq, opts ...grpc.CallOption) (*GetBlacklistResp, error)
 	// 删除好友
-	DeleteFriend(ctx context.Context, in *DeleteFriendReq, opts ...grpc.CallOption) (*CommonResp, error)
+	DeleteFriend(ctx context.Context, in *DeleteFriendReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error)
 	// 获取添加好友结果
-	AddFriendResponse(ctx context.Context, in *AddFriendResponseReq, opts ...grpc.CallOption) (*CommonResp, error)
+	AddFriendResponse(ctx context.Context, in *AddFriendResponseReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error)
 	// 设置备注
-	SetFriendComment(ctx context.Context, in *SetFriendCommentReq, opts ...grpc.CallOption) (*CommonResp, error)
+	SetFriendComment(ctx context.Context, in *SetFriendCommentReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error)
 	ImportFriend(ctx context.Context, in *ImportFriendReq, opts ...grpc.CallOption) (*ImportFriendResp, error)
 }
 
@@ -68,8 +69,8 @@ func (c *friendClient) GetFriendsInfo(ctx context.Context, in *GetFriendsInfoReq
 	return out, nil
 }
 
-func (c *friendClient) AddFriend(ctx context.Context, in *AddFriendReq, opts ...grpc.CallOption) (*CommonResp, error) {
-	out := new(CommonResp)
+func (c *friendClient) AddFriend(ctx context.Context, in *AddFriendReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error) {
+	out := new(pb_ws.CommonResp)
 	err := c.cc.Invoke(ctx, "/friend/addFriend", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -104,8 +105,8 @@ func (c *friendClient) GetFriendList(ctx context.Context, in *GetFriendListReq, 
 	return out, nil
 }
 
-func (c *friendClient) AddBlacklist(ctx context.Context, in *AddBlacklistReq, opts ...grpc.CallOption) (*CommonResp, error) {
-	out := new(CommonResp)
+func (c *friendClient) AddBlacklist(ctx context.Context, in *AddBlacklistReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error) {
+	out := new(pb_ws.CommonResp)
 	err := c.cc.Invoke(ctx, "/friend/addBlacklist", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -113,8 +114,8 @@ func (c *friendClient) AddBlacklist(ctx context.Context, in *AddBlacklistReq, op
 	return out, nil
 }
 
-func (c *friendClient) RemoveBlacklist(ctx context.Context, in *RemoveBlacklistReq, opts ...grpc.CallOption) (*CommonResp, error) {
-	out := new(CommonResp)
+func (c *friendClient) RemoveBlacklist(ctx context.Context, in *RemoveBlacklistReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error) {
+	out := new(pb_ws.CommonResp)
 	err := c.cc.Invoke(ctx, "/friend/removeBlacklist", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -149,8 +150,8 @@ func (c *friendClient) GetBlacklist(ctx context.Context, in *GetBlacklistReq, op
 	return out, nil
 }
 
-func (c *friendClient) DeleteFriend(ctx context.Context, in *DeleteFriendReq, opts ...grpc.CallOption) (*CommonResp, error) {
-	out := new(CommonResp)
+func (c *friendClient) DeleteFriend(ctx context.Context, in *DeleteFriendReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error) {
+	out := new(pb_ws.CommonResp)
 	err := c.cc.Invoke(ctx, "/friend/deleteFriend", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -158,8 +159,8 @@ func (c *friendClient) DeleteFriend(ctx context.Context, in *DeleteFriendReq, op
 	return out, nil
 }
 
-func (c *friendClient) AddFriendResponse(ctx context.Context, in *AddFriendResponseReq, opts ...grpc.CallOption) (*CommonResp, error) {
-	out := new(CommonResp)
+func (c *friendClient) AddFriendResponse(ctx context.Context, in *AddFriendResponseReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error) {
+	out := new(pb_ws.CommonResp)
 	err := c.cc.Invoke(ctx, "/friend/addFriendResponse", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -167,8 +168,8 @@ func (c *friendClient) AddFriendResponse(ctx context.Context, in *AddFriendRespo
 	return out, nil
 }
 
-func (c *friendClient) SetFriendComment(ctx context.Context, in *SetFriendCommentReq, opts ...grpc.CallOption) (*CommonResp, error) {
-	out := new(CommonResp)
+func (c *friendClient) SetFriendComment(ctx context.Context, in *SetFriendCommentReq, opts ...grpc.CallOption) (*pb_ws.CommonResp, error) {
+	out := new(pb_ws.CommonResp)
 	err := c.cc.Invoke(ctx, "/friend/setFriendComment", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -192,7 +193,7 @@ type FriendServer interface {
 	// 获取好友信息
 	GetFriendsInfo(context.Context, *GetFriendsInfoReq) (*GetFriendInfoResp, error)
 	// 申请添加好友
-	AddFriend(context.Context, *AddFriendReq) (*CommonResp, error)
+	AddFriend(context.Context, *AddFriendReq) (*pb_ws.CommonResp, error)
 	// 获取申请列表
 	GetFriendApplyList(context.Context, *GetFriendApplyReq) (*GetFriendApplyResp, error)
 	// 获取自己的申请列表
@@ -200,9 +201,9 @@ type FriendServer interface {
 	// 获取好友列表
 	GetFriendList(context.Context, *GetFriendListReq) (*GetFriendListResp, error)
 	// 拉入黑名单
-	AddBlacklist(context.Context, *AddBlacklistReq) (*CommonResp, error)
+	AddBlacklist(context.Context, *AddBlacklistReq) (*pb_ws.CommonResp, error)
 	// 移除黑名单
-	RemoveBlacklist(context.Context, *RemoveBlacklistReq) (*CommonResp, error)
+	RemoveBlacklist(context.Context, *RemoveBlacklistReq) (*pb_ws.CommonResp, error)
 	// 是否是好友
 	IsFriend(context.Context, *IsFriendReq) (*IsFriendResp, error)
 	// 是否在黑名单
@@ -210,11 +211,11 @@ type FriendServer interface {
 	// 获取黑名单
 	GetBlacklist(context.Context, *GetBlacklistReq) (*GetBlacklistResp, error)
 	// 删除好友
-	DeleteFriend(context.Context, *DeleteFriendReq) (*CommonResp, error)
+	DeleteFriend(context.Context, *DeleteFriendReq) (*pb_ws.CommonResp, error)
 	// 获取添加好友结果
-	AddFriendResponse(context.Context, *AddFriendResponseReq) (*CommonResp, error)
+	AddFriendResponse(context.Context, *AddFriendResponseReq) (*pb_ws.CommonResp, error)
 	// 设置备注
-	SetFriendComment(context.Context, *SetFriendCommentReq) (*CommonResp, error)
+	SetFriendComment(context.Context, *SetFriendCommentReq) (*pb_ws.CommonResp, error)
 	ImportFriend(context.Context, *ImportFriendReq) (*ImportFriendResp, error)
 	mustEmbedUnimplementedFriendServer()
 }
@@ -226,7 +227,7 @@ type UnimplementedFriendServer struct {
 func (UnimplementedFriendServer) GetFriendsInfo(context.Context, *GetFriendsInfoReq) (*GetFriendInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFriendsInfo not implemented")
 }
-func (UnimplementedFriendServer) AddFriend(context.Context, *AddFriendReq) (*CommonResp, error) {
+func (UnimplementedFriendServer) AddFriend(context.Context, *AddFriendReq) (*pb_ws.CommonResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddFriend not implemented")
 }
 func (UnimplementedFriendServer) GetFriendApplyList(context.Context, *GetFriendApplyReq) (*GetFriendApplyResp, error) {
@@ -238,10 +239,10 @@ func (UnimplementedFriendServer) GetSelfApplyList(context.Context, *GetFriendApp
 func (UnimplementedFriendServer) GetFriendList(context.Context, *GetFriendListReq) (*GetFriendListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFriendList not implemented")
 }
-func (UnimplementedFriendServer) AddBlacklist(context.Context, *AddBlacklistReq) (*CommonResp, error) {
+func (UnimplementedFriendServer) AddBlacklist(context.Context, *AddBlacklistReq) (*pb_ws.CommonResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddBlacklist not implemented")
 }
-func (UnimplementedFriendServer) RemoveBlacklist(context.Context, *RemoveBlacklistReq) (*CommonResp, error) {
+func (UnimplementedFriendServer) RemoveBlacklist(context.Context, *RemoveBlacklistReq) (*pb_ws.CommonResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveBlacklist not implemented")
 }
 func (UnimplementedFriendServer) IsFriend(context.Context, *IsFriendReq) (*IsFriendResp, error) {
@@ -253,13 +254,13 @@ func (UnimplementedFriendServer) IsInBlackList(context.Context, *IsInBlackListRe
 func (UnimplementedFriendServer) GetBlacklist(context.Context, *GetBlacklistReq) (*GetBlacklistResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBlacklist not implemented")
 }
-func (UnimplementedFriendServer) DeleteFriend(context.Context, *DeleteFriendReq) (*CommonResp, error) {
+func (UnimplementedFriendServer) DeleteFriend(context.Context, *DeleteFriendReq) (*pb_ws.CommonResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFriend not implemented")
 }
-func (UnimplementedFriendServer) AddFriendResponse(context.Context, *AddFriendResponseReq) (*CommonResp, error) {
+func (UnimplementedFriendServer) AddFriendResponse(context.Context, *AddFriendResponseReq) (*pb_ws.CommonResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddFriendResponse not implemented")
 }
-func (UnimplementedFriendServer) SetFriendComment(context.Context, *SetFriendCommentReq) (*CommonResp, error) {
+func (UnimplementedFriendServer) SetFriendComment(context.Context, *SetFriendCommentReq) (*pb_ws.CommonResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetFriendComment not implemented")
 }
 func (UnimplementedFriendServer) ImportFriend(context.Context, *ImportFriendReq) (*ImportFriendResp, error) {
@@ -595,5 +596,5 @@ var Friend_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "friend.proto",
+	Metadata: "pb_friend.proto",
 }

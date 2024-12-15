@@ -82,7 +82,8 @@ type config struct {
 
 func init() {
 	//path, _ := os.Getwd()
-	cfgFile, err := os.Open("../config/config.yaml")
+	//log.Println(path)
+	cfgFile, err := os.Open("./config/config.yaml")
 	if err != nil {
 		panic(err)
 	}

@@ -2,12 +2,13 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v5.27.0
-// source: chat.proto
+// source: pb_chat.proto
 
-package pb
+package pb_chat
 
 import (
 	context "context"
+	pb_ws "github.com/adnpa/IM/pkg/pb/pb_ws"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -23,9 +24,9 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChatClient interface {
 	GetMaxAndMinSeq(ctx context.Context, in *GetMaxAndMinSeqReq, opts ...grpc.CallOption) (*GetMaxAndMinSeqResp, error)
-	PullMessageBySeqList(ctx context.Context, in *PullMessageBySeqListReq, opts ...grpc.CallOption) (*PullMessageBySeqListResp, error)
+	PullMessageBySeqList(ctx context.Context, in *pb_ws.PullMessageBySeqListReq, opts ...grpc.CallOption) (*pb_ws.PullMessageBySeqListResp, error)
 	SendMsg(ctx context.Context, in *SendMsgReq, opts ...grpc.CallOption) (*SendMsgResp, error)
-	DelMsgList(ctx context.Context, in *DelMsgListReq, opts ...grpc.CallOption) (*DelMsgListResp, error)
+	DelMsgList(ctx context.Context, in *pb_ws.DelMsgListReq, opts ...grpc.CallOption) (*pb_ws.DelMsgListResp, error)
 }
 
 type chatClient struct {
@@ -45,8 +46,8 @@ func (c *chatClient) GetMaxAndMinSeq(ctx context.Context, in *GetMaxAndMinSeqReq
 	return out, nil
 }
 
-func (c *chatClient) PullMessageBySeqList(ctx context.Context, in *PullMessageBySeqListReq, opts ...grpc.CallOption) (*PullMessageBySeqListResp, error) {
-	out := new(PullMessageBySeqListResp)
+func (c *chatClient) PullMessageBySeqList(ctx context.Context, in *pb_ws.PullMessageBySeqListReq, opts ...grpc.CallOption) (*pb_ws.PullMessageBySeqListResp, error) {
+	out := new(pb_ws.PullMessageBySeqListResp)
 	err := c.cc.Invoke(ctx, "/Chat/PullMessageBySeqList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -63,8 +64,8 @@ func (c *chatClient) SendMsg(ctx context.Context, in *SendMsgReq, opts ...grpc.C
 	return out, nil
 }
 
-func (c *chatClient) DelMsgList(ctx context.Context, in *DelMsgListReq, opts ...grpc.CallOption) (*DelMsgListResp, error) {
-	out := new(DelMsgListResp)
+func (c *chatClient) DelMsgList(ctx context.Context, in *pb_ws.DelMsgListReq, opts ...grpc.CallOption) (*pb_ws.DelMsgListResp, error) {
+	out := new(pb_ws.DelMsgListResp)
 	err := c.cc.Invoke(ctx, "/Chat/DelMsgList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -77,9 +78,9 @@ func (c *chatClient) DelMsgList(ctx context.Context, in *DelMsgListReq, opts ...
 // for forward compatibility
 type ChatServer interface {
 	GetMaxAndMinSeq(context.Context, *GetMaxAndMinSeqReq) (*GetMaxAndMinSeqResp, error)
-	PullMessageBySeqList(context.Context, *PullMessageBySeqListReq) (*PullMessageBySeqListResp, error)
+	PullMessageBySeqList(context.Context, *pb_ws.PullMessageBySeqListReq) (*pb_ws.PullMessageBySeqListResp, error)
 	SendMsg(context.Context, *SendMsgReq) (*SendMsgResp, error)
-	DelMsgList(context.Context, *DelMsgListReq) (*DelMsgListResp, error)
+	DelMsgList(context.Context, *pb_ws.DelMsgListReq) (*pb_ws.DelMsgListResp, error)
 	mustEmbedUnimplementedChatServer()
 }
 
@@ -90,13 +91,13 @@ type UnimplementedChatServer struct {
 func (UnimplementedChatServer) GetMaxAndMinSeq(context.Context, *GetMaxAndMinSeqReq) (*GetMaxAndMinSeqResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMaxAndMinSeq not implemented")
 }
-func (UnimplementedChatServer) PullMessageBySeqList(context.Context, *PullMessageBySeqListReq) (*PullMessageBySeqListResp, error) {
+func (UnimplementedChatServer) PullMessageBySeqList(context.Context, *pb_ws.PullMessageBySeqListReq) (*pb_ws.PullMessageBySeqListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PullMessageBySeqList not implemented")
 }
 func (UnimplementedChatServer) SendMsg(context.Context, *SendMsgReq) (*SendMsgResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMsg not implemented")
 }
-func (UnimplementedChatServer) DelMsgList(context.Context, *DelMsgListReq) (*DelMsgListResp, error) {
+func (UnimplementedChatServer) DelMsgList(context.Context, *pb_ws.DelMsgListReq) (*pb_ws.DelMsgListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelMsgList not implemented")
 }
 func (UnimplementedChatServer) mustEmbedUnimplementedChatServer() {}
@@ -131,7 +132,7 @@ func _Chat_GetMaxAndMinSeq_Handler(srv interface{}, ctx context.Context, dec fun
 }
 
 func _Chat_PullMessageBySeqList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PullMessageBySeqListReq)
+	in := new(pb_ws.PullMessageBySeqListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func _Chat_PullMessageBySeqList_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/Chat/PullMessageBySeqList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServer).PullMessageBySeqList(ctx, req.(*PullMessageBySeqListReq))
+		return srv.(ChatServer).PullMessageBySeqList(ctx, req.(*pb_ws.PullMessageBySeqListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -167,7 +168,7 @@ func _Chat_SendMsg_Handler(srv interface{}, ctx context.Context, dec func(interf
 }
 
 func _Chat_DelMsgList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DelMsgListReq)
+	in := new(pb_ws.DelMsgListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -179,7 +180,7 @@ func _Chat_DelMsgList_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/Chat/DelMsgList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServer).DelMsgList(ctx, req.(*DelMsgListReq))
+		return srv.(ChatServer).DelMsgList(ctx, req.(*pb_ws.DelMsgListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -209,5 +210,5 @@ var Chat_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "chat.proto",
+	Metadata: "pb_chat.proto",
 }

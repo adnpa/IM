@@ -2,8 +2,8 @@ package dao
 
 import (
 	"context"
-	"github.com/adnpa/IM/common/db/mysql/model"
-	"github.com/adnpa/IM/common/db/mysql/query"
+	"github.com/adnpa/IM/pkg/common/db/mysql/model"
+	"github.com/adnpa/IM/pkg/common/db/mysql/query"
 	"time"
 )
 

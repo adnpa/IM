@@ -6,22 +6,17 @@ package model
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 const TableNameFriend = "friend"
 
 // Friend mapped from table <friend>
 type Friend struct {
-	ID         int32          `gorm:"column:id;primaryKey" json:"id"`
-	OwnerUID   string         `gorm:"column:owner_uid;not null" json:"owner_uid"`
-	FriendUID  string         `gorm:"column:friend_uid;not null" json:"friend_uid"`
-	Comment    string         `gorm:"column:comment" json:"comment"`
-	FriendFlag int32          `gorm:"column:friend_flag;not null" json:"friend_flag"`
-	CreatedAt  time.Time      `gorm:"column:created_at;not null;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt  time.Time      `gorm:"column:updated_at;not null;default:CURRENT_TIMESTAMP" json:"updated_at"`
-	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;not null" json:"deleted_at"`
+	OwnerID    string    `gorm:"column:owner_id;primaryKey" json:"owner_id"`
+	FriendID   string    `gorm:"column:friend_id;primaryKey" json:"friend_id"`
+	Comment    string    `gorm:"column:comment" json:"comment"`
+	FriendFlag int32     `gorm:"column:friend_flag;not null" json:"friend_flag"`
+	CreateTime time.Time `gorm:"column:create_time;not null" json:"create_time"`
 }
 
 // TableName Friend's table name

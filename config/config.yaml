@@ -27,4 +27,5 @@ mongo:
 
 jwt:
   secret: im
-  expire: 7*24*60*60
+  expire: 604800
+#    7*24*60*60

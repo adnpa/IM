@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/adnpa/IM/pkg/discovery"
-	"github.com/adnpa/IM/pkg/pb"
+	"github.com/adnpa/IM/pkg/pb/pb_auth"
 
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -23,8 +23,8 @@ type paramRegisterReq struct {
 	Ex       string `json:"ex" binding:"omitempty,max=1024"`
 }
 
-func registerParams2PB(params *paramRegisterReq) *pb.RegisterReq {
-	pbData := pb.RegisterReq{
+func registerParams2PB(params *paramRegisterReq) *pb_auth.RegisterReq {
+	pbData := pb_auth.RegisterReq{
 		UID:    params.UID,
 		Name:   params.Name,
 		Icon:   params.Icon,
@@ -39,7 +39,7 @@ func registerParams2PB(params *paramRegisterReq) *pb.RegisterReq {
 
 func UserRegister(c *gin.Context) {
 	grpcConn := discovery.GetSrvConn(config.Config.RpcRegisterName.AuthName)
-	cli := pb.NewAuthClient(grpcConn)
+	cli := pb_auth.NewAuthClient(grpcConn)
 
 	params := paramRegisterReq{}
 	if err := c.BindJSON(&params); err != nil {

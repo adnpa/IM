@@ -27,14 +27,11 @@ func newFriendRequest(db *gorm.DB, opts ...gen.DOOption) friendRequest {
 
 	tableName := _friendRequest.friendRequestDo.TableName()
 	_friendRequest.ALL = field.NewAsterisk(tableName)
-	_friendRequest.ID = field.NewInt32(tableName, "id")
 	_friendRequest.ReqID = field.NewString(tableName, "req_id")
 	_friendRequest.UserID = field.NewString(tableName, "user_id")
 	_friendRequest.Flag = field.NewInt32(tableName, "flag")
 	_friendRequest.ReqMessage = field.NewString(tableName, "req_message")
-	_friendRequest.CreatedAt = field.NewTime(tableName, "created_at")
-	_friendRequest.UpdatedAt = field.NewTime(tableName, "updated_at")
-	_friendRequest.DeletedAt = field.NewField(tableName, "deleted_at")
+	_friendRequest.CreateTime = field.NewTime(tableName, "create_time")
 
 	_friendRequest.fillFieldMap()
 
@@ -45,14 +42,11 @@ type friendRequest struct {
 	friendRequestDo
 
 	ALL        field.Asterisk
-	ID         field.Int32
 	ReqID      field.String
 	UserID     field.String
 	Flag       field.Int32
 	ReqMessage field.String
-	CreatedAt  field.Time
-	UpdatedAt  field.Time
-	DeletedAt  field.Field
+	CreateTime field.Time
 
 	fieldMap map[string]field.Expr
 }
@@ -69,14 +63,11 @@ func (f friendRequest) As(alias string) *friendRequest {
 
 func (f *friendRequest) updateTableName(table string) *friendRequest {
 	f.ALL = field.NewAsterisk(table)
-	f.ID = field.NewInt32(table, "id")
 	f.ReqID = field.NewString(table, "req_id")
 	f.UserID = field.NewString(table, "user_id")
 	f.Flag = field.NewInt32(table, "flag")
 	f.ReqMessage = field.NewString(table, "req_message")
-	f.CreatedAt = field.NewTime(table, "created_at")
-	f.UpdatedAt = field.NewTime(table, "updated_at")
-	f.DeletedAt = field.NewField(table, "deleted_at")
+	f.CreateTime = field.NewTime(table, "create_time")
 
 	f.fillFieldMap()
 
@@ -93,15 +84,12 @@ func (f *friendRequest) GetFieldByName(fieldName string) (field.OrderExpr, bool)
 }
 
 func (f *friendRequest) fillFieldMap() {
-	f.fieldMap = make(map[string]field.Expr, 8)
-	f.fieldMap["id"] = f.ID
+	f.fieldMap = make(map[string]field.Expr, 5)
 	f.fieldMap["req_id"] = f.ReqID
 	f.fieldMap["user_id"] = f.UserID
 	f.fieldMap["flag"] = f.Flag
 	f.fieldMap["req_message"] = f.ReqMessage
-	f.fieldMap["created_at"] = f.CreatedAt
-	f.fieldMap["updated_at"] = f.UpdatedAt
-	f.fieldMap["deleted_at"] = f.DeletedAt
+	f.fieldMap["create_time"] = f.CreateTime
 }
 
 func (f friendRequest) clone(db *gorm.DB) friendRequest {

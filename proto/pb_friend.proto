@@ -1,12 +1,12 @@
 syntax = "proto3";
-//option go_package = "../pb/pb_friend;pb_friend";
-option go_package = "../pb;pb";
+option go_package = "github.com/adnpa/IM/pkg/pb/pb_friend";
+import "pb_ws.proto";
 
 service friend{
   //  获取好友信息
   rpc getFriendsInfo(GetFriendsInfoReq) returns(GetFriendInfoResp);
   //  申请添加好友
-  rpc addFriend(AddFriendReq) returns(CommonResp);
+  rpc addFriend(AddFriendReq) returns(server_api_params.CommonResp);
   //  获取申请列表
   rpc getFriendApplyList(GetFriendApplyReq) returns(GetFriendApplyResp);
   //获取自己的申请列表
@@ -15,9 +15,9 @@ service friend{
   rpc getFriendList(getFriendListReq) returns(getFriendListResp);
 
   //  拉入黑名单
-  rpc addBlacklist(AddBlacklistReq) returns(CommonResp);
+  rpc addBlacklist(AddBlacklistReq) returns(server_api_params.CommonResp);
   //  移除黑名单
-  rpc removeBlacklist(RemoveBlacklistReq) returns(CommonResp);
+  rpc removeBlacklist(RemoveBlacklistReq) returns(server_api_params.CommonResp);
   //  是否是好友
   rpc isFriend(IsFriendReq) returns(IsFriendResp);
   //  是否在黑名单
@@ -26,18 +26,13 @@ service friend{
   rpc getBlacklist(GetBlacklistReq) returns(GetBlacklistResp);
 
   //  删除好友
-  rpc deleteFriend(DeleteFriendReq) returns(CommonResp);
+  rpc deleteFriend(DeleteFriendReq) returns(server_api_params.CommonResp);
   //  获取添加好友结果
-  rpc addFriendResponse(AddFriendResponseReq) returns(CommonResp);
+  rpc addFriendResponse(AddFriendResponseReq) returns(server_api_params.CommonResp);
   // 设置备注
-  rpc setFriendComment(SetFriendCommentReq) returns(CommonResp);
+  rpc setFriendComment(SetFriendCommentReq) returns(server_api_params.CommonResp);
 
   rpc ImportFriend(ImportFriendReq)  returns(ImportFriendResp);
-}
-
-message CommonResp{
-  int32   errorCode = 1;
-  string  errorMsg = 2;
 }
 
 message GetFriendsInfoReq{
@@ -66,7 +61,7 @@ message ImportFriendReq{
   string OwnerUid = 4;
 }
 message ImportFriendResp{
-  CommonResp commonResp = 1;
+  server_api_params.CommonResp commonResp = 1;
   repeated string failedUidList = 2;
 }
 
@@ -102,20 +97,9 @@ message getFriendListReq{
 message getFriendListResp{
   int32   errorCode = 1;
   string  errorMsg = 2;
-  repeated UserInfo data = 3;
+  repeated server_api_params.UserInfo data = 3;
 }
-message UserInfo{
-  string  uid = 1;
-  string  name = 3;
-  string  icon = 2;
-  int32   gender = 4;
-  string mobile = 5;
-  string birth = 6;
-  string email = 7;
-  string ex = 8;
-  string  comment = 9;
-  int32 isInBlackList = 10;
-}
+
 
 message AddBlacklistReq{
   string uid = 1;
@@ -139,7 +123,7 @@ message GetBlacklistReq{
 message GetBlacklistResp{
   int32   errorCode = 1;
   string  errorMsg = 2;
-  repeated UserInfo data = 3;
+  repeated server_api_params.UserInfo data = 3;
 }
 
 message IsFriendReq{

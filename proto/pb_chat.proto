@@ -1,7 +1,6 @@
 syntax = "proto3";
-import "ws.proto";
-//option go_package = "./pb_chat;pb_chat";
-option go_package = "../pb;pb";
+import "pb_ws.proto";
+option go_package = "github.com/adnpa/IM/pkg/pb/pb_chat";
 
 
 

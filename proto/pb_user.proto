@@ -1,6 +1,6 @@
 syntax = "proto3";
-//option go_package = "../pb/pb_user;pb_user";
-option go_package = "../pb;pb";
+option go_package = "github.com/adnpa/IM/pkg/pb/pb_user";
+import "pb_ws.proto";
 
 service user {
   //获取用户信息
@@ -8,7 +8,7 @@ service user {
   // 批量获取用户信息
   rpc GetAllUsersUid(GetAllUsersUidReq)returns(GetAllUsersUidResp);
   //更新用户信息
-  rpc UpdateUserInfo(UpdateUserInfoReq) returns(CommonResp);
+  rpc UpdateUserInfo(UpdateUserInfoReq) returns(server_api_params.CommonResp);
   //manager批量删除
   rpc DeleteUsers(DeleteUsersReq) returns(DeleteUsersResp);
 }
@@ -22,7 +22,7 @@ message GetUserInfoReq{
 message GetUserInfoResp{
   int32  errorCode = 1;
   string errorMsg = 2;
-  repeated UserInfo Data = 3;
+  repeated server_api_params.UserInfo Data = 3;
 }
 
 message GetAllUsersUidReq{
@@ -30,7 +30,7 @@ message GetAllUsersUidReq{
   string operationID = 3;
 }
 message GetAllUsersUidResp{
-  CommonResp  commonResp = 1;
+  server_api_params.CommonResp  commonResp = 1;
   repeated string uidList = 2;
 }
 
@@ -40,7 +40,7 @@ message DeleteUsersReq{
   string OperationID = 4;
 }
 message DeleteUsersResp{
-  CommonResp  commonResp = 1;
+  server_api_params.CommonResp  commonResp = 1;
   repeated string failedUidList = 2;
 }
 
@@ -65,21 +65,3 @@ message UpdateUserInfoReq{
   string Uid = 10;
 }
 
-
-// ============================= 中间结构 =============================
-
-message CommonResp{
-  int32  errorCode = 1;
-  string errorMsg = 2;
-}
-
-message UserInfo{
-  string uid = 1;
-  string name = 2;
-  string icon = 3;
-  int32 gender = 4;
-  string mobile = 5;
-  string birth = 6;
-  string email = 7;
-  string ex = 8;
-}

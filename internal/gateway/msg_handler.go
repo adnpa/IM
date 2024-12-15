@@ -1,9 +1,9 @@
 package gateway
 
 import (
-	"adnpa/go-base/common/constant"
 	"bytes"
 	"encoding/gob"
+	"github.com/adnpa/IM/pkg/common/constant"
 	"github.com/gorilla/websocket"
 	"log"
 )

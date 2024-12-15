@@ -6,22 +6,17 @@ package model
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 const TableNameFriendRequest = "friend_request"
 
 // FriendRequest mapped from table <friend_request>
 type FriendRequest struct {
-	ID         int32          `gorm:"column:id;primaryKey" json:"id"`
-	ReqID      string         `gorm:"column:req_id;not null" json:"req_id"`
-	UserID     string         `gorm:"column:user_id;not null" json:"user_id"`
-	Flag       int32          `gorm:"column:flag;not null" json:"flag"`
-	ReqMessage string         `gorm:"column:req_message" json:"req_message"`
-	CreatedAt  time.Time      `gorm:"column:created_at;not null;default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt  time.Time      `gorm:"column:updated_at;not null;default:CURRENT_TIMESTAMP" json:"updated_at"`
-	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;not null" json:"deleted_at"`
+	ReqID      string    `gorm:"column:req_id;primaryKey" json:"req_id"`
+	UserID     string    `gorm:"column:user_id;primaryKey" json:"user_id"`
+	Flag       int32     `gorm:"column:flag;not null" json:"flag"`
+	ReqMessage string    `gorm:"column:req_message" json:"req_message"`
+	CreateTime time.Time `gorm:"column:create_time;not null" json:"create_time"`
 }
 
 // TableName FriendRequest's table name

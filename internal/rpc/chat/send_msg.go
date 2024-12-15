@@ -2,8 +2,8 @@ package chat
 
 import (
 	"context"
-	"github.com/adnpa/IM/common/constant"
-	"github.com/adnpa/IM/pkg/pb"
+	"github.com/adnpa/IM/pkg/common/constant"
+	"github.com/adnpa/IM/pkg/pb/pb_chat"
 )
 
 type MsgCallBackReq struct {
@@ -28,8 +28,8 @@ type MsgCallBackResp struct {
 	}
 }
 
-func (rpc *RpcChatServer) SendMsg(_ context.Context, req *pb.SendMsgReq) (*pb.SendMsgResp, error) {
-	reply := &pb.SendMsgResp{}
+func (rpc *RpcChatServer) SendMsg(_ context.Context, req *pb_chat.SendMsgReq) (*pb_chat.SendMsgResp, error) {
+	reply := &pb_chat.SendMsgResp{}
 
 	switch req.MsgData.SessionType {
 	case constant.SingleChatType:
@@ -38,8 +38,8 @@ func (rpc *RpcChatServer) SendMsg(_ context.Context, req *pb.SendMsgReq) (*pb.Se
 		//	return nil, err
 		//}
 
-		msgToMQ := pb.MsgDataToMQ{Token: req.Token, OperationID: req.OperationID, MsgData: req.MsgData}
-		err := rpc.sendMsgToKafka(&msgToMQ, msgToMQ.MsgData.SendID)
+		msgToMQ := pb_chat.MsgDataToMQ{Token: req.Token, OperationID: req.OperationID, MsgData: req.MsgData}
+		_ = rpc.sendMsgToKafka(&msgToMQ, msgToMQ.MsgData.SendID)
 
 		//callbackAfterSendSingle(pb)
 	case constant.GroupChatType:
@@ -52,12 +52,12 @@ func callbackAfterSendSingle(p any) {
 
 }
 
-func callbackBeforeSendSingle(req *pb.SendMsgReq) (bool, error) {
+func callbackBeforeSendSingle(req *pb_chat.SendMsgReq) (bool, error) {
 
 	return true, nil
 }
 
-func (rpc *RpcChatServer) sendMsgToKafka(m *pb.MsgDataToMQ, key string) error {
+func (rpc *RpcChatServer) sendMsgToKafka(m *pb_chat.MsgDataToMQ, key string) error {
 	_, _, err := rpc.producer.SendMsg(m, key)
 	return err
 }

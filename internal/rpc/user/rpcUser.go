@@ -2,12 +2,13 @@ package user
 
 import (
 	"context"
-	"github.com/adnpa/IM/common/config"
-	"github.com/adnpa/IM/common/db/mysql/dao"
-	"github.com/adnpa/IM/common/db/mysql/model"
-	"github.com/adnpa/IM/discovery"
 	"github.com/adnpa/IM/internal/utils"
-	"github.com/adnpa/IM/pb/pb_user"
+	"github.com/adnpa/IM/pkg/common/config"
+	"github.com/adnpa/IM/pkg/common/db/mysql/dao"
+	"github.com/adnpa/IM/pkg/common/db/mysql/model"
+	"github.com/adnpa/IM/pkg/discovery"
+	"github.com/adnpa/IM/pkg/pb/pb_user"
+	"github.com/adnpa/IM/pkg/pb/pb_ws"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -64,37 +65,37 @@ func (rpc *RpcUserServer) Run() {
 }
 
 func (rpc *RpcUserServer) GetUserInfo(ctx context.Context, req *pb_user.GetUserInfoReq) (*pb_user.GetUserInfoResp, error) {
-	var pbUserL []*pb_user.UserInfo
-	if len(req.UserIDList) > 0 {
-		userL, err := dao.GetUsersByUidL(req.UserIDList)
-		if err != nil {
-			return nil, err
-		}
-		for _, u := range userL {
-			pbu := &pb_user.UserInfo{
-				Uid:    u.UID,
-				Name:   u.Name,
-				Icon:   u.Icon,
-				Gender: u.Gender,
-				Mobile: u.Mobile,
-				Birth:  u.Birth,
-				Email:  u.Email,
-			}
-			pbUserL = append(pbUserL, pbu)
-		}
-	} else {
-		return &pb_user.GetUserInfoResp{
-			ErrorCode: 999,
-			ErrorMsg:  "arg_err",
-		}, nil
-	}
-
+	//var pbUserL []*pb_user.UserInfo
+	//if len(req.UserIDList) > 0 {
+	//	userL, err := dao.GetUsersByUidL(req.UserIDList)
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	//	for _, u := range userL {
+	//		pbu := &pb_user.UserInfo{
+	//			Uid:    u.UID,
+	//			Name:   u.Name,
+	//			Icon:   u.Icon,
+	//			Gender: u.Gender,
+	//			Mobile: u.Mobile,
+	//			Birth:  u.Birth,
+	//			Email:  u.Email,
+	//		}
+	//		pbUserL = append(pbUserL, pbu)
+	//	}
+	//} else {
+	//	return &pb_user.GetUserInfoResp{
+	//		ErrorCode: 999,
+	//		ErrorMsg:  "arg_err",
+	//	}, nil
+	//}
+	//
 	return &pb_user.GetUserInfoResp{
-		Data: pbUserL,
+		//Data: pbUserL,
 	}, nil
 }
 
-func (rpc *RpcUserServer) UpdateUserInfo(ctx context.Context, req *pb_user.UpdateUserInfoReq) (*pb_user.CommonResp, error) {
+func (rpc *RpcUserServer) UpdateUserInfo(ctx context.Context, req *pb_user.UpdateUserInfoReq) (*pb_ws.CommonResp, error) {
 	//todo 权限分离
 	//用户自身修改自己
 	//appManager修改任意用户
@@ -109,12 +110,12 @@ func (rpc *RpcUserServer) UpdateUserInfo(ctx context.Context, req *pb_user.Updat
 		UpdatedAt: time.Now(),
 	})
 	if err != nil {
-		return &pb_user.CommonResp{ErrorCode: 999, ErrorMsg: "update_err"}, err
+		return &pb_ws.CommonResp{ErrorCode: 999, ErrorMsg: "update_err"}, err
 	}
 
 	//todo friend
 
-	return &pb_user.CommonResp{ErrorCode: 0, ErrorMsg: ""}, err
+	return &pb_ws.CommonResp{ErrorCode: 0, ErrorMsg: ""}, err
 }
 
 func (rpc *RpcUserServer) DeleteUsers(ctx context.Context, req *pb_user.DeleteUsersReq) (*pb_user.DeleteUsersResp, error) {

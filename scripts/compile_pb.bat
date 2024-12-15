@@ -6,7 +6,7 @@ setlocal enabledelayedexpansion
 set PROTO_DIR=../proto
 
 :: 指定输出目录
-set OUTPUT_DIR=../pkg/pb
+set OUTPUT_DIR=../pkg
 
 :: 检查 protoc 命令是否存在
 where protoc >nul 2>&1

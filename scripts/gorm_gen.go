@@ -26,9 +26,15 @@ func main() {
 	// Generate basic type-safe DAO API for struct `model.User` following conventions
 
 	g.ApplyBasic(
+		g.GenerateModelAs("register", "Register"),
 		g.GenerateModelAs("user", "User"),
 		g.GenerateModelAs("friend", "Friend"),
 		g.GenerateModelAs("friend_request", "FriendRequest"),
+		g.GenerateModelAs("user_black_list", "UserBlackList"),
+		g.GenerateModelAs("chat_log", "ChatLog"),
+		g.GenerateModelAs("group", "Group"),
+		g.GenerateModelAs("group_member", "GroupMember"),
+		g.GenerateModelAs("group_request", "GroupRequest"),
 	)
 	g.ApplyBasic(
 		// Generate structs from all tables of current database

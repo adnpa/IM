@@ -6,7 +6,7 @@ import (
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/adnpa/IM/pkg/common/constant"
 	"github.com/adnpa/IM/pkg/discovery"
-	"github.com/adnpa/IM/pkg/pb"
+	"github.com/adnpa/IM/pkg/pb/pb_relay"
 	"github.com/gorilla/websocket"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/proto"
@@ -16,7 +16,7 @@ import (
 )
 
 type RpcRelayServer struct {
-	*pb.UnimplementedOnlineMessageRelayServiceServer
+	*pb_relay.UnimplementedOnlineMessageRelayServiceServer
 
 	rpcPort         int
 	rpcRegisterName string
@@ -40,7 +40,7 @@ func (s *RpcRelayServer) Run() {
 	defer listener.Close()
 	srv := grpc.NewServer()
 	defer srv.GracefulStop()
-	pb.RegisterOnlineMessageRelayServiceServer(srv, s)
+	pb_relay.RegisterOnlineMessageRelayServiceServer(srv, s)
 	err = discovery.RegisterUnique(s.etcdSchema, strings.Join(s.etcdAddr, ","), ip, s.rpcPort, s.rpcRegisterName, 10)
 	if err != nil {
 		log.Println(err)
@@ -52,8 +52,8 @@ func (s *RpcRelayServer) Run() {
 	}
 }
 
-func (s *RpcRelayServer) OnlinePushMsg(ctx context.Context, in *pb.OnlinePushMsgReq) (*pb.OnlinePushMsgResp, error) {
-	var resp []*pb.SingleMsgToUser
+func (s *RpcRelayServer) OnlinePushMsg(ctx context.Context, in *pb_relay.OnlinePushMsgReq) (*pb_relay.OnlinePushMsgResp, error) {
+	var resp []*pb_relay.SingleMsgToUser
 	msgBytes, _ := proto.Marshal(in.MsgData)
 	mReply := Resp{
 		ReqIdentifier: constant.WSPushMsg,
@@ -70,14 +70,14 @@ func (s *RpcRelayServer) OnlinePushMsg(ctx context.Context, in *pb.OnlinePushMsg
 	for _, v := range platformList {
 		if conn := ws.getWsConn(recvID, v); conn != nil {
 			resultCode := sendMsgToUser(conn, replyBytes, in, v, recvID)
-			temp := &pb.SingleMsgToUser{
+			temp := &pb_relay.SingleMsgToUser{
 				ResultCode:     resultCode,
 				RecvID:         recvID,
 				RecvPlatFormID: constant.PlatformNameToID(v),
 			}
 			resp = append(resp, temp)
 		} else {
-			temp := &pb.SingleMsgToUser{
+			temp := &pb_relay.SingleMsgToUser{
 				ResultCode:     -1,
 				RecvID:         recvID,
 				RecvPlatFormID: constant.PlatformNameToID(v),
@@ -85,20 +85,20 @@ func (s *RpcRelayServer) OnlinePushMsg(ctx context.Context, in *pb.OnlinePushMsg
 			resp = append(resp, temp)
 		}
 	}
-	return &pb.OnlinePushMsgResp{
+	return &pb_relay.OnlinePushMsgResp{
 		Resp: resp,
 	}, nil
 }
 
-func (s *RpcRelayServer) GetUsersOnlineStatus(ctx context.Context, req *pb.GetUsersOnlineStatusReq) (*pb.GetUsersOnlineStatusResp, error) {
-	var resp pb.GetUsersOnlineStatusResp
+func (s *RpcRelayServer) GetUsersOnlineStatus(ctx context.Context, req *pb_relay.GetUsersOnlineStatusReq) (*pb_relay.GetUsersOnlineStatusResp, error) {
+	var resp pb_relay.GetUsersOnlineStatusResp
 	for _, userID := range req.UserIDList {
 		platformList := genPlatformArray()
-		temp := new(pb.GetUsersOnlineStatusResp_SuccessResult)
+		temp := new(pb_relay.GetUsersOnlineStatusResp_SuccessResult)
 		temp.UserID = userID
 		for _, platform := range platformList {
 			if conn := ws.getWsConn(userID, platform); conn != nil {
-				ps := new(pb.GetUsersOnlineStatusResp_SuccessDetail)
+				ps := new(pb_relay.GetUsersOnlineStatusResp_SuccessDetail)
 				ps.Platform = platform
 				ps.Status = constant.OnlineStatus
 				temp.Status = constant.OnlineStatus
@@ -113,7 +113,7 @@ func (s *RpcRelayServer) GetUsersOnlineStatus(ctx context.Context, req *pb.GetUs
 	return &resp, nil
 }
 
-func sendMsgToUser(conn *WsConn, bMsg []byte, in *pb.OnlinePushMsgReq, RecvPlatForm, RecvID string) (ResultCode int64) {
+func sendMsgToUser(conn *WsConn, bMsg []byte, in *pb_relay.OnlinePushMsgReq, RecvPlatForm, RecvID string) (ResultCode int64) {
 	err := ws.writeMsg(conn, websocket.BinaryMessage, bMsg)
 	if err != nil {
 		ResultCode = -2

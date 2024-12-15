@@ -1,6 +1,6 @@
 syntax = "proto3";
-option go_package = "../pb;pb";
-import "ws.proto";
+option go_package = "github.com/adnpa/IM/pkg/pb/pb_relay";
+import "pb_ws.proto";
 
 
 
