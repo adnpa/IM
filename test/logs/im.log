@@ -1,0 +1,53 @@
+{"level":"INFO","time":"2024-12-16T16:01:31.172+0800","caller":"logger/logger.go:76","msg":"register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T16:05:14.173+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-17T19:24:50.183+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-17T19:24:50.184+0800","caller":"discovery/resolver.go:93","msg":"","key":"goIM:///testName"}
+{"level":"INFO","time":"2024-12-17T19:39:13.681+0800","caller":"discovery/resolver.go:90","msg":"","key":"goIM:///"}
+{"level":"INFO","time":"2024-12-17T19:42:44.144+0800","caller":"discovery/resolver.go:90","msg":"","key":"goIM:///"}
+{"level":"INFO","time":"2024-12-18T03:32:11.919+0800","caller":"discovery/resolver.go:90","msg":"","key":"goIM:///"}
+{"level":"INFO","time":"2024-12-18T03:32:11.923+0800","caller":"discovery/resolver.go:95","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:32:11.923+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:33:01.223+0800","caller":"discovery/resolver.go:90","msg":"","key":"goIM:///"}
+{"level":"INFO","time":"2024-12-18T03:33:01.228+0800","caller":"discovery/resolver.go:95","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:33:01.228+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:42:18.858+0800","caller":"discovery/resolver.go:106","msg":"","last":"goIM"}
+{"level":"INFO","time":"2024-12-18T03:42:18.859+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:43:42.959+0800","caller":"discovery/resolver.go:106","msg":"","last":"goIM"}
+{"level":"INFO","time":"2024-12-18T03:43:42.960+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:45:09.935+0800","caller":"discovery/resolver.go:106","msg":"","last":"goIM"}
+{"level":"INFO","time":"2024-12-18T03:45:09.936+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:47:02.140+0800","caller":"discovery/resolver.go:37","msg":"args","":"goIM","":"192.168.1.129:2379","":"User"}
+{"level":"INFO","time":"2024-12-18T03:47:02.146+0800","caller":"discovery/resolver.go:108","msg":"","last":"goIM"}
+{"level":"INFO","time":"2024-12-18T03:47:02.146+0800","caller":"discovery/resolver.go:56","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T13:17:32.286+0800","caller":"discovery/resolver.go:37","msg":"args","":"goIM","":"192.168.1.129:2379","":"User"}
+{"level":"INFO","time":"2024-12-18T17:06:57.026+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-18T17:06:57.030+0800","caller":"discovery/resolver.go:194","msg":"resolveNow"}
+{"level":"INFO","time":"2024-12-18T17:07:32.547+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-18T17:07:32.550+0800","caller":"discovery/resolver.go:194","msg":"resolveNow"}
+{"level":"INFO","time":"2024-12-18T17:08:03.563+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-18T17:08:03.566+0800","caller":"discovery/resolver.go:194","msg":"resolveNow"}
+{"level":"INFO","time":"2024-12-18T17:09:43.041+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:09:43.044+0800","caller":"discovery/resolver.go:194","msg":"resolveNow"}
+{"level":"INFO","time":"2024-12-18T17:11:07.082+0800","caller":"discovery/resolver.go:194","msg":"resolveNow"}
+{"level":"INFO","time":"2024-12-18T17:16:03.465+0800","caller":"discovery/resolver.go:194","msg":"resolveNow"}
+{"level":"INFO","time":"2024-12-18T17:19:34.031+0800","caller":"discovery/grpc_client.go:27","msg":"updateState","":[{"Addr":"127.0.0.1:10060","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null},{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:20:56.208+0800","caller":"discovery/grpc_client.go:27","msg":"updateState","":[{"Addr":"127.0.0.1:10060","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null},{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:21:49.710+0800","caller":"discovery/grpc_client.go:27","msg":"updateState","":[{"Addr":"127.0.0.1:10060","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null},{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:22:24.300+0800","caller":"discovery/grpc_client.go:27","msg":"updateState","":[{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:23:55.053+0800","caller":"discovery/grpc_client.go:27","msg":"updateState","":[{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:24:18.372+0800","caller":"discovery/grpc_client.go:27","msg":"updateState","":[{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:25:08.121+0800","caller":"discovery/grpc_client.go:27","msg":"updateState","":[{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:25:08.121+0800","caller":"discovery/grpc_client.go:36","msg":"newCC","target":null}
+{"level":"INFO","time":"2024-12-18T17:25:08.121+0800","caller":"discovery/grpc_client.go:38","msg":"cc","target":null}
+{"level":"INFO","time":"2024-12-18T17:26:12.714+0800","caller":"discovery/grpc_client.go:27","msg":"updateState","":[{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:26:12.714+0800","caller":"discovery/grpc_client.go:35","msg":"","addr":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:26:12.714+0800","caller":"discovery/grpc_client.go:38","msg":"err","error":"grpc: no transport security set (use grpc.WithTransportCredentials(insecure.NewCredentials()) explicitly or set credentials)"}
+{"level":"INFO","time":"2024-12-18T17:26:12.714+0800","caller":"discovery/grpc_client.go:40","msg":"newCC"}
+{"level":"INFO","time":"2024-12-18T17:26:12.714+0800","caller":"discovery/grpc_client.go:42","msg":"cc"}
+{"level":"INFO","time":"2024-12-18T17:28:05.326+0800","caller":"discovery/grpc_client.go:28","msg":"updateState","":[{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:28:05.327+0800","caller":"discovery/grpc_client.go:36","msg":"","addr":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:28:05.327+0800","caller":"discovery/grpc_client.go:43","msg":"newCC"}
+{"level":"INFO","time":"2024-12-18T17:28:05.327+0800","caller":"discovery/grpc_client.go:45","msg":"cc"}
+{"level":"INFO","time":"2024-12-18T17:50:52.879+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/mysql.go:24","msg":"mysql","":"root:root@tcp([192.168.1.129:3306])/goim?charset=utf8mb4&parseTime=true&loc=Local"}
+{"level":"INFO","time":"2024-12-18T17:55:25.807+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/mysql.go:28","msg":"mysql","":"root:root@tcp([192.168.1.129:3306])/?charset=utf8mb4&parseTime=True&loc=Local"}
+{"level":"INFO","time":"2024-12-18T17:56:05.667+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/mysql.go:28","msg":"mysql","":"root:root@tcp(192.168.1.129:3306)/?charset=utf8mb4&parseTime=True&loc=Local"}

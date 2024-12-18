@@ -3,9 +3,11 @@ package user
 import (
 	"context"
 	"github.com/adnpa/IM/internal/utils"
+	"github.com/adnpa/IM/model"
 	"github.com/adnpa/IM/pkg/common/config"
+	"github.com/adnpa/IM/pkg/common/constant"
 	"github.com/adnpa/IM/pkg/common/db/mysql/dao"
-	"github.com/adnpa/IM/pkg/common/db/mysql/model"
+	"github.com/adnpa/IM/pkg/common/logger"
 	"github.com/adnpa/IM/pkg/discovery"
 	"github.com/adnpa/IM/pkg/pb/pb_user"
 	"github.com/adnpa/IM/pkg/pb/pb_ws"
@@ -16,7 +18,6 @@ import (
 	"net"
 	"strconv"
 	"strings"
-	"time"
 )
 
 type RpcUserServer struct {
@@ -65,33 +66,33 @@ func (rpc *RpcUserServer) Run() {
 }
 
 func (rpc *RpcUserServer) GetUserInfo(ctx context.Context, req *pb_user.GetUserInfoReq) (*pb_user.GetUserInfoResp, error) {
-	//var pbUserL []*pb_user.UserInfo
-	//if len(req.UserIDList) > 0 {
-	//	userL, err := dao.GetUsersByUidL(req.UserIDList)
-	//	if err != nil {
-	//		return nil, err
-	//	}
-	//	for _, u := range userL {
-	//		pbu := &pb_user.UserInfo{
-	//			Uid:    u.UID,
-	//			Name:   u.Name,
-	//			Icon:   u.Icon,
-	//			Gender: u.Gender,
-	//			Mobile: u.Mobile,
-	//			Birth:  u.Birth,
-	//			Email:  u.Email,
-	//		}
-	//		pbUserL = append(pbUserL, pbu)
-	//	}
-	//} else {
-	//	return &pb_user.GetUserInfoResp{
-	//		ErrorCode: 999,
-	//		ErrorMsg:  "arg_err",
-	//	}, nil
-	//}
-	//
+	logger.L().Info("rpc GetUserInfo start")
+	var pbUserL []*pb_ws.UserInfo
+	if len(req.UserIDList) > 0 {
+		userL, err := dao.GetUsersByUidL(req.UserIDList)
+		if err != nil {
+			return nil, err
+		}
+		for _, u := range userL {
+			pbu := &pb_ws.UserInfo{
+				UserID:      u.UID,
+				Nickname:    u.Name,
+				FaceURL:     u.Icon,
+				Gender:      u.Gender,
+				PhoneNumber: u.Mobile,
+				Birth:       u.Birth,
+				Email:       u.Email,
+			}
+			pbUserL = append(pbUserL, pbu)
+		}
+	} else {
+		return &pb_user.GetUserInfoResp{
+			ErrorCode: constant.ErrUserArgs,
+			ErrorMsg:  "UserIDList is empty",
+		}, nil
+	}
 	return &pb_user.GetUserInfoResp{
-		//Data: pbUserL,
+		Data: pbUserL,
 	}, nil
 }
 
@@ -100,14 +101,14 @@ func (rpc *RpcUserServer) UpdateUserInfo(ctx context.Context, req *pb_user.Updat
 	//用户自身修改自己
 	//appManager修改任意用户
 	err := dao.UpdateUser(&model.User{
-		UID:       req.Uid,
-		Name:      req.Name,
-		Icon:      req.Icon,
-		Gender:    req.Gender,
-		Mobile:    req.Mobile,
-		Birth:     req.Birth,
-		Email:     req.Email,
-		UpdatedAt: time.Now(),
+		UID:    req.Uid,
+		Name:   req.Name,
+		Icon:   req.Icon,
+		Gender: req.Gender,
+		Mobile: req.Mobile,
+		Birth:  req.Birth,
+		Email:  req.Email,
+		//UpdatedAt: time.Now(),
 	})
 	if err != nil {
 		return &pb_ws.CommonResp{ErrorCode: 999, ErrorMsg: "update_err"}, err

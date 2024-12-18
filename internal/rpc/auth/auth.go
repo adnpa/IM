@@ -4,13 +4,13 @@ import (
 	"context"
 	"errors"
 	utils2 "github.com/adnpa/IM/internal/utils"
+	"github.com/adnpa/IM/model"
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/adnpa/IM/pkg/common/db/mysql/dao"
-	"github.com/adnpa/IM/pkg/common/db/mysql/model"
 	"github.com/adnpa/IM/pkg/discovery"
 	"github.com/adnpa/IM/pkg/pb/pb_auth"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"log"
 	"net"
 	"strconv"
 	"strings"
@@ -38,9 +38,12 @@ func (rpc *RpcAuthServer) Run() {
 	address := utils2.ServerIP + ":" + strconv.Itoa(rpc.rpcPort)
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
-		log.Println(err)
+		logger.L().Warn("Rpc Auth Server start failed, port used")
 		return
 	}
+
+	logger.L().Info("Rpc Auth Server is starting...", zap.String("addr", address))
+
 	//grpc server
 	srv := grpc.NewServer()
 	defer srv.GracefulStop()
@@ -49,16 +52,16 @@ func (rpc *RpcAuthServer) Run() {
 	pb_auth.RegisterAuthServer(srv, rpc)
 	err = discovery.Register(rpc.etcdSchema, strings.Join(rpc.etcdAddr, ","), utils2.ServerIP, rpc.rpcPort, rpc.rpcRegisterName, 10)
 	if err != nil {
-		log.Println(err)
+		logger.L().Warn("Rpc Auth Server start failed")
 		return
 	}
 
 	err = srv.Serve(listener)
 	if err != nil {
-		log.Println(err)
+		logger.L().Warn("Rpc Auth Server start failed")
 		return
 	}
-	log.Println("", "", "rpc get_token init success")
+
 }
 
 func (rpc *RpcAuthServer) Register(ctx context.Context, params *pb_auth.RegisterReq) (*pb_auth.RegisterResp, error) {

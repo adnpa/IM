@@ -2,15 +2,13 @@ package discovery
 
 import (
 	"context"
-	"fmt"
 	"github.com/adnpa/IM/pkg/common/config"
+	"github.com/adnpa/IM/pkg/common/logger"
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/balancer/roundrobin"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/resolver"
-	"log"
 	"strings"
 	"sync"
 	"time"
@@ -20,77 +18,129 @@ import (
 //参考dns_resolver和unix实现
 
 var (
+	//k-v本地缓存
 	nameResolver        = make(map[string]*Resolver)
 	rwNameResolverMutex sync.RWMutex
 )
 
-func GetSrvConn(serviceName string) *grpc.ClientConn {
-	return GetConn(config.Config.Etcd.EtcdSchema, strings.Join(config.Config.Etcd.EtcdAddr, ","), serviceName)
+// GetConn api
+
+func init() {
+
 }
 
-// GetConn api
+func GetSrvConn(serviceName string) *grpc.ClientConn {
+	conn := GetConn(config.Config.Etcd.EtcdSchema, strings.Join(config.Config.Etcd.EtcdAddr, ","), serviceName)
+	return conn
+}
+
 func GetConn(schema, etcdAddr, serviceName string) *grpc.ClientConn {
-	rwNameResolverMutex.RLock()
-	r, ok := nameResolver[schema+serviceName]
-	if ok {
-		rwNameResolverMutex.RUnlock()
-		return r.grpcCli
-	}
-	r, err := newResolver(schema, etcdAddr, serviceName)
-	if err != nil {
-		rwNameResolverMutex.Unlock()
-		return nil
-	}
-	rwNameResolverMutex.Unlock()
-	return r.grpcCli
+	//todo  缓存conn
+	b, _ := NewBuilder(schema, etcdAddr, serviceName)
+	conn := NewGrpcConn()
+	r, _ := b.Build(resolver.Target{}, conn, resolver.BuildOptions{})
+	r.ResolveNow(resolver.ResolveNowOptions{})
+	//
+	//rwNameResolverMutex.RLock()
+	//r, ok := nameResolver[schema+serviceName]
+	//if ok {
+	//	rwNameResolverMutex.RUnlock()
+	//	return r.grpcCli
+	//}
+	//rwNameResolverMutex.RUnlock()
+	//
+	//rwNameResolverMutex.Lock()
+	//r, ok = nameResolver[schema+serviceName]
+	//
+	//if ok {
+	//	rwNameResolverMutex.Unlock()
+	//	return r.grpcCli
+	//}
+	//
+	//r, err := NewBuilder(schema, etcdAddr, serviceName).Build(resolver.Target{}, newEtcdDiscoveryMechanism(), resolver.BuildOptions{})
+	//if err != nil {
+	//	logger.L().Warn("build ", zap.Error(err))
+	//	rwNameResolverMutex.Unlock()
+	//	return nil
+	//}
+	//nameResolver[schema+serviceName] = r
+	//rwNameResolverMutex.Unlock()
+	return conn.Conn()
 }
 
 // ResolverBuilder 实现resolver.Builder接口
-type ResolverBuilder struct {
-	schema      string
-	etcdAddr    string
-	serviceName string
-}
+//type ResolverBuilder struct {
+//	schema      string
+//	etcdAddr    string
+//	serviceName string
+//}
+//
+//func NewBuilder(schema, etcdAddr, serviceName string) *ResolverBuilder {
+//	return &ResolverBuilder{
+//		schema:      schema,
+//		etcdAddr:    etcdAddr,
+//		serviceName: serviceName,
+//	}
+//}
+//
+//// Build 创建并启动 etcd 解析器，用于监视目标的名称解析。
+//func (b *ResolverBuilder) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (*Resolver, error) {
+//	r, err := NewResolver(b.schema, b.etcdAddr, b.serviceName)
+//	if err != nil {
+//		return nil, err
+//	}
+//	r.cc = cc
+//	ctx, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
+//	defer cancelFunc()
+//	key := GetPrefix(b.schema, r.serviceName)
+//	resp, err := r.etcdCli.Get(ctx, key, clientv3.WithPrefix())
+//	logger.L().Info("", zap.Any("resp", resp))
+//	if err != nil {
+//		logger.L().Warn("build resolver err", zap.Error(err))
+//	}
+//	var addrList []resolver.Address
+//	for _, ev := range resp.Kvs {
+//		addrList = append(addrList, resolver.Address{Addr: string(ev.Value)})
+//	}
+//	logger.L().Info("", zap.Any("addr", addrList))
+//
+//	err = r.cc.UpdateState(resolver.State{Addresses: addrList})
+//
+//	if err != nil {
+//		logger.L().Warn("update err")
+//		return nil, err
+//	}
+//	r.watchStartRevision = resp.Header.Revision + 1
+//	go r.watch(key, addrList)
+//
+//	return r, nil
+//}
 
-func NewBuilder() resolver.Builder {
-	return &ResolverBuilder{}
-}
-
-// Build 创建并启动 etcd 解析器，用于监视目标的名称解析。
-func (b *ResolverBuilder) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
-	r, err := newResolver(b.schema, b.etcdAddr, b.serviceName)
+//	func (b *ResolverBuilder) Scheme() string {
+//		return b.schema
+//	}
+//
+// uild(target Target, cc ClientConn, opts BuildOptions) (*Resolver, error)
+func NewBuilder(schema, etcdAddr, serviceName string) (*Resolver, error) {
+	etcdCli, err := clientv3.New(clientv3.Config{
+		Endpoints: strings.Split(etcdAddr, ","),
+	})
 	if err != nil {
 		return nil, err
 	}
-	r.cc = cc
+	r := &Resolver{
+		schema:      schema,
+		etcdAddr:    etcdAddr,
+		serviceName: serviceName,
 
-	ctx, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancelFunc()
-
-	key := GetPrefix(b.schema, r.serviceName)
-	resp, err := r.etcdCli.Get(ctx, key, clientv3.WithPrefix())
-	if err != nil {
-		return nil, err
+		etcdCli: etcdCli,
 	}
-	var addrList []resolver.Address
-	for _, ev := range resp.Kvs {
-		addrList = append(addrList, resolver.Address{Addr: string(ev.Value)})
-	}
-	err = r.cc.UpdateState(resolver.State{Addresses: addrList})
-	if err != nil {
-		return nil, err
-	}
-	r.watchStartRevision = resp.Header.Revision + 1
-	go r.watch(key, addrList)
-
 	return r, nil
 }
 
-func (b *ResolverBuilder) Scheme() string {
-	return b.schema
-}
-
 type Resolver struct {
+	//*manual.Resolver
+	schema             string
 	serviceName        string
 	etcdAddr           string
 	watchStartRevision int64
@@ -98,38 +148,60 @@ type Resolver struct {
 	cc      resolver.ClientConn
 	grpcCli *grpc.ClientConn
 	etcdCli *clientv3.Client
+
+	//r.lastSeenState = &s
 }
 
-func newResolver(schema, etcdAddr, serviceName string) (*Resolver, error) {
-	etcdCli, err := clientv3.New(clientv3.Config{
-		Endpoints: strings.Split(etcdAddr, ","),
-	})
+//func (r *Resolver) Conn() {
+//	r.cc.
+//}
+
+func (r *Resolver) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
+	r, err := NewBuilder(r.schema, r.etcdAddr, r.serviceName)
 	if err != nil {
 		return nil, err
 	}
+	r.cc = cc
 
-	grpcConn, err := grpc.NewClient(GetPrefix(schema, serviceName),
-		grpc.WithDefaultServiceConfig(fmt.Sprintf(`{"LoadBalancingPolicy": "%s"}`, roundrobin.Name)),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
+	ctx, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancelFunc()
+	key := GetPrefix(r.schema, r.serviceName)
+	resp, err := r.etcdCli.Get(ctx, key, clientv3.WithPrefix())
 	if err != nil {
+		logger.L().Warn("build resolver err", zap.Error(err))
+	}
+	var addrList []resolver.Address
+	for _, ev := range resp.Kvs {
+		addrList = append(addrList, resolver.Address{Addr: string(ev.Value)})
+	}
+	err = r.cc.UpdateState(resolver.State{Addresses: addrList})
+	if err != nil {
+		logger.L().Warn("update err")
 		return nil, err
 	}
-	r := &Resolver{
-		//schema:      schema,
-		serviceName: serviceName,
-		etcdAddr:    etcdAddr,
 
-		etcdCli: etcdCli,
-		grpcCli: grpcConn,
-	}
+	r.watchStartRevision = resp.Header.Revision + 1
+	go r.watch(key, addrList)
 
 	return r, nil
 }
 
-func (r *Resolver) ResolveNow(resolver.ResolveNowOptions) {}
+func (r *Resolver) Scheme() string {
+	return r.schema
+}
+
+func (r *Resolver) ResolveNow(resolver.ResolveNowOptions) {
+	//r.cc.UpdateState()
+}
 
 func (r *Resolver) Close() {}
+
+func (r *Resolver) UpdateState(s resolver.State) {
+
+}
+func (r *Resolver) ReportError(err error) {
+
+}
 
 func (r *Resolver) watch(prefix string, addrList []resolver.Address) {
 	watchChan := r.etcdCli.Watch(context.Background(), prefix, clientv3.WithPrefix())
@@ -153,7 +225,7 @@ func (r *Resolver) watch(prefix string, addrList []resolver.Address) {
 		if changed {
 			err := r.cc.UpdateState(resolver.State{Addresses: addrList})
 			if err != nil {
-				log.Printf("update state err:%v", err)
+				logger.L().Warn("service update err", zap.Error(err))
 			}
 		}
 	}

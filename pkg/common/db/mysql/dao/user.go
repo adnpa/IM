@@ -2,8 +2,8 @@ package dao
 
 import (
 	"context"
-	"github.com/adnpa/IM/pkg/common/db/mysql/model"
-	"github.com/adnpa/IM/pkg/common/db/mysql/query"
+	"github.com/adnpa/IM/model"
+	"github.com/adnpa/IM/query"
 	"time"
 )
 
@@ -42,7 +42,7 @@ func UpdateUser(user *model.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 
-	user.UpdatedAt = time.Now()
+	//user.UpdatedAt = time.Now()
 	_, err := query.User.WithContext(ctx).Where(query.User.UID.Eq(user.UID)).Updates(user)
 	if err != nil {
 		return err

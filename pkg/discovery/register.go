@@ -3,8 +3,9 @@ package discovery
 import (
 	"context"
 	"fmt"
+	"github.com/adnpa/IM/pkg/common/logger"
 	clientv3 "go.etcd.io/etcd/client/v3"
-	"log"
+	"go.uber.org/zap"
 	"net"
 	"strconv"
 	"strings"
@@ -26,25 +27,28 @@ func Register(schema, etcdAddr, host string, port int, serviceName string, ttl i
 		Endpoints: strings.Split(etcdAddr, ","),
 	})
 	if err != nil {
-		log.Println(err)
+		logger.L().Warn("register error", zap.Error(err))
 	}
 
 	//lease
 	ctx, cancelFunc := context.WithCancel(context.Background())
 	resp, err := cli.Grant(ctx, int64(ttl))
 	if err != nil {
-		log.Println(err)
+		logger.L().Warn("register error", zap.Error(err))
 	}
 
 	//put
 	val := net.JoinHostPort(host, strconv.Itoa(port))
 	key := GetPrefix(schema, serviceName) + val
 	_, err = cli.Put(ctx, key, val)
+	if err != nil {
+		logger.L().Warn("register error", zap.Error(err))
+	}
 
 	//keepalive
 	keepAliveResponses, err := cli.KeepAlive(ctx, resp.ID)
 	if err != nil {
-		log.Println(err)
+		logger.L().Warn("register error", zap.Error(err))
 	}
 
 	//heartbeat
@@ -65,6 +69,8 @@ func Register(schema, etcdAddr, host string, port int, serviceName string, ttl i
 		cancel: cancelFunc,
 		key:    key,
 	}
+
+	logger.L().Info("etcd register success", zap.String(key, val))
 
 	return nil
 }

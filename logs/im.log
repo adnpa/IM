@@ -1,0 +1,319 @@
+{"level":"INFO","time":"2024-12-16T03:08:00.443+0800","caller":"auth/register.go:41","msg":"start"}
+{"level":"INFO","time":"2024-12-16T15:08:24.505+0800","caller":"logger/logger.go:76","msg":"start"}
+{"level":"INFO","time":"2024-12-16T15:08:50.169+0800","caller":"logger/logger.go:76","msg":"start"}
+{"level":"INFO","time":"2024-12-16T15:09:04.332+0800","caller":"logger/logger.go:76","msg":"start"}
+{"level":"INFO","time":"2024-12-16T15:09:34.440+0800","caller":"logger/logger.go:76","msg":"start"}
+{"level":"INFO","time":"2024-12-16T15:11:00.906+0800","caller":"logger/logger.go:76","msg":"start"}
+{"level":"INFO","time":"2024-12-16T15:11:00.906+0800","caller":"logger/logger.go:76","msg":"end","args":"UID:\"111111\" Name:\"111111\" Icon:\"111111\" Gender:1 Mobile:\"111111\" Birth:\"111111\" Email:\"111111\" Ex:\"111111\""}
+{"level":"INFO","time":"2024-12-16T15:16:46.264+0800","caller":"logger/logger.go:76","msg":"RPC Auth Server is starting..."}
+{"level":"INFO","time":"2024-12-16T17:53:11.020+0800","caller":"logger/logger.go:76","msg":"RPC Auth Server is starting..."}
+{"level":"INFO","time":"2024-12-16T17:53:41.911+0800","caller":"logger/logger.go:76","msg":"RPC Auth Server is starting..."}
+{"level":"INFO","time":"2024-12-16T17:55:18.388+0800","caller":"logger/logger.go:76","msg":"RPC Auth Server is starting...","addr":"127.0.0.1:10600"}
+{"level":"INFO","time":"2024-12-16T17:55:18.395+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///127.0.0.1:10600":"127.0.0.1:10600"}
+{"level":"INFO","time":"2024-12-16T18:04:41.159+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:05:34.968+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:05:34.969+0800","caller":"logger/logger.go:76","msg":"start","":{}}
+{"level":"INFO","time":"2024-12-16T18:06:26.060+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:07:06.402+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:07:28.243+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:07:33.595+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:07:51.905+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:08:23.244+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:08:23.245+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:08:23.245+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:08:52.281+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:08:52.281+0800","caller":"logger/logger.go:76","msg":"11111,asjf"}
+{"level":"INFO","time":"2024-12-16T18:08:52.281+0800","caller":"logger/logger.go:76","msg":"11111,dasfjo"}
+{"level":"INFO","time":"2024-12-16T18:09:43.189+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:09:43.190+0800","caller":"logger/logger.go:76","msg":"11111,asjf"}
+{"level":"INFO","time":"2024-12-16T18:09:43.190+0800","caller":"logger/logger.go:76","msg":"isOk?","":false}
+{"level":"INFO","time":"2024-12-16T18:10:36.508+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:10:36.509+0800","caller":"logger/logger.go:76","msg":"11111,asjf"}
+{"level":"INFO","time":"2024-12-16T18:10:36.509+0800","caller":"logger/logger.go:76","msg":"isOk?","":false}
+{"level":"INFO","time":"2024-12-16T18:13:28.142+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:13:28.143+0800","caller":"logger/logger.go:76","msg":"11111","ok":false}
+{"level":"INFO","time":"2024-12-16T18:13:28.143+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:13:28.143+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:13:28.143+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:13:28.143+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"WARN","time":"2024-12-16T18:13:33.158+0800","caller":"logger/logger.go:80","msg":"build resolver err","error":"context deadline exceeded"}
+{"level":"INFO","time":"2024-12-16T18:15:25.904+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:15:25.905+0800","caller":"logger/logger.go:76","msg":"11111","ok":false}
+{"level":"INFO","time":"2024-12-16T18:15:25.905+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:15:25.905+0800","caller":"logger/logger.go:76","msg":"","key":":///"}
+{"level":"WARN","time":"2024-12-16T18:15:30.908+0800","caller":"logger/logger.go:80","msg":"build resolver err","error":"context deadline exceeded"}
+{"level":"INFO","time":"2024-12-16T18:16:57.629+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:16:57.630+0800","caller":"logger/logger.go:76","msg":"11111","ok":false}
+{"level":"INFO","time":"2024-12-16T18:16:57.630+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:16:57.630+0800","caller":"logger/logger.go:76","msg":"","key":"goIM:///testName"}
+{"level":"INFO","time":"2024-12-16T18:16:57.632+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:16:57.632+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:16:57.632+0800","caller":"logger/logger.go:76","msg":"22222"}
+{"level":"INFO","time":"2024-12-16T18:16:57.632+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:17:42.192+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:17:42.194+0800","caller":"logger/logger.go:76","msg":"","key":"goIM:///testName"}
+{"level":"INFO","time":"2024-12-16T18:17:42.197+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:17:42.197+0800","caller":"logger/logger.go:76","msg":"11111"}
+{"level":"INFO","time":"2024-12-16T18:17:42.197+0800","caller":"logger/logger.go:76","msg":"22222"}
+{"level":"INFO","time":"2024-12-16T18:18:30.786+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///testName127.0.0.1:10060":"127.0.0.1:10060"}
+{"level":"INFO","time":"2024-12-16T18:18:30.787+0800","caller":"logger/logger.go:76","msg":"","key":"goIM:///testName"}
+{"level":"INFO","time":"2024-12-16T18:29:57.332+0800","caller":"logger/logger.go:76","msg":"Rpc Auth Server is starting...","addr":"127.0.0.1:10600"}
+{"level":"INFO","time":"2024-12-16T18:29:57.339+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///127.0.0.1:10600":"127.0.0.1:10600"}
+{"level":"INFO","time":"2024-12-16T18:33:21.442+0800","caller":"logger/logger.go:76","msg":"","key":"goIM:///"}
+{"level":"INFO","time":"2024-12-16T18:33:21.446+0800","caller":"logger/logger.go:76","msg":"start"}
+{"level":"INFO","time":"2024-12-17T17:40:57.146+0800","caller":"logger/logger.go:76","msg":"get"}
+{"level":"INFO","time":"2024-12-17T17:40:57.150+0800","caller":"logger/logger.go:76","msg":"get","":{"operationID":"1","userID":"1"}}
+{"level":"INFO","time":"2024-12-17T17:42:57.484+0800","caller":"logger/logger.go:76","msg":"update","params":{"userID":"","nickname":"","faceURL":"","gender":0,"phoneNumber":"","birth":0,"email":"","ex":"","operationID":"1"},"error":"Key: 'UpdateUserInfoReq.UserInfo.UserID' Error:Field validation for 'UserID' failed on the 'required' tag"}
+{"level":"INFO","time":"2024-12-17T17:43:52.355+0800","caller":"logger/logger.go:76","msg":"update","params":{"userID":"","nickname":"","faceURL":"","gender":0,"phoneNumber":"","birth":0,"email":"","ex":"","operationID":"1"},"error":"Key: 'UpdateUserInfoReq.UserInfo.UserID' Error:Field validation for 'UserID' failed on the 'required' tag"}
+{"level":"INFO","time":"2024-12-17T17:44:59.568+0800","caller":"logger/logger.go:76","msg":"update","params":{"userID":"","nickname":"","faceURL":"","gender":0,"phoneNumber":"","birth":0,"email":"","ex":"","operationID":"1"},"error":"Key: 'UpdateUserInfoReq.UserInfo.UserID' Error:Field validation for 'UserID' failed on the 'required' tag"}
+{"level":"INFO","time":"2024-12-17T17:46:13.097+0800","caller":"logger/logger.go:76","msg":"update","params":{"userID":"","nickname":"","faceURL":"","gender":0,"phoneNumber":"","birth":0,"email":"","ex":"","operationID":"1"},"error":"Key: 'UpdateUserInfoReq.UserInfo.UserID' Error:Field validation for 'UserID' failed on the 'required' tag"}
+{"level":"INFO","time":"2024-12-17T17:51:16.862+0800","caller":"logger/logger.go:76","msg":"update","params":{"friendUserIDList":null,"operationID":"","fromUserID":""},"error":"invalid character '}' looking for beginning of object key string"}
+{"level":"INFO","time":"2024-12-17T18:50:45.754+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///127.0.0.1:10013":"127.0.0.1:10013"}
+{"level":"INFO","time":"2024-12-17T18:51:08.191+0800","caller":"logger/logger.go:76","msg":"","key":"goIM:///"}
+{"level":"INFO","time":"2024-12-17T18:51:11.193+0800","caller":"logger/logger.go:76","msg":"","":"<nil>"}
+{"level":"INFO","time":"2024-12-17T18:52:28.269+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///127.0.0.1:10013":"127.0.0.1:10013"}
+{"level":"INFO","time":"2024-12-17T18:52:34.588+0800","caller":"logger/logger.go:76","msg":"","":"<nil>"}
+{"level":"INFO","time":"2024-12-17T18:53:26.164+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///127.0.0.1:10013":"127.0.0.1:10013"}
+{"level":"INFO","time":"2024-12-17T18:53:27.928+0800","caller":"logger/logger.go:76","msg":"","":"<nil>"}
+{"level":"INFO","time":"2024-12-17T18:58:54.807+0800","caller":"logger/logger.go:76","msg":"etcd register success","goIM:///127.0.0.1:10013":"127.0.0.1:10013"}
+{"level":"INFO","time":"2024-12-17T19:09:24.576+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///127.0.0.1:10013":"127.0.0.1:10013"}
+{"level":"INFO","time":"2024-12-17T19:10:04.622+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-17T19:10:04.626+0800","caller":"discovery/resolver.go:89","msg":"","key":"goIM:///"}
+{"level":"WARN","time":"2024-12-17T19:10:07.568+0800","caller":"user/user.go:33","msg":"GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-17T19:12:44.109+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///127.0.0.1:10013":"127.0.0.1:10013"}
+{"level":"INFO","time":"2024-12-17T19:12:50.305+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"WARN","time":"2024-12-17T19:12:50.305+0800","caller":"user/user.go:33","msg":"GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-17T19:13:24.580+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-17T19:13:24.583+0800","caller":"discovery/resolver.go:89","msg":"","key":"goIM:///"}
+{"level":"INFO","time":"2024-12-17T19:13:24.587+0800","caller":"user/user.go:27","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-17T19:13:27.369+0800","caller":"user/user.go:34","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-17T19:19:47.690+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///127.0.0.1:10013":"127.0.0.1:10013"}
+{"level":"INFO","time":"2024-12-17T19:19:55.106+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-17T19:19:55.110+0800","caller":"discovery/resolver.go:93","msg":"","key":"goIM:///"}
+{"level":"INFO","time":"2024-12-17T19:19:55.113+0800","caller":"user/user.go:27","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-17T19:19:57.899+0800","caller":"user/user.go:34","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-17T19:22:39.190+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-17T19:22:39.193+0800","caller":"discovery/resolver.go:93","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-17T19:22:39.196+0800","caller":"user/user.go:27","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-17T19:22:41.978+0800","caller":"user/user.go:34","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-17T19:22:45.708+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10013":"127.0.0.1:10013"}
+{"level":"INFO","time":"2024-12-17T19:22:53.270+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-17T19:22:53.270+0800","caller":"user/user.go:27","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-17T19:22:53.270+0800","caller":"user/user.go:34","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-17T19:28:36.177+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-17T19:28:48.432+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-17T19:28:48.435+0800","caller":"discovery/resolver.go:93","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-17T19:28:48.439+0800","caller":"user/user.go:27","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-17T19:28:51.222+0800","caller":"user/user.go:34","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-17T19:40:58.883+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-17T19:41:02.561+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-17T19:41:02.561+0800","caller":"user/user.go:27","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-17T19:41:02.561+0800","caller":"user/user.go:34","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-17T19:47:09.457+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T03:25:35.981+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:25:35.984+0800","caller":"discovery/resolver.go:90","msg":"","key":"goIM:///User"}
+{"level":"WARN","time":"2024-12-18T03:25:40.992+0800","caller":"discovery/resolver.go:93","msg":"build resolver err","error":"context deadline exceeded"}
+{"level":"INFO","time":"2024-12-18T03:27:51.908+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T03:28:21.424+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:28:51.202+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T03:28:55.947+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:28:55.949+0800","caller":"discovery/resolver.go:90","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:28:55.952+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:28:55.952+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:28:58.845+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:30:09.210+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:30:09.214+0800","caller":"discovery/resolver.go:90","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:30:09.217+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:30:09.217+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:30:09.217+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:30:12.493+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:31:39.744+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:31:39.746+0800","caller":"discovery/resolver.go:90","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:31:39.748+0800","caller":"discovery/resolver.go:95","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:31:39.749+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:31:39.749+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:31:39.749+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:31:42.487+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:35:03.437+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:35:03.440+0800","caller":"discovery/resolver.go:90","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:35:03.443+0800","caller":"discovery/resolver.go:95","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:35:03.443+0800","caller":"discovery/resolver.go:109","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:35:03.443+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:35:03.443+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:35:03.443+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:35:06.206+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:36:15.500+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:36:15.504+0800","caller":"discovery/resolver.go:86","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:36:15.504+0800","caller":"discovery/resolver.go:92","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:36:15.509+0800","caller":"discovery/resolver.go:97","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:36:15.510+0800","caller":"discovery/resolver.go:102","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:36:15.510+0800","caller":"discovery/resolver.go:112","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:36:15.510+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:36:15.510+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:36:15.510+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:36:18.273+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:37:03.466+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:37:03.469+0800","caller":"discovery/resolver.go:86","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:37:03.469+0800","caller":"discovery/resolver.go:92","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:37:03.472+0800","caller":"discovery/resolver.go:97","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:37:03.472+0800","caller":"discovery/resolver.go:102","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:37:03.473+0800","caller":"discovery/resolver.go:112","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:37:03.473+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:37:03.473+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:37:03.473+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:37:06.374+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:37:34.946+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:37:34.949+0800","caller":"discovery/resolver.go:158","msg":"errrrr","":{}}
+{"level":"INFO","time":"2024-12-18T03:37:34.949+0800","caller":"discovery/resolver.go:86","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:37:34.949+0800","caller":"discovery/resolver.go:92","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:37:34.952+0800","caller":"discovery/resolver.go:97","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:37:34.953+0800","caller":"discovery/resolver.go:102","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:37:34.953+0800","caller":"discovery/resolver.go:112","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:37:34.953+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:37:34.953+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:37:34.953+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:37:37.867+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:37:56.763+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:37:56.766+0800","caller":"discovery/resolver.go:158","msg":"errrrr","":{}}
+{"level":"INFO","time":"2024-12-18T03:37:56.766+0800","caller":"discovery/resolver.go:86","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:37:56.766+0800","caller":"discovery/resolver.go:92","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:37:56.769+0800","caller":"discovery/resolver.go:97","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:37:56.770+0800","caller":"discovery/resolver.go:102","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:37:56.770+0800","caller":"discovery/resolver.go:112","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:37:56.770+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:37:56.770+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:37:56.770+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:37:59.519+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:38:17.865+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:38:17.868+0800","caller":"discovery/resolver.go:158","msg":"errrrr","":""}
+{"level":"INFO","time":"2024-12-18T03:38:17.868+0800","caller":"discovery/resolver.go:86","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:38:17.868+0800","caller":"discovery/resolver.go:92","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:38:17.871+0800","caller":"discovery/resolver.go:97","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:38:17.871+0800","caller":"discovery/resolver.go:102","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:38:17.871+0800","caller":"discovery/resolver.go:112","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:38:17.871+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:38:17.871+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:38:17.871+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:38:20.772+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:39:04.434+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:39:04.436+0800","caller":"discovery/resolver.go:158","msg":"errrrr","":"User"}
+{"level":"INFO","time":"2024-12-18T03:39:04.436+0800","caller":"discovery/resolver.go:86","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:39:04.436+0800","caller":"discovery/resolver.go:92","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:39:04.439+0800","caller":"discovery/resolver.go:97","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:39:04.439+0800","caller":"discovery/resolver.go:102","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:39:04.439+0800","caller":"discovery/resolver.go:112","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:39:04.439+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:39:04.439+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:39:04.439+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:39:07.363+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:39:25.978+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:39:25.981+0800","caller":"discovery/resolver.go:158","msg":"errrrr","":{}}
+{"level":"INFO","time":"2024-12-18T03:39:25.981+0800","caller":"discovery/resolver.go:86","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:39:25.981+0800","caller":"discovery/resolver.go:92","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:39:25.984+0800","caller":"discovery/resolver.go:97","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:39:25.984+0800","caller":"discovery/resolver.go:102","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:39:25.984+0800","caller":"discovery/resolver.go:112","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:39:25.984+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:39:25.984+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:39:25.984+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:39:28.721+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:39:57.221+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:39:57.223+0800","caller":"discovery/resolver.go:158","msg":"errrrr","":"goIM","":"User"}
+{"level":"INFO","time":"2024-12-18T03:39:57.223+0800","caller":"discovery/resolver.go:86","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:39:57.223+0800","caller":"discovery/resolver.go:92","msg":"","key":"goIM:///User"}
+{"level":"INFO","time":"2024-12-18T03:39:57.227+0800","caller":"discovery/resolver.go:97","msg":"get from etcd","":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":2,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":2,"version":1,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T03:39:57.227+0800","caller":"discovery/resolver.go:102","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:39:57.227+0800","caller":"discovery/resolver.go:112","msg":"","last":{}}
+{"level":"INFO","time":"2024-12-18T03:39:57.227+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:39:57.227+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:39:57.227+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:39:59.957+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:41:12.454+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:41:12.465+0800","caller":"discovery/resolver.go:106","msg":"","last":"goIM"}
+{"level":"INFO","time":"2024-12-18T03:41:12.465+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:41:12.465+0800","caller":"user/user.go:27","msg":"","name":"User"}
+{"level":"INFO","time":"2024-12-18T03:41:12.465+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"WARN","time":"2024-12-18T03:41:15.246+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:43:50.536+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:43:50.542+0800","caller":"discovery/resolver.go:106","msg":"","last":"goIM"}
+{"level":"INFO","time":"2024-12-18T03:43:50.542+0800","caller":"discovery/resolver.go:54","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:43:50.542+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"INFO","time":"2024-12-18T03:43:50.542+0800","caller":"user/user.go:29","msg":"","client":{}}
+{"level":"WARN","time":"2024-12-18T03:43:53.290+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:46:29.614+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:46:29.615+0800","caller":"discovery/resolver.go:37","msg":"","":"goIM","":"192.168.1.129:2379","":"User"}
+{"level":"INFO","time":"2024-12-18T03:46:29.620+0800","caller":"discovery/resolver.go:108","msg":"","last":"goIM"}
+{"level":"INFO","time":"2024-12-18T03:46:29.620+0800","caller":"discovery/resolver.go:56","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:46:29.620+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"INFO","time":"2024-12-18T03:46:29.620+0800","caller":"user/user.go:29","msg":"","client":{}}
+{"level":"WARN","time":"2024-12-18T03:46:32.352+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:46:50.815+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:46:50.815+0800","caller":"discovery/resolver.go:37","msg":"args","":"goIM","":"192.168.1.129:2379","":"User"}
+{"level":"INFO","time":"2024-12-18T03:46:50.820+0800","caller":"discovery/resolver.go:108","msg":"","last":"goIM"}
+{"level":"INFO","time":"2024-12-18T03:46:50.820+0800","caller":"discovery/resolver.go:56","msg":"abcabc","":{}}
+{"level":"INFO","time":"2024-12-18T03:46:50.820+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"INFO","time":"2024-12-18T03:46:50.820+0800","caller":"user/user.go:29","msg":"","client":{}}
+{"level":"WARN","time":"2024-12-18T03:46:53.703+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T03:48:50.063+0800","caller":"user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T03:48:50.064+0800","caller":"discovery/resolver.go:37","msg":"args","":"goIM","":"192.168.1.129:2379","":"User"}
+{"level":"INFO","time":"2024-12-18T03:48:50.069+0800","caller":"user/user.go:28","msg":"","cc":{}}
+{"level":"INFO","time":"2024-12-18T03:48:50.070+0800","caller":"user/user.go:29","msg":"","client":{}}
+{"level":"WARN","time":"2024-12-18T03:48:52.795+0800","caller":"user/user.go:35","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T13:14:11.546+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T13:16:10.942+0800","caller":"user/user.go:20","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T13:16:10.943+0800","caller":"discovery/resolver.go:37","msg":"args","":"goIM","":"192.168.1.129:2379","":"User"}
+{"level":"INFO","time":"2024-12-18T13:16:10.948+0800","caller":"user/user.go:29","msg":"","cc":{}}
+{"level":"INFO","time":"2024-12-18T13:16:10.948+0800","caller":"user/user.go:30","msg":"","client":{}}
+{"level":"WARN","time":"2024-12-18T13:16:13.711+0800","caller":"user/user.go:38","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T14:11:41.030+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T14:12:28.364+0800","caller":"user/user.go:20","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T14:12:28.366+0800","caller":"discovery/resolver.go:37","msg":"args","":"goIM","":"192.168.1.129:2379","":"User"}
+{"level":"INFO","time":"2024-12-18T14:12:28.370+0800","caller":"discovery/resolver.go:143","msg":"","state":"IDLE"}
+{"level":"INFO","time":"2024-12-18T14:12:28.375+0800","caller":"discovery/resolver.go:92","msg":"","resp":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":3,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":3,"version":2,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T14:12:28.375+0800","caller":"user/user.go:29","msg":"","cc":{}}
+{"level":"INFO","time":"2024-12-18T14:12:28.375+0800","caller":"user/user.go:30","msg":"","client":{}}
+{"level":"WARN","time":"2024-12-18T14:12:31.167+0800","caller":"user/user.go:38","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = last resolver error: produced zero addresses"}
+{"level":"INFO","time":"2024-12-18T14:24:22.508+0800","caller":"user/user.go:20","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T14:24:22.510+0800","caller":"discovery/resolver.go:34","msg":"args","":"goIM","":"192.168.1.129:2379","":"User"}
+{"level":"INFO","time":"2024-12-18T14:24:22.518+0800","caller":"discovery/resolver.go:89","msg":"","resp":{"header":{"cluster_id":14841639068965178418,"member_id":10276657743932975437,"revision":3,"raft_term":3},"kvs":[{"key":"Z29JTTovLy9Vc2VyMTI3LjAuMC4xOjEwMTAw","create_revision":2,"mod_revision":3,"version":2,"value":"MTI3LjAuMC4xOjEwMTAw"}],"count":1}}
+{"level":"INFO","time":"2024-12-18T14:24:22.518+0800","caller":"discovery/resolver.go:97","msg":"","addr":[{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T14:24:22.518+0800","caller":"user/user.go:29","msg":"","cc":null}
+{"level":"INFO","time":"2024-12-18T14:24:22.518+0800","caller":"user/user.go:30","msg":"","client":{}}
+{"level":"INFO","time":"2024-12-18T17:10:39.138+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:15:57.753+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:19:24.262+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:22:19.346+0800","caller":"discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:28:05.328+0800","caller":"user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"INFO","time":"2024-12-18T17:29:14.228+0800","caller":"user/user.go:20","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T17:29:14.234+0800","caller":"discovery/grpc_client.go:28","msg":"updateState","":[{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:29:14.234+0800","caller":"discovery/grpc_client.go:36","msg":"","addr":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:29:14.234+0800","caller":"discovery/grpc_client.go:43","msg":"newCC"}
+{"level":"INFO","time":"2024-12-18T17:29:14.234+0800","caller":"discovery/grpc_client.go:45","msg":"cc"}
+{"level":"INFO","time":"2024-12-18T17:29:14.235+0800","caller":"user/user.go:29","msg":"","cc":{}}
+{"level":"INFO","time":"2024-12-18T17:29:14.235+0800","caller":"user/user.go:30","msg":"","client":{}}
+{"level":"INFO","time":"2024-12-18T17:29:14.236+0800","caller":"user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"WARN","time":"2024-12-18T17:29:14.252+0800","caller":"user/user.go:38","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:4169->127.0.0.1:10100: wsarecv: An existing connection was forcibly closed by the remote host."}
+{"level":"INFO","time":"2024-12-18T17:30:26.079+0800","caller":"user/user.go:20","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T17:30:26.082+0800","caller":"discovery/grpc_client.go:28","msg":"updateState","":[{"Addr":"127.0.0.1:10100","ServerName":"","Attributes":null,"BalancerAttributes":null,"Metadata":null}]}
+{"level":"INFO","time":"2024-12-18T17:30:26.082+0800","caller":"discovery/grpc_client.go:36","msg":"","addr":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:30:26.082+0800","caller":"discovery/grpc_client.go:43","msg":"newCC"}
+{"level":"INFO","time":"2024-12-18T17:30:26.083+0800","caller":"discovery/grpc_client.go:45","msg":"cc"}
+{"level":"INFO","time":"2024-12-18T17:30:26.083+0800","caller":"user/user.go:29","msg":"","cc":{}}
+{"level":"INFO","time":"2024-12-18T17:30:26.083+0800","caller":"user/user.go:30","msg":"","client":{}}
+{"level":"WARN","time":"2024-12-18T17:30:26.083+0800","caller":"user/user.go:38","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 127.0.0.1:10100: connectex: No connection could be made because the target machine actively refused it.\""}
+{"level":"INFO","time":"2024-12-18T17:37:03.074+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:43:56.430+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T17:43:56.440+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"WARN","time":"2024-12-18T17:43:56.453+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:33","msg":"Api GetUserInfo Error","error":"rpc error: code = Unavailable desc = error reading from server: read tcp 127.0.0.1:5245->127.0.0.1:10100: wsarecv: An existing connection was forcibly closed by the remote host."}
+{"level":"INFO","time":"2024-12-18T17:57:13.727+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:57:18.805+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T17:57:18.819+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"WARN","time":"2024-12-18T17:57:18.822+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:33","msg":"Api GetUserInfo Error","error":"rpc error: code = Unknown desc = Error 1046 (3D000): No database selected"}
+{"level":"INFO","time":"2024-12-18T17:58:28.287+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"INFO","time":"2024-12-18T17:58:32.736+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T17:58:32.747+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"info","ts":1734517258.5329409,"caller":"C:/Code/golang/IM/internal/api/user/user.go:19","msg":"GetUserinfo"}
+{"level":"INFO","time":"2024-12-18T18:20:58.545+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"info","ts":"2024-12-18T18:22:55.504+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":1734517676.2902105,"caller":"C:/Code/golang/IM/internal/api/user/user.go:19","msg":"GetUserinfo"}
+{"level":"info","ts":"2024-12-18T18:27:56.295+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:69","msg":"rpc GetUserInfo start"}

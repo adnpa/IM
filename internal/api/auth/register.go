@@ -3,10 +3,11 @@ package auth
 import (
 	"context"
 	"github.com/adnpa/IM/pkg/common/config"
+	"github.com/adnpa/IM/pkg/common/logger"
 	"github.com/adnpa/IM/pkg/discovery"
 	"github.com/adnpa/IM/pkg/pb/pb_auth"
-
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 	"net/http"
 )
 
@@ -40,6 +41,7 @@ func registerParams2PB(params *paramRegisterReq) *pb_auth.RegisterReq {
 func UserRegister(c *gin.Context) {
 	grpcConn := discovery.GetSrvConn(config.Config.RpcRegisterName.AuthName)
 	cli := pb_auth.NewAuthClient(grpcConn)
+	logger.L().Info("start")
 
 	params := paramRegisterReq{}
 	if err := c.BindJSON(&params); err != nil {
@@ -53,5 +55,5 @@ func UserRegister(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"errCode": 500, "errMsg": err})
 		return
 	}
-
+	logger.L().Info("end", zap.Any("args", pbData))
 }

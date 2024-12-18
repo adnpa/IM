@@ -2,8 +2,8 @@ package dao
 
 import (
 	"context"
-	"github.com/adnpa/IM/pkg/common/db/mysql/model"
-	"github.com/adnpa/IM/pkg/common/db/mysql/query"
+	"github.com/adnpa/IM/model"
+	"github.com/adnpa/IM/query"
 	"time"
 )
 
@@ -21,7 +21,7 @@ import (
 func GetFriendsByUserUid(uid string) ([]*model.Friend, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	return query.Friend.WithContext(ctx).Where(query.Friend.OwnerUID.Eq(uid)).Find()
+	return query.Friend.WithContext(ctx).Where(query.Friend.OwnerID.Eq(uid)).Find()
 }
 
 //

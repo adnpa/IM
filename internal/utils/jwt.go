@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+//https://oauth.net/2/
+
 type Claims struct {
 	UID      string
 	Platform int32

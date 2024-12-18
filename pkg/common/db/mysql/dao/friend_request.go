@@ -2,8 +2,8 @@ package dao
 
 import (
 	"context"
-	"github.com/adnpa/IM/pkg/common/db/mysql/model"
-	"github.com/adnpa/IM/pkg/common/db/mysql/query"
+	"github.com/adnpa/IM/model"
+	"github.com/adnpa/IM/query"
 	"time"
 )
 
@@ -41,7 +41,7 @@ func UpdateFriendRequest(fq *model.FriendRequest) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 
-	fq.UpdatedAt = time.Now()
+	//fq.UpdatedAt = time.Now()
 	_, err := query.FriendRequest.WithContext(ctx).Where(query.FriendRequest.UserID.Eq(fq.UserID)).Updates(fq)
 	if err != nil {
 		return err

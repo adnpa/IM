@@ -49,7 +49,7 @@ message UserInfo{
   string faceURL = 3;
   int32 gender = 4;
   string phoneNumber = 5;
-  uint32 birth = 6;
+  string birth = 6;
   string email = 7;
   string ex = 8;
   uint32 createTime = 9;

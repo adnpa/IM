@@ -18,6 +18,11 @@ func StringToInt64(i string) int64 {
 	return j
 }
 
+func StringToInt32(i string) int32 {
+	j, _ := strconv.Atoi(i)
+	return int32(j)
+}
+
 // judge a string whether in the  string list
 func IsContain(target string, List []string) bool {
 

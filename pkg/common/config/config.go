@@ -9,6 +9,9 @@ import (
 var Config config
 
 type config struct {
+	ServerIP      string `yaml:"serverip"`
+	ServerVersion string `yaml:"serverversion"`
+
 	Mysql struct {
 		DBAddress      []string `yaml:"dbMysqlAddress"`
 		DBUserName     string   `yaml:"dbMysqlUserName"`
@@ -34,6 +37,16 @@ type config struct {
 	Etcd struct {
 		EtcdSchema string   `yaml:"etcdSchema"`
 		EtcdAddr   []string `yaml:"etcdAddr"`
+	}
+
+	RpcPort struct {
+		UserPort              []int `yaml:"UserPort"`
+		FriendPort            []int `yaml:"FriendPort"`
+		RpcMessagePort        []int `yaml:"rpcMessagePort"`
+		RpcPushMessagePort    []int `yaml:"rpcPushMessagePort"`
+		GroupPort             []int `yaml:"GroupPort"`
+		RpcModifyUserInfoPort []int `yaml:"rpcModifyUserInfoPort"`
+		RpcGetTokenPort       []int `yaml:"rpcGetTokenPort"`
 	}
 	RpcRegisterName struct {
 		UserName               string `yaml:"UserName"`
@@ -73,7 +86,7 @@ type config struct {
 	}
 
 	LongConnSvr struct {
-		WebsocketPort       []int `yaml:"openImWsPort"`
+		WebsocketPort       []int `yaml:"WsPort"`
 		WebsocketMaxConnNum int   `yaml:"websocketMaxConnNum"`
 		WebsocketMaxMsgLen  int   `yaml:"websocketMaxMsgLen"`
 		WebsocketTimeOut    int   `yaml:"websocketTimeOut"`
