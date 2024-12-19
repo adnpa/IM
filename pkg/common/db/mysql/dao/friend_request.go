@@ -29,7 +29,7 @@ func GetFriendReq(reqId, userId string) (*model.FriendRequest, error) {
 func AddFriendRequest(fq *model.FriendRequest) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-
+	fq.CreateTime = time.Now()
 	err := query.FriendRequest.WithContext(ctx).Create(fq)
 	if err != nil {
 		return err

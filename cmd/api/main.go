@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/adnpa/IM/internal/api/auth"
+	"github.com/adnpa/IM/internal/api/chat"
 	"github.com/adnpa/IM/internal/api/friend"
 	"github.com/adnpa/IM/internal/api/user"
 	"github.com/adnpa/IM/internal/utils"
@@ -43,13 +44,13 @@ func main() {
 		friendRouterGroup.POST("/is_friend", friend.IsFriend)
 	}
 
-	//chatGroup := r.Group("/msg")
-	//{
-	//	chatGroup.POST("/newest_seq", apiChat.GetSeq)
-	//	chatGroup.POST("/send_msg", apiChat.SendMsg)
-	//	chatGroup.POST("/pull_msg_by_seq", apiChat.PullMsgBySeqList)
-	//	chatGroup.POST("/del_msg", apiChat.DelMsg)
-	//}
+	chatGroup := r.Group("/msg")
+	{
+		chatGroup.POST("/newest_seq", chat.GetSeq)
+		chatGroup.POST("/send_msg", chat.SendMsg)
+		chatGroup.POST("/pull_msg_by_seq", chat.PullMsgBySeqList)
+		chatGroup.POST("/del_msg", chat.DelMsg)
+	}
 
 	//groupRouterGroup := r.Group("/group")
 	//{

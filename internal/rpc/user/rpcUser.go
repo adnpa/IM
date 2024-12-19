@@ -11,6 +11,7 @@ import (
 	"github.com/adnpa/IM/pkg/discovery"
 	"github.com/adnpa/IM/pkg/pb/pb_user"
 	"github.com/adnpa/IM/pkg/pb/pb_ws"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -66,7 +67,7 @@ func (rpc *RpcUserServer) Run() {
 }
 
 func (rpc *RpcUserServer) GetUserInfo(ctx context.Context, req *pb_user.GetUserInfoReq) (*pb_user.GetUserInfoResp, error) {
-	logger.L().Info("rpc GetUserInfo start")
+	logger.L().Info("rpc GetUserInfo start", zap.Any("uidList", req.UserIDList))
 	var pbUserL []*pb_ws.UserInfo
 	if len(req.UserIDList) > 0 {
 		userL, err := dao.GetUsersByUidL(req.UserIDList)
@@ -100,6 +101,7 @@ func (rpc *RpcUserServer) UpdateUserInfo(ctx context.Context, req *pb_user.Updat
 	//todo 权限分离
 	//用户自身修改自己
 	//appManager修改任意用户
+	logger.L().Info("rpc UpdateUserInfo", zap.String("new user info", req.String()))
 	err := dao.UpdateUser(&model.User{
 		UID:    req.Uid,
 		Name:   req.Name,

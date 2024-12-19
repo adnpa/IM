@@ -58,7 +58,9 @@ func GetSelfUserInfo(c *gin.Context) {
 	}
 
 	client := GetUserClient()
-	pbParams := &pb_user.GetUserInfoReq{}
+	pbParams := &pb_user.GetUserInfoReq{
+		UserIDList: []string{params.UserID},
+	}
 	pbResp, err := client.GetUserInfo(context.Background(), pbParams)
 	if err != nil {
 		logger.L().Warn("Api GetSelfUserInfo Error", zap.Error(err))
@@ -76,8 +78,14 @@ func UpdateUserInfo(c *gin.Context) {
 		return
 	}
 
+	logger.L().Info("raw", zap.Any("", params))
+
 	pbParams := &pb_user.UpdateUserInfoReq{}
-	_ = utils.CopyStructFields(pbParams, &params)
+	err := utils.CopyStructFields(pbParams, &params)
+	if err != nil {
+		logger.L().Warn("", zap.Error(err))
+	}
+	logger.L().Info("", zap.Any("", pbParams.String()))
 	client := GetUserClient()
 	pbResp, err := client.UpdateUserInfo(context.Background(), pbParams)
 	if err != nil {

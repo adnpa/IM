@@ -2,7 +2,7 @@ package mongodb
 
 import (
 	"context"
-	"github.com/adnpa/IM/pkg/pb"
+	"github.com/adnpa/IM/pkg/pb/pb_ws"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -23,7 +23,7 @@ func (c *Conn) Close() {
 	}
 }
 
-func SaveUserChatMongo2(uid string, sendTime int64, m *pb.MsgDataToDB) error {
+func SaveUserChatMongo2(uid string, sendTime int64, m *pb_ws.MsgDataToDB) error {
 
 	return nil
 }

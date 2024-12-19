@@ -317,3 +317,152 @@
 {"level":"info","ts":"2024-12-18T18:22:55.504+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
 {"level":"info","ts":1734517676.2902105,"caller":"C:/Code/golang/IM/internal/api/user/user.go:19","msg":"GetUserinfo"}
 {"level":"info","ts":"2024-12-18T18:27:56.295+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"info","ts":"2024-12-20T00:12:52.280+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T00:13:04.083+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:15:31.237+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:31","msg":"","len(addresses)":0}
+{"level":"info","ts":"2024-12-20T00:20:15.542+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"info","ts":"2024-12-20T00:21:57.857+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:29","msg":"update state","len(addresses)":null}
+{"level":"info","ts":"2024-12-20T00:21:57.857+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:32","msg":"","len(addresses)":0}
+{"level":"info","ts":"2024-12-20T00:25:12.954+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:30","msg":"new addr is null"}
+{"level":"info","ts":"2024-12-20T00:25:12.954+0800","caller":"C:/Code/golang/IM/internal/api/auth/register.go:44","msg":"start"}
+{"level":"info","ts":"2024-12-20T00:26:56.141+0800","caller":"C:/Code/golang/IM/internal/rpc/auth/auth.go:46","msg":"Rpc Auth Server is starting...","addr":"127.0.0.1:10010"}
+{"level":"info","ts":"2024-12-20T00:26:56.147+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:26:56.147+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Auth127.0.0.1:10010":"127.0.0.1:10010"}
+{"level":"info","ts":"2024-12-20T00:27:14.060+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:27:14.060+0800","caller":"C:/Code/golang/IM/internal/api/auth/register.go:44","msg":"start"}
+{"level":"info","ts":"2024-12-20T00:30:26.114+0800","caller":"C:/Code/golang/IM/internal/rpc/auth/auth.go:46","msg":"Rpc Auth Server is starting...","addr":"127.0.0.1:10010"}
+{"level":"info","ts":"2024-12-20T00:30:26.122+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Auth127.0.0.1:10010":"127.0.0.1:10010"}
+{"level":"info","ts":"2024-12-20T00:30:29.902+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:30:29.902+0800","caller":"C:/Code/golang/IM/internal/api/auth/register.go:44","msg":"start"}
+{"level":"info","ts":"2024-12-20T00:30:29.910+0800","caller":"C:/Code/golang/IM/internal/api/auth/register.go:58","msg":"end","args":"UID:\"1\"  Name:\"111111\"  Icon:\"111111\"  Gender:1  Mobile:\"111111\"  Birth:\"111111\"  Email:\"111111\"  Ex:\"111111\""}
+{"level":"info","ts":"2024-12-20T00:31:23.506+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:31:23.506+0800","caller":"C:/Code/golang/IM/internal/api/auth/register.go:44","msg":"start"}
+{"level":"info","ts":"2024-12-20T00:31:23.511+0800","caller":"C:/Code/golang/IM/internal/api/auth/register.go:58","msg":"end","args":"UID:\"2\"  Name:\"111111\"  Icon:\"111111\"  Gender:1  Mobile:\"111111\"  Birth:\"111111\"  Email:\"111111\"  Ex:\"111111\""}
+{"level":"info","ts":"2024-12-20T00:31:47.282+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:31:47.284+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"info","ts":"2024-12-20T00:33:40.098+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:33:44.966+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:33:44.967+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:69","msg":"rpc GetUserInfo start"}
+{"level":"info","ts":"2024-12-20T00:35:24.486+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:35:27.074+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:35:27.075+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:70","msg":"rpc GetUserInfo start","pb":""}
+{"level":"info","ts":"2024-12-20T00:36:52.001+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:36:55.237+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:36:55.239+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:70","msg":"rpc GetUserInfo start","uidList":[]}
+{"level":"info","ts":"2024-12-20T00:37:42.286+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:37:42.288+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:70","msg":"rpc GetUserInfo start","uidList":["1"]}
+{"level":"info","ts":"2024-12-20T00:37:49.916+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:25","msg":"GetUserinfo"}
+{"level":"info","ts":"2024-12-20T00:37:49.919+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:37:49.920+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:70","msg":"rpc GetUserInfo start","uidList":["1","2"]}
+{"level":"info","ts":"2024-12-20T00:38:00.445+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:40:06.400+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:40:10.239+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:40:10.241+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"gender:1 birth:\"\\x01\" email:\"1\" OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:41:31.909+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:41:35.340+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:41:35.340+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"gender:1 birth:\"\\x01\" email:\"1\" OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:41:35.340+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/dao/user.go:48","msg":"db","":""}
+{"level":"info","ts":"2024-12-20T00:42:57.906+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:42:57.907+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"gender:1 birth:\"\\x01\" email:\"1\" OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:42:57.907+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/dao/user.go:48","msg":"db","":""}
+{"level":"info","ts":"2024-12-20T00:45:08.153+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:45:11.575+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:45:11.577+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"gender:1 birth:\"\\x01\" email:\"1\" OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:45:11.577+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/dao/user.go:48","msg":"db","":""}
+{"level":"info","ts":"2024-12-20T00:45:56.112+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:45:59.242+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:45:59.244+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"gender:1 birth:\"\\x01\" email:\"1\" OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:45:59.244+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/dao/user.go:48","msg":"db","":""}
+{"level":"info","ts":"2024-12-20T00:46:26.717+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:46:30.668+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:46:30.670+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"gender:1 birth:\"\\x01\" email:\"1\" OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:46:30.670+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/dao/user.go:48","msg":"db","":""}
+{"level":"info","ts":"2024-12-20T00:47:24.174+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:86","msg":"","":"icon:\"1\" name:\"1\" gender:1 mobile:\"1\" birth:\"\\x01\" email:\"1\" OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:47:24.178+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:47:24.179+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"icon:\"1\" name:\"1\" gender:1 mobile:\"1\" birth:\"\\x01\" email:\"1\" OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:47:24.179+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/dao/user.go:48","msg":"db","":"1"}
+{"level":"info","ts":"2024-12-20T00:49:36.318+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:86","msg":"","":"icon:\"1\" name:\"1\" gender:1 mobile:\"1\" birth:\"\\x01\" email:\"1\" OperationID:\"1\" Uid:\"1\""}
+{"level":"info","ts":"2024-12-20T00:49:36.324+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:49:36.325+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"icon:\"1\" name:\"1\" gender:1 mobile:\"1\" birth:\"\\x01\" email:\"1\" OperationID:\"1\" Uid:\"1\""}
+{"level":"info","ts":"2024-12-20T00:49:36.325+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/dao/user.go:48","msg":"db","":"1"}
+{"level":"info","ts":"2024-12-20T00:50:18.372+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:81","msg":"raw","":{"uid":"1","name":"1","icon":"1","gender":1,"mobile":"1","birth":1,"email":"1","ex":"","operationID":"1"}}
+{"level":"info","ts":"2024-12-20T00:50:18.373+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:88","msg":"","":"icon:\"1\"  name:\"1\"  gender:1  mobile:\"1\"  birth:\"\\x01\"  email:\"1\"  OperationID:\"1\"  Uid:\"1\""}
+{"level":"info","ts":"2024-12-20T00:50:18.379+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:50:18.380+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"icon:\"1\" name:\"1\" gender:1 mobile:\"1\" birth:\"\\x01\" email:\"1\" OperationID:\"1\" Uid:\"1\""}
+{"level":"info","ts":"2024-12-20T00:50:18.380+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/dao/user.go:48","msg":"db","":"1"}
+{"level":"info","ts":"2024-12-20T00:52:01.613+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///User127.0.0.1:10100":"127.0.0.1:10100"}
+{"level":"info","ts":"2024-12-20T00:52:05.589+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:81","msg":"raw","":{"uid":"1","name":"1","icon":"1","gender":1,"mobile":"1","birth":1,"email":"1","ex":"","operationID":"1"}}
+{"level":"info","ts":"2024-12-20T00:52:05.590+0800","caller":"C:/Code/golang/IM/internal/api/user/user.go:88","msg":"","":"Uid:\"1\"  icon:\"1\"  name:\"1\"  gender:1  mobile:\"1\"  birth:\"\\x01\"  email:\"1\"  OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:52:05.595+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:52:05.597+0800","caller":"C:/Code/golang/IM/internal/rpc/user/rpcUser.go:104","msg":"rpc UpdateUserInfo","new user info":"Uid:\"1\" icon:\"1\" name:\"1\" gender:1 mobile:\"1\" birth:\"\\x01\" email:\"1\" OperationID:\"1\""}
+{"level":"info","ts":"2024-12-20T00:52:05.597+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/dao/user.go:48","msg":"db","":"1"}
+{"level":"info","ts":"2024-12-20T00:52:38.212+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"warn","ts":"2024-12-20T00:52:38.228+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:35","msg":"Api AddFriend Error","error":"rpc error: code = Unknown desc = record not found"}
+{"level":"info","ts":"2024-12-20T00:55:16.814+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T00:55:26.286+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:30","msg":"","":{"operationID":"1","toUserID":"2","fromUserID":"1","reqMsg":"1申请添加2"}}
+{"level":"info","ts":"2024-12-20T00:55:26.293+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T00:55:26.298+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:36","msg":"","pb":"OperationID:\"1\""}
+{"level":"warn","ts":"2024-12-20T00:55:26.298+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:39","msg":"Api AddFriend Error","error":"rpc error: code = Unknown desc = record not found"}
+{"level":"info","ts":"2024-12-20T01:07:40.718+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:07:47.926+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:30","msg":"","":{"operationID":"1","toUserID":"2","fromUserID":"1","reqMsg":"1申请添加2"}}
+{"level":"info","ts":"2024-12-20T01:07:47.933+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:07:47.942+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:40","msg":"","pb":"uid:\"1\"  friendUid:\"2\"  ReqMessage:\"1申请添加2\""}
+{"level":"warn","ts":"2024-12-20T01:07:47.942+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:43","msg":"Api AddFriend Error","error":"rpc error: code = Unknown desc = Error 1292 (22007): Incorrect datetime value: '0000-00-00' for column 'create_time' at row 1"}
+{"level":"info","ts":"2024-12-20T01:08:38.600+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:08:41.462+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:30","msg":"","":{"operationID":"1","toUserID":"2","fromUserID":"1","reqMsg":"1申请添加2"}}
+{"level":"info","ts":"2024-12-20T01:08:41.465+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:08:41.472+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:40","msg":"","pb":"uid:\"1\"  friendUid:\"2\"  ReqMessage:\"1申请添加2\""}
+{"level":"info","ts":"2024-12-20T01:09:01.126+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:10:02.237+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:11:12.979+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:11:12.979+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:86","msg":"","pb":"uid:\"1\""}
+{"level":"info","ts":"2024-12-20T01:13:32.781+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:13:35.387+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:13:35.388+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:86","msg":"","pb":"uid:\"1\""}
+{"level":"info","ts":"2024-12-20T01:14:08.445+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:14:59.390+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:15:49.723+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:15:51.492+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:16:26.928+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:18:49.253+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:19:10.526+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"warn","ts":"2024-12-20T01:19:10.531+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:140","msg":"Api AddFriend Error","error":"rpc error: code = Unknown desc = record not found"}
+{"level":"info","ts":"2024-12-20T01:20:22.146+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:22:46.995+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:22:56.839+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:23:21.495+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:23:26.271+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:25:29.536+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:29:04.243+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:33:08.917+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:34:15.217+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:34:57.385+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:30","msg":"","":{"operationID":"1","toUserID":"2","fromUserID":"1","reqMsg":"1申请添加2"}}
+{"level":"info","ts":"2024-12-20T01:34:57.388+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:34:57.393+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:40","msg":"","pb":"uid:\"1\"  friendUid:\"2\"  ReqMessage:\"1申请添加2\""}
+{"level":"info","ts":"2024-12-20T01:40:46.587+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:41:09.971+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:41:50.723+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:41:53.641+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"warn","ts":"2024-12-20T01:41:53.647+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:66","msg":"Api AddFriend Error","error":"rpc error: code = Unknown desc = Error 1054 (42S22): Unknown column 'friend_request.user_id' in 'where clause'"}
+{"level":"info","ts":"2024-12-20T01:42:14.033+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:30","msg":"","":{"operationID":"1","toUserID":"2","fromUserID":"1","reqMsg":"1申请添加2"}}
+{"level":"info","ts":"2024-12-20T01:42:14.036+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:42:14.039+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:40","msg":"","pb":"uid:\"1\"  friendUid:\"2\"  ReqMessage:\"1申请添加2\""}
+{"level":"warn","ts":"2024-12-20T01:42:14.039+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:43","msg":"Api AddFriend Error","error":"rpc error: code = Unknown desc = Error 1062 (23000): Duplicate entry '2-1' for key 'friend_request.PRIMARY'"}
+{"level":"info","ts":"2024-12-20T01:44:08.694+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:30","msg":"","":{"operationID":"1","toUserID":"2","fromUserID":"1","reqMsg":"1申请添加2"}}
+{"level":"info","ts":"2024-12-20T01:44:08.697+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:44:08.704+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:40","msg":"","pb":"uid:\"1\"  friendUid:\"2\"  ReqMessage:\"1申请添加2\""}
+{"level":"info","ts":"2024-12-20T01:44:45.807+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:44:45.807+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:88","msg":"","pb":"uid:\"1\""}
+{"level":"info","ts":"2024-12-20T01:44:49.097+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:44:54.824+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:45:00.036+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:45:00.036+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:88","msg":"","pb":"uid:\"2\""}
+{"level":"info","ts":"2024-12-20T01:45:10.324+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:45:27.458+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2024-12-20T01:45:37.579+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"warn","ts":"2024-12-20T01:45:37.585+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:66","msg":"Api AddFriend Error","error":"rpc error: code = Unknown desc = Error 1054 (42S22): Unknown column 'friend_request.user_id' in 'where clause'"}
+{"level":"info","ts":"2024-12-20T01:46:52.690+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:47:07.981+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"warn","ts":"2024-12-20T01:47:07.986+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:66","msg":"Api AddFriend Error","error":"rpc error: code = Unknown desc = Error 1054 (42S22): Unknown column 'friend_request.user_id' in 'where clause'"}
+{"level":"info","ts":"2024-12-20T01:49:09.511+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
+{"level":"info","ts":"2024-12-20T01:49:12.980+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}

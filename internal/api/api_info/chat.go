@@ -2,6 +2,17 @@ package api_info
 
 import "github.com/adnpa/IM/pkg/pb/pb_ws"
 
+type DelMsgReq struct {
+	OpUserID    string   `json:"opUserID,omitempty"`
+	UserID      string   `json:"userID,omitempty"`
+	SeqList     []uint32 `json:"seqList,omitempty"`
+	OperationID string   `json:"operationID,omitempty"`
+}
+
+type DelMsgResp struct {
+	CommResp
+}
+
 type ParamsUserNewestSeq struct {
 	ReqIdentifier int    `json:"reqIdentifier" binding:"required"`
 	SendID        string `json:"sendID" binding:"required"`

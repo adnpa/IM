@@ -2,9 +2,11 @@ package test
 
 import (
 	"context"
+	"github.com/adnpa/IM/internal/api/api_info"
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/adnpa/IM/pkg/discovery"
 	"github.com/adnpa/IM/pkg/pb/pb_user"
+	"github.com/goccy/go-json"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"testing"
 )
@@ -54,4 +56,16 @@ func TestResolver(t *testing.T) {
 	_, err := client.GetUserInfo(context.Background(), pbParams)
 	t.Log("err", err)
 	//select {}
+}
+
+func TestJson(t *testing.T) {
+	myStruct := api_info.DelMsgReq{
+		OpUserID:    "1",
+		UserID:      "1",
+		SeqList:     []uint32{1, 2},
+		OperationID: "",
+	}
+	//myStruct := api_info.ParamsUserSendMsg{}
+	data, _ := json.Marshal(myStruct)
+	t.Log(string(data))
 }

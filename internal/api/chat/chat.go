@@ -26,14 +26,25 @@ func PullMsgBySeqList(c *gin.Context) {
 	c.JSON(http.StatusOK, "")
 }
 
-//func newUserSendMsgReq(token string, params *paramsUserSendMsg) *pb_chat.SendMsgReq {
-//
-//}
-
 func SendMsg(c *gin.Context) {
-	params := api_info.UpdateUserInfoReq{}
+	params := api_info.ParamsUserSendMsg{}
 	if err := c.BindJSON(&params); err != nil {
 		c.JSON(http.StatusBadRequest, constant.ErrInfo(constant.ErrArgs))
+	}
+
+	c.JSON(http.StatusOK, "")
+}
+
+func DelMsg(c *gin.Context) {
+	params := api_info.DelMsgReq{
+		OpUserID:    "",
+		UserID:      "",
+		SeqList:     nil,
+		OperationID: "",
+	}
+	if err := c.BindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, "")

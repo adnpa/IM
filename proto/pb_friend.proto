@@ -48,26 +48,16 @@ message GetFriendInfoResp{
 
 message AddFriendReq{
   string   uid = 1;
-  string  OperationID = 2;
-  string  Token = 3;
-  string  ReqMessage = 4;
+  string friendUid = 2;
+  string  ReqMessage = 3;
+  string  OperationID = 4;
 }
 
-
-message ImportFriendReq{
-  repeated string   uidList = 1;
-  string  OperationID = 2;
-  string  Token = 3;
-  string OwnerUid = 4;
-}
-message ImportFriendResp{
-  server_api_params.CommonResp commonResp = 1;
-  repeated string failedUidList = 2;
-}
 
 message GetFriendApplyReq{
-  string OperationID = 1;
-  string Token = 2;
+  string uid = 1;
+  string OperationID = 2;
+//  string Token = 2;
 }
 message GetFriendApplyResp{
   int32   errorCode = 1;
@@ -92,7 +82,7 @@ message ApplyUserInfo{
 
 message getFriendListReq{
   string OperationID = 1;
-  string Token = 2;
+  string uid = 2;
 }
 message getFriendListResp{
   int32   errorCode = 1;
@@ -103,22 +93,22 @@ message getFriendListResp{
 
 message AddBlacklistReq{
   string uid = 1;
+  string friendUid = 4;
   string OperationID = 2;
-  string Token = 3;
-  string OwnerUid = 4;
+//  string Token = 3;
 }
 
 
 message RemoveBlacklistReq{
   string uid = 1;
   string OperationID = 2;
-  string Token = 3;
+  string friendUid = 3;
 }
 
 
 message GetBlacklistReq{
   string OperationID = 1;
-  string token = 2;
+  string uid = 2;
 }
 message GetBlacklistResp{
   int32   errorCode = 1;
@@ -127,8 +117,8 @@ message GetBlacklistResp{
 }
 
 message IsFriendReq{
-  string token = 1;
-  string receiveUid = 2;
+  string uid = 1;
+  string friendUid = 2;
   string OperationID = 3;
 }
 message IsFriendResp{
@@ -149,25 +139,39 @@ message IsInBlackListResp{
 
 message DeleteFriendReq{
   string uid = 1;
-  string OperationID = 2;
-  string Token = 3;
+  string friendUid = 2;
+  string OperationID = 3;
+//  string Token = 3;
 }
 
 
 message AddFriendResponseReq{
   string uid = 1;
-  int32  flag = 2;
-  string OperationID = 3;
-  string Token = 4;
+  string friendUid = 2;
+  int32  flag = 3;
+  string OperationID = 4;
+//  string Token = 4;
 }
 
 message SetFriendCommentReq{
   string uid = 1;
-  string operationID = 2;
+  string friendUid = 2;
   string comment = 3;
-  string token = 4;
+  string operationID = 4;
+//  string token = 4;
 }
 
+
+message ImportFriendReq{
+  repeated string   uidList = 1;
+  string  OperationID = 2;
+  string  Token = 3;
+  string OwnerUid = 4;
+}
+message ImportFriendResp{
+  server_api_params.CommonResp commonResp = 1;
+  repeated string failedUidList = 2;
+}
 
 // ====================================
 
@@ -184,3 +188,4 @@ message GetFriendData{
   int32  isFriend = 10;
   int32 isInBlackList = 11;
 }
+

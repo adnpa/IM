@@ -2,13 +2,17 @@ package friend
 
 import (
 	"context"
+	"errors"
 	utils2 "github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/model"
 	"github.com/adnpa/IM/pkg/common/config"
+	"github.com/adnpa/IM/pkg/common/constant"
 	"github.com/adnpa/IM/pkg/common/db/mysql/dao"
+	"github.com/adnpa/IM/pkg/common/logger"
 	"github.com/adnpa/IM/pkg/discovery"
 	"github.com/adnpa/IM/pkg/pb/pb_friend"
 	"github.com/adnpa/IM/pkg/pb/pb_ws"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -61,15 +65,105 @@ func (rpc *RpcFriendServer) Run() {
 	log.Println("", "", "rpc get_token init success")
 }
 
-//func (rpc *RpcFriendServer) GetFriendsInfo(context.Context, *pb_friend.GetFriendsInfoReq) (*pb_friend.GetFriendInfoResp, error) {
-//	//
-//	return nil, nil
-//}
+func (rpc *RpcFriendServer) AddFriend(ctx context.Context, req *pb_friend.AddFriendReq) (*pb_ws.CommonResp, error) {
+	if _, err := dao.GetUserByUid(req.Uid); err != nil {
+		return nil, err
+	}
+
+	friendReq := &model.FriendRequest{
+		ReqID:      req.Uid,
+		UserID:     req.FriendUid,
+		ReqMessage: req.ReqMessage,
+	}
+	err := dao.AddFriendRequest(friendReq)
+	if err != nil {
+		return nil, err
+	}
+
+	//todo 推送被申请者
+	return &pb_ws.CommonResp{ErrorMsg: "", ErrorCode: 0}, nil
+}
+
+func (rpc *RpcFriendServer) GetFriendApplyList(ctx context.Context, req *pb_friend.GetFriendApplyReq) (*pb_friend.GetFriendApplyResp, error) {
+	list, err := dao.GetApplyList(req.Uid)
+	if err != nil {
+		logger.L().Info("GetFriendApplyList db err", zap.Error(err))
+		return nil, err
+	}
+
+	var data []*pb_friend.ApplyUserInfo
+
+	for _, i := range list {
+		tmp := &pb_friend.ApplyUserInfo{
+			Name: i.ReqID,
+		}
+		data = append(data, tmp)
+	}
+
+	return &pb_friend.GetFriendApplyResp{
+		Data: data,
+	}, nil
+}
+
+func (rpc *RpcFriendServer) GetSelfApplyList(ctx context.Context, req *pb_friend.GetFriendApplyReq) (*pb_friend.GetFriendApplyResp, error) {
+	uid := req.Uid
+	list, err := dao.GetSelfApplyList(uid)
+	if err != nil {
+		logger.L().Info("GetSelfApplyList db err", zap.Error(err))
+		return nil, err
+	}
+
+	var data []*pb_friend.ApplyUserInfo
+
+	for _, i := range list {
+		tmp := &pb_friend.ApplyUserInfo{
+			Name: i.ReqID,
+		}
+		data = append(data, tmp)
+	}
+
+	return &pb_friend.GetFriendApplyResp{
+		Data: data,
+	}, nil
+}
+
+// AddFriendResponse 添加好友回复
+func (rpc *RpcFriendServer) AddFriendResponse(ctx context.Context, req *pb_friend.AddFriendResponseReq) (*pb_ws.CommonResp, error) {
+	fq, err := dao.GetFriendReq(req.FriendUid, req.Uid)
+	if err != nil {
+		return nil, err
+	}
+	fq.Flag = req.Flag
+	//todo 推送好友
+
+	if req.Flag == constant.FriendAgreeFlag {
+		err = dao.AddFriend(fq)
+	} else if req.Flag == constant.FriendRefuseFlag {
+		err = dao.UpdateFriendRequest(fq)
+	} else {
+		err = errors.New("error flag")
+	}
+
+	return &pb_ws.CommonResp{}, nil
+}
+
+func (rpc *RpcFriendServer) IsFriend(ctx context.Context, req *pb_friend.IsFriendReq) (*pb_friend.IsFriendResp, error) {
+	uid := req.Uid
+
+	isFriend := dao.IsFriend(uid, req.FriendUid)
+
+	var flag int32
+	if isFriend {
+		flag = constant.FriendAgreeFlag
+	} else {
+		flag = constant.FriendRefuseFlag
+	}
+	return &pb_friend.IsFriendResp{ShipType: flag}, nil
+}
 
 func (rpc *RpcFriendServer) GetFriendList(ctx context.Context, req *pb_friend.GetFriendListReq) (*pb_friend.GetFriendListResp, error) {
 	var data []*pb_ws.UserInfo
-	claims, _ := utils2.ParseToken(req.Token)
-	friends, err := dao.GetFriendsByUserUid(claims.UID)
+	friends, err := dao.GetFriendsByUserUid(req.Uid)
 	if err != nil {
 		return nil, err
 	}
@@ -87,71 +181,49 @@ func (rpc *RpcFriendServer) GetFriendList(ctx context.Context, req *pb_friend.Ge
 	}, nil
 }
 
-func (rpc *RpcFriendServer) AddFriend(ctx context.Context, req *pb_friend.AddFriendReq) (*pb_ws.CommonResp, error) {
-	if _, err := dao.GetUserByUid(req.Uid); err != nil {
-		return nil, err
-	}
-	uid, _ := utils2.GetUserId(req.Token)
+func (rpc *RpcFriendServer) SetFriendComment(ctx context.Context, req *pb_friend.SetFriendCommentReq) (*pb_ws.CommonResp, error) {
+	err := dao.SetComment(req.Uid, req.FriendUid, req.Comment)
+	return &pb_ws.CommonResp{}, err
+}
 
-	friendReq := &model.FriendRequest{
-		ReqID:      uid,
-		UserID:     req.Uid,
-		ReqMessage: req.ReqMessage,
-	}
-	err := dao.AddFriendRequest(friendReq)
+func (rpc *RpcFriendServer) DeleteFriend(ctx context.Context, req *pb_friend.DeleteFriendReq) (*pb_ws.CommonResp, error) {
+	err := dao.DeleteFriend(req.Uid, req.FriendUid)
 	if err != nil {
 		return nil, err
 	}
-
-	//todo 推送被申请者
-	return &pb_ws.CommonResp{ErrorMsg: "", ErrorCode: 0}, nil
+	return &pb_ws.CommonResp{}, nil
 }
 
-// AddFriendResponse 添加好友回复
-func (rpc *RpcFriendServer) AddFriendResponse(ctx context.Context, req *pb_friend.AddFriendResponseReq) (*pb_ws.CommonResp, error) {
-	//userid, _ := utils2.GetUserId(req.Token)
-	//fq, err := dao.GetFriendReq(req.Uid, userid)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//fq.Flag = req.Flag
-	//todo 推送好友
-
-	//if req.Flag ==
-
-	return nil, nil
+func (rpc *RpcFriendServer) AddBlacklist(ctx context.Context, req *pb_friend.AddBlacklistReq) (*pb_ws.CommonResp, error) {
+	err := dao.AddBlacklist(req.Uid, req.FriendUid)
+	return &pb_ws.CommonResp{}, err
 }
 
-func (rpc *RpcFriendServer) DeleteFriend(context.Context, *pb_friend.DeleteFriendReq) (*pb_ws.CommonResp, error) {
-	return nil, nil
+func (rpc *RpcFriendServer) RemoveBlacklist(ctx context.Context, req *pb_friend.RemoveBlacklistReq) (*pb_ws.CommonResp, error) {
+	err := dao.RemoveBlacklist(req.Uid, req.FriendUid)
+	return &pb_ws.CommonResp{}, err
 }
 
-func (rpc *RpcFriendServer) GetFriendApplyList(context.Context, *pb_friend.GetFriendApplyReq) (*pb_friend.GetFriendApplyResp, error) {
-	return nil, nil
+func (rpc *RpcFriendServer) IsInBlackList(ctx context.Context, req *pb_friend.IsInBlackListReq) (*pb_friend.IsInBlackListResp, error) {
+	boo := dao.IsInBlackList(req.SendUid, req.ReceiveUid)
+	return &pb_friend.IsInBlackListResp{Response: boo}, nil
 }
-func (rpc *RpcFriendServer) GetSelfApplyList(context.Context, *pb_friend.GetFriendApplyReq) (*pb_friend.GetFriendApplyResp, error) {
-	return nil, nil
-}
-
-func (rpc *RpcFriendServer) AddBlacklist(context.Context, *pb_friend.AddBlacklistReq) (*pb_ws.CommonResp, error) {
-	return nil, nil
-}
-func (rpc *RpcFriendServer) RemoveBlacklist(context.Context, *pb_friend.RemoveBlacklistReq) (*pb_ws.CommonResp, error) {
-	return nil, nil
-}
-func (rpc *RpcFriendServer) IsFriend(context.Context, *pb_friend.IsFriendReq) (*pb_friend.IsFriendResp, error) {
-	return nil, nil
-}
-func (rpc *RpcFriendServer) IsInBlackList(context.Context, *pb_friend.IsInBlackListReq) (*pb_friend.IsInBlackListResp, error) {
-	return nil, nil
-}
-func (rpc *RpcFriendServer) GetBlacklist(context.Context, *pb_friend.GetBlacklistReq) (*pb_friend.GetBlacklistResp, error) {
-	return nil, nil
+func (rpc *RpcFriendServer) GetBlacklist(ctx context.Context, req *pb_friend.GetBlacklistReq) (*pb_friend.GetBlacklistResp, error) {
+	blacklist, err := dao.GetBlacklist(req.Uid)
+	if err != nil {
+		return &pb_friend.GetBlacklistResp{}, err
+	}
+	var data []*pb_ws.UserInfo
+	for _, i := range blacklist {
+		tmp := &pb_ws.UserInfo{
+			UserID: i.OwnerID,
+		}
+		data = append(data, tmp)
+	}
+	return &pb_friend.GetBlacklistResp{Data: data}, nil
 }
 
-func (rpc *RpcFriendServer) SetFriendComment(context.Context, *pb_friend.SetFriendCommentReq) (*pb_ws.CommonResp, error) {
-	return nil, nil
-}
-func (rpc *RpcFriendServer) ImportFriend(context.Context, *pb_friend.ImportFriendReq) (*pb_friend.ImportFriendResp, error) {
+// ImportFriend 管理员批量导入好友
+func (rpc *RpcFriendServer) ImportFriend(ctx context.Context, req *pb_friend.ImportFriendReq) (*pb_friend.ImportFriendResp, error) {
 	return nil, nil
 }

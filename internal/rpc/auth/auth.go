@@ -7,6 +7,7 @@ import (
 	"github.com/adnpa/IM/model"
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/adnpa/IM/pkg/common/db/mysql/dao"
+	"github.com/adnpa/IM/pkg/common/logger"
 	"github.com/adnpa/IM/pkg/discovery"
 	"github.com/adnpa/IM/pkg/pb/pb_auth"
 	"go.uber.org/zap"

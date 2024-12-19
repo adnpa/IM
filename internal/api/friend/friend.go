@@ -28,9 +28,14 @@ func AddFriend(c *gin.Context) {
 	}
 
 	client := GetFriendClient()
-	pbParams := &pb_friend.AddFriendReq{}
-	_ = utils.CopyStructFields(pbParams, &params)
+	pbParams := &pb_friend.AddFriendReq{
+		Uid:        params.FromUserID,
+		FriendUid:  params.ToUserID,
+		ReqMessage: params.ReqMsg,
+	}
+	//_ = utils.CopyStructFields(pbParams, &params)
 	pbResp, err := client.AddFriend(context.Background(), pbParams)
+
 	if err != nil {
 		logger.L().Warn("Api AddFriend Error", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, constant.ErrInfo(constant.ErrInternal))
@@ -49,8 +54,10 @@ func DeleteFriend(c *gin.Context) {
 	}
 
 	client := GetFriendClient()
-	pbParams := &pb_friend.DeleteFriendReq{}
-	_ = utils.CopyStructFields(pbParams, &params)
+	pbParams := &pb_friend.DeleteFriendReq{
+		Uid:       params.FromUserID,
+		FriendUid: params.ToUserID,
+	}
 	pbResp, err := client.DeleteFriend(context.Background(), pbParams)
 	if err != nil {
 		logger.L().Warn("Api AddFriend Error", zap.Error(err))
@@ -72,9 +79,11 @@ func GetFriendApplyList(c *gin.Context) {
 	}
 
 	client := GetFriendClient()
-	pbParams := &pb_friend.GetFriendApplyReq{}
-	_ = utils.CopyStructFields(pbParams, &params)
+	pbParams := &pb_friend.GetFriendApplyReq{
+		Uid: params.FromUserID,
+	}
 	pbResp, err := client.GetFriendApplyList(context.Background(), pbParams)
+
 	if err != nil {
 		logger.L().Warn("Api AddFriend Error", zap.Error(err))
 		c.JSON(http.StatusInternalServerError, constant.ErrInfo(constant.ErrInternal))
@@ -95,8 +104,9 @@ func GetSelfFriendApplyList(c *gin.Context) {
 	}
 
 	client := GetFriendClient()
-	pbParams := &pb_friend.GetFriendApplyReq{}
-	_ = utils.CopyStructFields(pbParams, &params)
+	pbParams := &pb_friend.GetFriendApplyReq{
+		Uid: params.FromUserID,
+	}
 	pbResp, err := client.GetSelfApplyList(context.Background(), pbParams)
 	if err != nil {
 		logger.L().Warn("Api AddFriend Error", zap.Error(err))
@@ -110,6 +120,31 @@ func GetSelfFriendApplyList(c *gin.Context) {
 
 }
 
+func AddFriendResponse(c *gin.Context) {
+	params := api_info.AddFriendResponseReq{}
+	if err := c.BindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, constant.ErrInfo(constant.ErrArgs))
+		return
+	}
+
+	client := GetFriendClient()
+	pbParams := &pb_friend.AddFriendResponseReq{
+		Uid:       params.FromUserID,
+		FriendUid: params.ToUserID,
+		Flag:      params.Flag,
+	}
+	pbResp, err := client.AddFriendResponse(context.Background(), pbParams)
+	if err != nil {
+		logger.L().Warn("Api AddFriend Error", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, constant.ErrInfo(constant.ErrInternal))
+		return
+	}
+
+	//resp := api_info.AddFriendResponseResp{}
+	//c.JSON(http.StatusOK, resp)
+	c.JSON(http.StatusOK, pbResp)
+}
+
 func GetFriendList(c *gin.Context) {
 	params := api_info.GetFriendListReq{}
 	if err := c.BindJSON(&params); err != nil {
@@ -118,8 +153,9 @@ func GetFriendList(c *gin.Context) {
 	}
 
 	client := GetFriendClient()
-	pbParams := &pb_friend.GetFriendListReq{}
-	_ = utils.CopyStructFields(pbParams, &params)
+	pbParams := &pb_friend.GetFriendListReq{
+		Uid: params.FromUserID,
+	}
 	pbResp, err := client.GetFriendList(context.Background(), pbParams)
 	if err != nil {
 		logger.L().Warn("Api AddFriend Error", zap.Error(err))
@@ -133,28 +169,6 @@ func GetFriendList(c *gin.Context) {
 
 }
 
-func AddFriendResponse(c *gin.Context) {
-	params := api_info.AddFriendResponseReq{}
-	if err := c.BindJSON(&params); err != nil {
-		c.JSON(http.StatusBadRequest, constant.ErrInfo(constant.ErrArgs))
-		return
-	}
-
-	client := GetFriendClient()
-	pbParams := &pb_friend.AddFriendResponseReq{}
-	_ = utils.CopyStructFields(pbParams, &params)
-	pbResp, err := client.AddFriendResponse(context.Background(), pbParams)
-	if err != nil {
-		logger.L().Warn("Api AddFriend Error", zap.Error(err))
-		c.JSON(http.StatusInternalServerError, constant.ErrInfo(constant.ErrInternal))
-		return
-	}
-
-	//resp := api_info.AddFriendResponseResp{}
-	//c.JSON(http.StatusOK, resp)
-	c.JSON(http.StatusOK, pbResp)
-}
-
 func SetFriendRemark(c *gin.Context) {
 	params := api_info.SetFriendRemarkReq{}
 	if err := c.BindJSON(&params); err != nil {
@@ -163,8 +177,11 @@ func SetFriendRemark(c *gin.Context) {
 	}
 
 	client := GetFriendClient()
-	pbParams := &pb_friend.SetFriendCommentReq{}
-	_ = utils.CopyStructFields(pbParams, &params)
+	pbParams := &pb_friend.SetFriendCommentReq{
+		Uid:       params.FromUserID,
+		FriendUid: params.ToUserID,
+		Comment:   params.Remark,
+	}
 	pbResp, err := client.SetFriendComment(context.Background(), pbParams)
 	if err != nil {
 		logger.L().Warn("Api AddFriend Error", zap.Error(err))

@@ -2,6 +2,12 @@ syntax = "proto3";
 import "pb_ws.proto";
 option go_package = "github.com/adnpa/IM/pkg/pb/pb_chat";
 
+service Chat {
+  rpc GetMaxAndMinSeq(GetMaxAndMinSeqReq) returns(GetMaxAndMinSeqResp);
+  rpc PullMessageBySeqList(server_api_params.PullMessageBySeqListReq) returns(server_api_params.PullMessageBySeqListResp);
+  rpc SendMsg(SendMsgReq) returns(SendMsgResp);
+  rpc DelMsgList(server_api_params.DelMsgListReq) returns(server_api_params.DelMsgListResp);
+}
 
 
 message MsgDataToMQ{
@@ -71,9 +77,3 @@ message SendMsgResp {
 
 
 
-service Chat {
-  rpc GetMaxAndMinSeq(GetMaxAndMinSeqReq) returns(GetMaxAndMinSeqResp);
-  rpc PullMessageBySeqList(server_api_params.PullMessageBySeqListReq) returns(server_api_params.PullMessageBySeqListResp);
-  rpc SendMsg(SendMsgReq) returns(SendMsgResp);
-  rpc DelMsgList(server_api_params.DelMsgListReq) returns(server_api_params.DelMsgListResp);
-}

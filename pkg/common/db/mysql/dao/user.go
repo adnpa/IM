@@ -3,7 +3,9 @@ package dao
 import (
 	"context"
 	"github.com/adnpa/IM/model"
+	"github.com/adnpa/IM/pkg/common/logger"
 	"github.com/adnpa/IM/query"
+	"go.uber.org/zap"
 	"time"
 )
 
@@ -28,7 +30,7 @@ func GetUsersByUidL(uidL []string) ([]*model.User, error) {
 func CreateUser(user *model.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-
+	user.CreateTime = time.Now()
 	//todo password
 	//user.Password = utils.EncryptPassword([]byte(user))
 	err := query.User.WithContext(ctx).Create(user)
@@ -43,6 +45,7 @@ func UpdateUser(user *model.User) error {
 	defer cancel()
 
 	//user.UpdatedAt = time.Now()
+	logger.L().Info("db", zap.Any("", user.Name))
 	_, err := query.User.WithContext(ctx).Where(query.User.UID.Eq(user.UID)).Updates(user)
 	if err != nil {
 		return err

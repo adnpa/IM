@@ -51,3 +51,4 @@
 {"level":"INFO","time":"2024-12-18T17:50:52.879+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/mysql.go:24","msg":"mysql","":"root:root@tcp([192.168.1.129:3306])/goim?charset=utf8mb4&parseTime=true&loc=Local"}
 {"level":"INFO","time":"2024-12-18T17:55:25.807+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/mysql.go:28","msg":"mysql","":"root:root@tcp([192.168.1.129:3306])/?charset=utf8mb4&parseTime=True&loc=Local"}
 {"level":"INFO","time":"2024-12-18T17:56:05.667+0800","caller":"C:/Code/golang/IM/pkg/common/db/mysql/mysql.go:28","msg":"mysql","":"root:root@tcp(192.168.1.129:3306)/?charset=utf8mb4&parseTime=True&loc=Local"}
+{"level":"info","ts":"2024-12-20T00:20:15.539+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:31","msg":"","len(addresses)":1}

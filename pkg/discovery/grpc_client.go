@@ -26,6 +26,10 @@ func (c *GrpcConn) Conn() *grpc.ClientConn {
 
 func (c *GrpcConn) UpdateState(state resolver.State) error {
 	c.state = state
+	if len(state.Addresses) <= 0 {
+		logger.L().Info("new addr is null")
+		return nil
+	}
 
 	addresses := c.state.Addresses
 	idx := utils.RandIntN(len(addresses))
