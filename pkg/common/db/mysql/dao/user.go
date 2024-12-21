@@ -9,6 +9,21 @@ import (
 	"time"
 )
 
+func GetAllUserUid() []string {
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	var res []string
+	li, err := query.User.WithContext(ctx).Select(query.User.UID).Find()
+	if err != nil {
+		return nil
+	}
+	for _, i := range li {
+		res = append(res, i.UID)
+	}
+	return res
+}
+
 func GetUserByUid(uid string) (*model.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()

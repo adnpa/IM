@@ -18,6 +18,7 @@ type MsgCallBackReq struct {
 	MsgID        string `json:"msgID"`
 	IsOnlineOnly bool   `json:"isOnlineOnly"`
 }
+
 type MsgCallBackResp struct {
 	ErrCode         int32  `json:"errCode"`
 	ErrMsg          string `json:"errMsg"`
@@ -28,8 +29,11 @@ type MsgCallBackResp struct {
 	}
 }
 
+// option
+
 func (rpc *RpcChatServer) SendMsg(_ context.Context, req *pb_chat.SendMsgReq) (*pb_chat.SendMsgResp, error) {
-	reply := &pb_chat.SendMsgResp{}
+
+	//isHistory := utils.GetSwitchFromOptions(pb.MsgData.Options, constant.IsHistory)
 
 	switch req.MsgData.SessionType {
 	case constant.SingleChatType:
@@ -37,25 +41,67 @@ func (rpc *RpcChatServer) SendMsg(_ context.Context, req *pb_chat.SendMsgReq) (*
 		//if err != nil {
 		//	return nil, err
 		//}
+		// todo 聊天选项控制
+		//isSend := modifyMessageByUserMessageReceiveOpt(req.MsgData.RecvID, req.MsgData.SendID, constant.SingleChatType, req)
 
 		msgToMQ := pb_chat.MsgDataToMQ{Token: req.Token, OperationID: req.OperationID, MsgData: req.MsgData}
-		_ = rpc.sendMsgToKafka(&msgToMQ, msgToMQ.MsgData.SendID)
+		err := rpc.sendMsgToKafka(&msgToMQ, msgToMQ.MsgData.SendID)
+		if err != nil {
+			return &pb_chat.SendMsgResp{
+				ErrCode:     constant.ErrChatKafkaSend,
+				ErrMsg:      constant.StatusText(constant.ErrChatKafkaSend),
+				ServerMsgID: msgToMQ.MsgData.ServerMsgID,
+				ClientMsgID: req.MsgData.ClientMsgID,
+				SendTime:    msgToMQ.MsgData.SendTime,
+			}, err
+		}
 
+		return &pb_chat.SendMsgResp{
+			ErrCode:     0,
+			ErrMsg:      "",
+			ServerMsgID: "",
+			ClientMsgID: "",
+			SendTime:    0,
+		}, err
 		//callbackAfterSendSingle(pb)
 	case constant.GroupChatType:
-
+		return nil, nil
+	default:
+		reply := &pb_chat.SendMsgResp{
+			ErrCode:     constant.ErrChatUnknownMsgType,
+			ErrMsg:      constant.StatusText(constant.ErrChatUnknownMsgType),
+			ServerMsgID: "",
+			ClientMsgID: "",
+			SendTime:    0,
+		}
+		return reply, nil
 	}
-	return reply, nil
 }
 
-func callbackAfterSendSingle(p any) {
+//func modifyMessageByUserMessageReceiveOpt(userID, sourceID string, sessionType int, pb *pb_chat.SendMsgReq) bool {
+//	//conversationId := getConversationIDBySessionType(sourceID, sessionType)
+//	//redis.
+//
+//}
 
-}
+//func getConversationIDBySessionType(sourceID string, sessionType int) string {
+//	switch sessionType {
+//	case constant.SingleChatType:
+//		return "single_" + sourceID
+//	case constant.GroupChatType:
+//		return "group_" + sourceID
+//	}
+//	return ""
+//}
 
-func callbackBeforeSendSingle(req *pb_chat.SendMsgReq) (bool, error) {
+//func callbackAfterSendSingle(p any) {
+//
+//}
 
-	return true, nil
-}
+//func callbackBeforeSendSingle(req *pb_chat.SendMsgReq) (bool, error) {
+//
+//	return true, nil
+//}
 
 func (rpc *RpcChatServer) sendMsgToKafka(m *pb_chat.MsgDataToMQ, key string) error {
 	_, _, err := rpc.producer.SendMsg(m, key)

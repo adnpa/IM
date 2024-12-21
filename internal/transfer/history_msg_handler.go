@@ -44,7 +44,7 @@ func saveUserChat(uid string, msg *pb.MsgDataToMQ) error {
 	msg.MsgData.Seq = uint32(seq)
 	pbSaveData := pb.MsgDataToDB{}
 	pbSaveData.MsgData = msg.MsgData
-	return mongodb.SaveUserChatMongo2(uid, pbSaveData.MsgData.SendTime, &pbSaveData)
+	return mongodb.SaveUserChat(uid, pbSaveData.MsgData.SendTime, &pbSaveData)
 }
 
 func (hc *HistoryConsumerHandler) Setup(sarama.ConsumerGroupSession) error {
