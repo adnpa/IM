@@ -6,3 +6,15 @@
 * Kafka 用于消息转发，支持集群部署
 
 https://docs.openim.io/zh-Hans/restapi/introduction
+
+gateway
+包括rpc server和ws server，负责将请求转发到api服务和聊天服务
+
+service列表
+http
+用户
+好友
+群聊
+
+ws
+聊天

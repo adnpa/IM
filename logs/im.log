@@ -466,3 +466,118 @@
 {"level":"warn","ts":"2024-12-20T01:47:07.986+0800","caller":"C:/Code/golang/IM/internal/api/friend/friend.go:66","msg":"Api AddFriend Error","error":"rpc error: code = Unknown desc = Error 1054 (42S22): Unknown column 'friend_request.user_id' in 'where clause'"}
 {"level":"info","ts":"2024-12-20T01:49:09.511+0800","caller":"C:/Code/golang/IM/pkg/discovery/register.go:73","msg":"etcd register success","goIM:///Friend127.0.0.1:10200":"127.0.0.1:10200"}
 {"level":"info","ts":"2024-12-20T01:49:12.980+0800","caller":"C:/Code/golang/IM/pkg/discovery/grpc_client.go:35","msg":"","len(addresses)":1}
+{"level":"info","ts":"2025-03-09T00:27:59.400+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:43","msg":"recvMsg","msg":{}}
+{"level":"info","ts":"2025-03-09T00:30:25.063+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:43","msg":"recvMsg","msg":{}}
+{"level":"info","ts":"2025-03-09T00:30:51.866+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:43","msg":"recvMsg","msg":{}}
+{"level":"info","ts":"2025-03-09T00:32:30.550+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:44","msg":"recvMsg","msg":{},"from":0,"to":0}
+{"level":"info","ts":"2025-03-09T00:34:42.081+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:44","msg":"recvMsg","msg":{},"from":0,"to":0}
+{"level":"info","ts":"2025-03-09T00:37:36.882+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:39","msg":"recvMsg12","msg":"[object Object]"}
+{"level":"error","ts":"2025-03-09T00:37:36.882+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:43","msg":"unmarshal","error":"invalid character 'o' looking for beginning of value"}
+{"level":"info","ts":"2025-03-09T00:37:36.882+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:46","msg":"recvMsg","msg":{},"from":0,"to":0}
+{"level":"info","ts":"2025-03-09T00:40:35.361+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:39","msg":"recvMsg12","msg":"{\"id\":1,\"from\":1,\"to\":2,\"cmd\":6,\"media\":1,\"content\":\"1\",\"pic\":\"abc\",\"url\":\"\",\"memo\":\"\",\"amount\":10}"}
+{"level":"info","ts":"2025-03-09T00:40:35.361+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:46","msg":"recvMsg","msg":{"id":1,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10},"from":1,"to":2}
+{"level":"info","ts":"2025-03-09T00:42:04.955+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:39","msg":"recvMsg12","msg":"{\"id\":1,\"from\":1,\"to\":2,\"cmd\":6,\"media\":1,\"content\":\"1\",\"pic\":\"abc\",\"url\":\"\",\"memo\":\"\",\"amount\":10}"}
+{"level":"info","ts":"2025-03-09T00:42:04.956+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:46","msg":"recvMsg","msg":{"id":1,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10},"from":1,"to":2}
+{"level":"info","ts":"2025-03-09T00:47:47.230+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:48.230+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:49.231+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:50.231+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:51.231+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:52.232+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:53.232+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:54.233+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:55.233+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:56.233+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:57.233+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:58.233+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:47:59.234+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:00.235+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:01.235+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:02.235+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:03.235+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:04.236+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:05.237+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:06.237+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:07.237+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:08.237+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:09.237+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:10.237+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:11.237+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:12.238+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:13.238+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:14.238+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:15.239+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:16.239+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:17.239+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:17.495+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:38","msg":"recvMsg","msg":"{\"id\":1,\"from\":1,\"to\":2,\"cmd\":6,\"media\":1,\"content\":\"1\",\"pic\":\"abc\",\"url\":\"\",\"memo\":\"\",\"amount\":10}"}
+{"level":"info","ts":"2025-03-09T00:48:17.495+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:26","msg":"recvMs","msg":{}}
+{"level":"info","ts":"2025-03-09T00:48:18.240+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:18.280+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:19.280+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:19.298+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:20.298+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:20.330+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:21.330+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:21.354+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:22.355+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:22.391+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:23.392+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:23.402+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:24.402+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:24.410+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:25.411+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:25.431+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:26.431+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:26.466+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:27.467+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:27.505+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:28.507+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:28.537+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:48:29.537+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:48:29.582+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452497495,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:49:33.633+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:34.634+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:35.634+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:36.634+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:37.635+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:38.635+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:39.635+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:40.636+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:41.637+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:42.638+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:43.639+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:44.639+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:45.639+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:45.869+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:38","msg":"recvMsg","msg":"{\"id\":1,\"from\":1,\"to\":2,\"cmd\":6,\"media\":1,\"content\":\"1\",\"pic\":\"abc\",\"url\":\"\",\"memo\":\"\",\"amount\":10}"}
+{"level":"info","ts":"2025-03-09T00:49:45.869+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:26","msg":"recvMs","msg":{}}
+{"level":"info","ts":"2025-03-09T00:49:46.639+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:46.680+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452585869,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:49:47.680+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:47.690+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452585869,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:49:48.690+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:48.724+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452585869,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:49:49.725+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:49.747+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452585869,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:49:50.752+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:50.760+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452585869,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:49:51.761+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:51.799+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452585869,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:49:52.800+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:52.844+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:40","msg":"user2 is online, send","msg":{"id":1741452585869,"cmd":6,"from":1,"to":2,"media":1,"content":"1","pic":"abc","amount":10}}
+{"level":"info","ts":"2025-03-09T00:49:53.011+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/msg_handler.go:38","msg":"recvMsg","msg":"{\n    \"cmd\": 1\n}"}
+{"level":"info","ts":"2025-03-09T00:49:53.844+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:54.845+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:55.846+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:56.846+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:57.846+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:58.847+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:49:59.847+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:50:00.848+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:50:01.849+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:50:02.849+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:50:03.849+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:50:04.849+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:50:05.850+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:50:06.850+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:50:07.850+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}
+{"level":"info","ts":"2025-03-09T00:50:08.850+0800","caller":"/home/hz/Code/go/IM/internal/service/chat/sync_queue.go:30","msg":"trysend"}

@@ -15,3 +15,4 @@ const (
 	IsConversationUpdate = "conversationUpdate"
 	IsSenderSync         = "senderSync"
 )
+

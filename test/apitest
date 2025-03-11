@@ -1,0 +1,3 @@
+
+
+curl http://localhost:10000/friend/get_friends?uid=1
