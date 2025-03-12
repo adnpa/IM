@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/adnpa/IM/pkg/common/db/mongodb"
-	"github.com/adnpa/IM/pkg/common/logger"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -16,7 +15,7 @@ const (
 	TypOfflineMsg
 	TypOfflineAck
 	TypHeartbelt
-	TypGROUP
+	TypGroup
 	TypSingle
 	TypSyncMsg
 )
@@ -35,16 +34,17 @@ type CommonMsg struct {
 
 // pk msgId
 type Message struct {
-	Id      int64   `json:"id,omitempty" form:"id"`           // 消息ID
-	Cmd     MsgType `json:"cmd,omitempty" form:"cmd"`         // 消息类型
-	From    int64   `json:"from,omitempty" form:"from"`       // 发送者ID
-	To      int64   `json:"to,omitempty" form:"to"`           // 接收者ID或群组ID
-	Media   int     `json:"media,omitempty" form:"media"`     // 媒体类型
-	Content string  `json:"content,omitempty" form:"content"` // 消息内容
-	Pic     string  `json:"pic,omitempty" form:"pic"`         // 缩略图URL
-	Url     string  `json:"url,omitempty" form:"url"`         // 服务URL
-	Memo    string  `json:"memo,omitempty" form:"memo"`       // 备注
-	Amount  int     `json:"amount,omitempty" form:"amount"`   // 数字相关，如语音长度等
+	Id       int64   `json:"id,omitempty" form:"id"`           // 消息ID
+	Cmd      MsgType `json:"cmd,omitempty" form:"cmd"`         // 消息类型
+	From     int64   `json:"from,omitempty" form:"from"`       // 发送者ID
+	To       int64   `json:"to,omitempty" form:"to"`           // 接收者ID或群组ID
+	Media    int     `json:"media,omitempty" form:"media"`     // 媒体类型
+	Content  string  `json:"content,omitempty" form:"content"` // 消息内容
+	Pic      string  `json:"pic,omitempty" form:"pic"`         // 缩略图URL
+	Url      string  `json:"url,omitempty" form:"url"`         // 服务URL
+	Memo     string  `json:"memo,omitempty" form:"memo"`       // 备注
+	Amount   int     `json:"amount,omitempty" form:"amount"`   // 数字相关，如语音长度等
+	RecverId int64
 }
 
 // 弃用，和Message合并
@@ -64,6 +64,5 @@ func GetAllMsg(id int64) ([]*Message, error) {
 			{"to": id},
 		}})
 	err := cur.All(context.Background(), &result)
-	logger.Infof("data", "11", result[0])
 	return result, err
 }

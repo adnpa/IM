@@ -25,7 +25,7 @@ func AddFriend(c *gin.Context) {
 		return
 	}
 
-	srv.AddFriend(params)
+	srv.FriendApply(params)
 
 	c.JSON(http.StatusOK, gin.H{"errCode": 0, "msg": "ok"})
 }

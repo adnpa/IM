@@ -3,6 +3,7 @@ package chat
 import (
 	"time"
 
+	"github.com/adnpa/IM/internal/service/group"
 	"github.com/adnpa/IM/internal/service/user"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/common/db/mongodb"
@@ -24,7 +25,6 @@ type MessageQueue struct {
 func (mq *MessageQueue) Product(msg *Message) {
 	mq.q.PushBack(msg)
 	logger.Info("recvMs", zap.Any("msg", mq.q))
-
 }
 
 func (mq *MessageQueue) TrySendMsg() {
@@ -36,11 +36,16 @@ func (mq *MessageQueue) TrySendMsg() {
 	msg, _ := mq.q.PeekFront()
 	user := &user.User{}
 	mongodb.GetDecode("user", bson.M{"id": msg.To}, user)
-	conn := MyServer.GetWsConn(msg.To)
+	var conn *WsConn
+	if msg.Cmd == TypGroup {
+		conn = MyServer.GetWsConn(msg.RecverId)
+	} else {
+		conn = MyServer.GetWsConn(msg.To)
+	}
 	if IsOnline(user) {
 		logger.Info("to User is online, send", zap.Any("msg", msg))
 		MyServer.SendMsg(conn, CommonMsg{
-			Cmd:    TypSingle,
+			Cmd:    msg.Cmd,
 			Single: msg,
 		})
 	} else {
@@ -54,7 +59,13 @@ func IsOnline(u *user.User) bool {
 }
 
 func (mq *MessageQueue) PopMsg() {
-	mq.q.PopFront()
+	msg, _ := mq.q.PopFront()
+	if msg.Cmd == TypGroup {
+		gm := &group.GroupMember{}
+		mongodb.GetDecode("group_member", bson.M{"uid": msg.RecverId}, gm)
+		gm.LastAck = msg.Id
+		mongodb.Update("group_member", gm)
+	}
 }
 
 func Init() {

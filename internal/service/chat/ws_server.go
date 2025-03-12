@@ -66,19 +66,15 @@ func (ws *WSServer) wsHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		} else {
-			//todo
-			//SendID := query["sendID"][0] + " " + utils.PlatformIDToName(int32(utils.StringToInt64(query["platformID"][0])))
 			SendId := query.Get("uid")
-			log.Println("========sendId", SendId)
 			newConn := &WsConn{conn, new(sync.Mutex)}
 			ws.AddWsConn(SendId, newConn)
-			// strconv.ParseInt(SendId, )
 			numId, _ := strconv.ParseInt(SendId, 10, 64)
-			logger.Infof("msg", "id", numId)
+			logger.Infof("user connect chat server", "id", numId)
 			msgs, _ := GetAllMsg(numId)
-			logger.Infof("sync msgs", msgs)
+			logger.Infof("Start to sync msgs")
 			ws.SendMsg(newConn, CommonMsg{Cmd: TypSyncMsg, Msgs: msgs})
-
+			logger.Infof("Sync msgs succ, end Login=================================")
 			go ws.readMsg(newConn)
 		}
 	} else {
@@ -123,7 +119,6 @@ func (ws *WSServer) AddWsConn(id string, c *WsConn) {
 	rwLock.Lock()
 	defer rwLock.Unlock()
 
-	//重复登录
 	if oldConn, ok := ws.userConnM[id]; ok {
 		err := oldConn.Close()
 		delete(ws.connUserM, c)
@@ -136,8 +131,7 @@ func (ws *WSServer) AddWsConn(id string, c *WsConn) {
 
 	ws.connUserM[c] = id
 	ws.userConnM[id] = c
-	log.Println("map1", ws.connUserM)
-	log.Println("map2", ws.userConnM)
+	logger.Infof("connect succ", "online users", ws.connUserM)
 }
 
 func (ws *WSServer) DelUserConn(conn *WsConn) {

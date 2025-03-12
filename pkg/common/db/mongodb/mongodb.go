@@ -75,6 +75,21 @@ func Insert(name string, data interface{}) error {
 	return err
 }
 
+func Delete(name string, filter interface{}) error {
+	ctx, cancelFunc := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancelFunc()
+	c, err := NewConn()
+	if err != nil {
+		return err
+	}
+	defer c.Close()
+
+	coll := c.delegate.Database(DB_Name).Collection(name)
+	_, err = coll.DeleteOne(ctx, filter)
+	return err
+}
+
+
 func Update(name string, data interface{}) error {
 	return nil
 }

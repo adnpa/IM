@@ -1,3 +1,16 @@
 
 
-curl http://localhost:10000/friend/get_friends?uid=1
+curl "http://localhost:10000/friend/get_friends?uid=1"
+
+curl "http://localhost:10000/friend/add_friend?uid=1"
+
+
+curl "http://localhost:10000/group/get_groups?uid=1"
+
+curl "http://localhost:10000/group/apply_group?gid=1741777196031&uid=2"
+
+
+curl "http://localhost:10000/group/?handle_apply=1"
+
+curl -X POST -H "Content-Type: application/json" -d '{"name":"MyFirstGroup"}' "http://localhost:10000/group/create_group?uid=1"
+

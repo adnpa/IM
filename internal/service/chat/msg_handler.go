@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 
+	"github.com/adnpa/IM/internal/service/group"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/common/logger"
 
@@ -35,10 +36,9 @@ func (ws *WSServer) readMsg(conn *WsConn) {
 
 func (ws *WSServer) handleMsg(conn *WsConn, data []byte) {
 	logger.Info("recv row msg", zap.Any("msg", string(data)))
-	// log.
 	msg := &Message{}
 	err := json.Unmarshal(data, msg)
-	logger.Infof("decoded", "msg", msg)
+	logger.Infof("decoded succ, begin handle")
 	if err != nil {
 		logger.Error("unmarshal", zap.Error(err))
 		return
@@ -68,7 +68,17 @@ func (ws *WSServer) handleMsg(conn *WsConn, data []byte) {
 		StoreMessage(msg)
 		// 向发送者确认服务器收到了消息
 		ws.SendMsg(conn, &CommonMsg{Cmd: TypMsgAckFromServer, Single: msg})
-	case TypGROUP:
+	case TypGroup:
+		StoreMessage(msg)
+		msg.Id = utils.NowMilliSecond()
+		users := group.GetAllGrouUser(msg.To)
+		logger.Infof("send to all group members", "members", users)
+		for _, u := range users {
+			tmp := msg
+			tmp.RecverId = u.UserId
+			TransferQueue.Product(tmp)
+		}
+		ws.SendMsg(conn, &CommonMsg{Cmd: TypMsgAckFromServer, Single: msg})
 	default:
 	}
 }

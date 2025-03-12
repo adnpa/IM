@@ -9,8 +9,7 @@ type AddFriendReq struct {
 	FriId int64 `json:"fri_id"`
 }
 
-// 直接成功，验证回复等后面做
-func (s *FriendService) AddFriend(req AddFriendReq) bool {
+func (s *FriendService) FriendApply(req AddFriendReq) bool {
 	err1 := mongodb.Insert("friend", &Friend{
 		OwnerID:  req.OwnId,
 		FriendID: req.FriId,
