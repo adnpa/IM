@@ -18,14 +18,14 @@ func main() {
 
 	authRouterGroup := r.Group("/auth")
 	{
-		authRouterGroup.POST("/register", handler.Register)
-		authRouterGroup.POST("/token", handler.Login)
+		authRouterGroup.GET("/register", handler.Register)
+		authRouterGroup.GET("/token", handler.Login)
 	}
 
 	friendGroup := r.Group("/friend")
 	{
 		friendGroup.GET("/get_friends", handler.GetFriendList)
-		friendGroup.POST("/add_friend", handler.AddFriend)
+		friendGroup.GET("/add_friend", handler.AddFriend)
 	}
 
 	groupGroup := r.Group("/group")

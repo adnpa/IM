@@ -2,6 +2,7 @@ package chat
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/adnpa/IM/pkg/common/db/mongodb"
 	"go.mongodb.org/mongo-driver/bson"
@@ -58,11 +59,15 @@ type Message struct {
 
 func GetAllMsg(id int64) ([]*Message, error) {
 	var result []*Message
-	cur, _ := mongodb.GetAll("message", bson.M{
+	cur, err := mongodb.GetAll("message", bson.M{
 		"$or": []bson.M{
 			{"from": id},
 			{"to": id},
 		}})
-	err := cur.All(context.Background(), &result)
+	if err != nil {
+		fmt.Println("ffffffffffffff")
+		return nil, nil
+	}
+	err = cur.All(context.Background(), &result)
 	return result, err
 }

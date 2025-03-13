@@ -3,6 +3,7 @@ package chat
 import (
 	"encoding/json"
 	"log"
+	"time"
 
 	"github.com/adnpa/IM/internal/service/group"
 	"github.com/adnpa/IM/internal/utils"
@@ -35,10 +36,12 @@ func (ws *WSServer) readMsg(conn *WsConn) {
 }
 
 func (ws *WSServer) handleMsg(conn *WsConn, data []byte) {
-	logger.Info("recv row msg", zap.Any("msg", string(data)))
 	msg := &Message{}
 	err := json.Unmarshal(data, msg)
-	logger.Infof("decoded succ, begin handle")
+	id := ws.GetUid(conn)
+	logger.Infof("=================msg handle start====================")
+	logger.Info("1 recv message", zap.String("source uid", id), zap.Any("msg", msg))
+
 	if err != nil {
 		logger.Error("unmarshal", zap.Error(err))
 		return
@@ -47,42 +50,44 @@ func (ws *WSServer) handleMsg(conn *WsConn, data []byte) {
 	switch msg.Cmd {
 	case TypMsgAckFromClient:
 		TransferQueue.PopMsg()
-		// mongodb.Insert("conversation", )
 	case TypOfflineAck:
-		His.PopAllMsg(msg.From)
+		HistoryMsgQueue.PopAllMsg(msg.From)
 	case TypHeartbelt:
 		ws.handleHeartbelt(conn)
 	case TypSingle:
-		// v1 使用时间戳作为id
+		if msg.To == msg.From {
+			logger.Infof("message error to == from")
+			return
+		}
 		msg.Id = utils.NowMilliSecond()
-		// todo 单聊和群聊消息结构可能不同
-		// switch m.ReqIdentifier {
-		// case constant.WSGetNewestSeq:
-		// 	ws.getSeqReq(conn, &m)
-		// default:
-		// }
-
-		// todo msg transfer service  转发队列
 		TransferQueue.Product(msg)
-		// todo msg persistent service 消息持久化服务
 		StoreMessage(msg)
-		// 向发送者确认服务器收到了消息
 		ws.SendMsg(conn, &CommonMsg{Cmd: TypMsgAckFromServer, Single: msg})
+		time.Sleep(1 * time.Second)
 	case TypGroup:
+		if msg.To == msg.From {
+			logger.Infof("message error to == from")
+			return
+		}
 		StoreMessage(msg)
 		msg.Id = utils.NowMilliSecond()
 		users := group.GetAllGrouUser(msg.To)
 		logger.Infof("send to all group members", "members", users)
+		// 对群里所有用户 复制一条消息到队列
 		for _, u := range users {
 			tmp := msg
 			tmp.RecverId = u.UserId
 			TransferQueue.Product(tmp)
 		}
 		ws.SendMsg(conn, &CommonMsg{Cmd: TypMsgAckFromServer, Single: msg})
+		time.Sleep(1 * time.Second)
+
 	default:
+		logger.Infof("unknown cmd")
 	}
 }
 
+// todo online service
 func (ws *WSServer) handleHeartbelt(conn *WsConn) {
 	// uid := ws.GetUid(conn)
 	// user := &user.User{}

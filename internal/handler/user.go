@@ -1,10 +1,16 @@
 package handler
 
 import (
+	"strconv"
+
+	"github.com/adnpa/IM/internal/service/user"
+	"github.com/adnpa/IM/pkg/common/db/mongodb"
 	"github.com/gin-gonic/gin"
 )
 
 func Register(c *gin.Context) {
+	uid, _ := strconv.ParseInt(c.Query("id"), 10, 64)
+	mongodb.Insert("user", &user.User{Id: uid})
 	// srv := &user.UserService{}
 	// utils.NowSecond()
 	// params := user.RegisterReq{}
@@ -14,7 +20,7 @@ func Register(c *gin.Context) {
 	// }
 
 	// srv.Register(params)
-	// logger.L().Info("end", zap.Any("args", pbData))
+	// logger.Info("end", zap.Any("args", pbData))
 }
 
 func Login(c *gin.Context) {

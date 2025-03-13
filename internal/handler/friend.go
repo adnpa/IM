@@ -2,8 +2,6 @@ package handler
 
 import (
 	"context"
-	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -18,12 +16,13 @@ import (
 
 func AddFriend(c *gin.Context) {
 	srv := &friend.FriendService{}
-
-	params := friend.AddFriendReq{}
-	if err := c.BindJSON(&params); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": err.Error()})
-		return
-	}
+	ownId, _ := strconv.ParseInt(c.Query("own"), 10, 64)
+	friId, _ := strconv.ParseInt(c.Query("fri"), 10, 64)
+	params := friend.AddFriendReq{OwnId: ownId, FriId: friId}
+	// if err := c.BindJSON(&params); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": err.Error()})
+	// 	return
+	// }
 
 	srv.FriendApply(params)
 
@@ -46,7 +45,6 @@ func GetFriendList(c *gin.Context) {
 	var resp GetFriendResp
 	id := c.Query("uid")
 	idNum, _ := strconv.ParseInt(id, 10, 64)
-	log.Println(idNum)
 	cur, err := mongodb.GetAll("friend", bson.M{"ownerid": idNum})
 	if err != nil {
 		logger.Error("", zap.Error(err))
@@ -55,18 +53,21 @@ func GetFriendList(c *gin.Context) {
 
 	for cur.Next(context.TODO()) {
 		var result friend.Friend
-		var u user.User
+		var u *user.User
 
 		cur.Decode(&result)
-		// logger.Infof("res", "res", result)
+		logger.Info("res", zap.Any("friend", result))
 		mongodb.GetDecode("user", bson.M{"id": result.FriendID}, &u)
-		log.Println(result)
-		tmp := FriendInfo{}
+		logger.Info("user", zap.Any("", u))
+		tmp := FriendInfo{
+			Uid:      u.Id,
+			Nickname: u.Nickname,
+		}
 		friendL = append(friendL, tmp)
-		fmt.Println(result)
 	}
 	resp.Friends = friendL
-	c.JSON(http.StatusOK, gin.H{"data": resp})
+	logger.Info("resp", zap.Any("friL", friendL))
+	c.JSON(http.StatusOK, resp)
 }
 
 func GetFriendDetail(c *gin.Context) {}

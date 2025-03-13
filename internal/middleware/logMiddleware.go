@@ -6,6 +6,7 @@ import (
 
 	"github.com/adnpa/IM/pkg/common/logger"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 func LoggerMiddleware() gin.HandlerFunc {
@@ -18,7 +19,7 @@ func LoggerMiddleware() gin.HandlerFunc {
 
 		// 将请求体重新写回，以便后续处理
 		c.Request.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
-		logger.Infof("api argues", "query args", c.Request.URL.Path, "body args", string(bodyBytes))
+		logger.Info("Api Request", zap.String("query args", c.Request.URL.Path), zap.String("body args", string(bodyBytes)))
 
 		// 继续处理请求
 		c.Next()

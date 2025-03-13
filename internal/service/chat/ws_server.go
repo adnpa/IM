@@ -8,6 +8,7 @@ import (
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/adnpa/IM/pkg/common/logger"
 	"github.com/gorilla/websocket"
+	"go.uber.org/zap"
 
 	"log"
 	"net/http"
@@ -72,7 +73,7 @@ func (ws *WSServer) wsHandler(w http.ResponseWriter, r *http.Request) {
 			numId, _ := strconv.ParseInt(SendId, 10, 64)
 			logger.Infof("user connect chat server", "id", numId)
 			msgs, _ := GetAllMsg(numId)
-			logger.Infof("Start to sync msgs")
+			logger.Info("Start to sync msgs", zap.Any("msgs:", msgs))
 			ws.SendMsg(newConn, CommonMsg{Cmd: TypSyncMsg, Msgs: msgs})
 			logger.Infof("Sync msgs succ, end Login=================================")
 			go ws.readMsg(newConn)
