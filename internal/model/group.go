@@ -1,4 +1,4 @@
-package group
+package model
 
 type GroupInfo struct {
 	Gid      int64   `json:"gid,omitempty"`
@@ -10,7 +10,7 @@ type GroupInfo struct {
 type GroupApply struct {
 	GroupId     int64
 	ApplyUserId int64
-	Flag        ApplyFlag //状态
+	// Flag        ApplyFlag //状态
 }
 
 // gid-[]Groupmember

@@ -1,0 +1,70 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+service Friend {
+  rpc GetFriendsById(GetFriendsByIdReq) returns (GetFriendsByIdResp);
+  rpc CreateFriend(CreateFriendReq) returns (CreateFriendResp);
+  rpc DeleteFriend(DeleteFriendReq) returns (DeleteFriendResp);
+  rpc UpdateFriend(UpdateFriendReq) returns (UpdateFriendResp);
+
+  rpc GetFriendApplyById(GetFriendApplyByIdReq)
+      returns (GetFriendApplyByIdResp);
+  rpc GetFriendApplyByIds(GetFriendApplyByIdsReq)
+      returns (GetFriendApplyByIdsResp);
+  rpc CreateFriendApply(CreateFriendApplyReq) returns (CreateFriendApplyResp);
+  rpc UpdateFriendApply(UpdateFriendApplyReq) returns (UpdateFriendApplyResp);
+  rpc DeleteFriendApply(DeleteFriendApplyReq) returns (DeleteFriendApplyResp);
+}
+
+message GetFriendsByIdReq { int64 ownid = 1; }
+
+message GetFriendsByIdResp { repeated FriendInfo friends = 1; }
+
+message CreateFriendReq { FriendInfo info = 1; }
+
+message CreateFriendResp {}
+
+message DeleteFriendReq {
+  int64 left = 1;
+  int64 right = 2;
+}
+
+message DeleteFriendResp {}
+
+message UpdateFriendReq { FriendInfo info = 1; }
+
+message UpdateFriendResp {}
+
+message GetFriendApplyByIdReq {}
+
+message GetFriendApplyByIdResp {}
+
+message GetFriendApplyByIdsReq {}
+
+message GetFriendApplyByIdsResp {}
+
+message CreateFriendApplyReq {}
+
+message CreateFriendApplyResp {}
+
+message UpdateFriendApplyReq {}
+
+message UpdateFriendApplyResp {}
+
+message DeleteFriendApplyReq {}
+
+message DeleteFriendApplyResp {}
+
+// -- 中间结构 --------------------------
+
+message FriendInfo {
+  int64 Owner = 1;
+  int64 Friend = 2;
+  string Comment = 3;
+}
+
+message FriendApply {
+  int64 applicant = 1;
+  int64 handler = 2;
+  uint32 flag = 3;
+}

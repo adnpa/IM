@@ -41,31 +41,7 @@ type GetFriendResp struct {
 }
 
 func GetFriendList(c *gin.Context) {
-	var friendL []FriendInfo
-	var resp GetFriendResp
-	id := c.Query("uid")
-	idNum, _ := strconv.ParseInt(id, 10, 64)
-	cur, err := mongodb.GetAll("friend", bson.M{"ownerid": idNum})
-	if err != nil {
-		logger.Error("", zap.Error(err))
-		return
-	}
-
-	for cur.Next(context.TODO()) {
-		var result friend.Friend
-		var u *user.User
-
-		cur.Decode(&result)
-		logger.Info("res", zap.Any("friend", result))
-		mongodb.GetDecode("user", bson.M{"id": result.FriendID}, &u)
-		logger.Info("user", zap.Any("", u))
-		tmp := FriendInfo{
-			Uid:      u.Id,
-			Nickname: u.Nickname,
-		}
-		friendL = append(friendL, tmp)
-	}
-	resp.Friends = friendL
+	
 	logger.Info("resp", zap.Any("friL", friendL))
 	c.JSON(http.StatusOK, resp)
 }

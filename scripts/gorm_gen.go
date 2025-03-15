@@ -1,4 +1,4 @@
-package main
+package scripts
 
 import (
 	"gorm.io/driver/mysql"

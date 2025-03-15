@@ -1,0 +1,134 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+service Group {
+  // 群聊基础信息管理
+  rpc GetGroupInfoById(GetGroupInfoByIdReq) returns (GetGroupInfoByIdResp);
+  rpc GetGroupInfoByIds(GetGroupInfoByIdsReq) returns (GetGroupInfoByIdsResp);
+  rpc CreateGroupInfo(CreateGroupInfoReq) returns (CreateGroupInfoResp);
+  rpc UpdateGroupInfo(UpdateGroupInfoReq) returns (UpdateGroupInfoResp);
+  rpc DeleteGroupInfo(DeleteGroupInfoReq) returns (DeleteGroupInfoResp);
+  // 成员管理
+  rpc GetGroupMemberById(GetGroupMemberByIdReq) returns (GetGroupMemberByIdResp);
+  rpc GetGroupMemberByIds(GetGroupMemberByIdsReq) returns (GetGroupMemberByIdsResp);
+  rpc CreateGroupMember(CreateGroupMemberReq) returns (CreateGroupMemberResp);
+  rpc UpdateGroupMember(UpdateGroupMemberReq) returns (UpdateGroupMemberResp);
+  rpc DeleteGroupMember(DeleteGroupMemberReq) returns (DeleteGroupMemberResp);
+  // 申请管理
+  rpc GetGroupApplyById(GetGroupApplyByIdReq) returns (GetGroupApplyByIdResp);
+  rpc GetGroupApplyByIds(GetGroupApplyByIdsReq) returns (GetGroupApplyByIdsResp);
+  rpc CreateGroupApply(CreateGroupApplyReq) returns (CreateGroupApplyResp);
+  rpc UpdateGroupApply(UpdateGroupApplyReq) returns (UpdateGroupApplyResp);
+  rpc DeleteGroupApply(DeleteGroupApplyReq) returns (DeleteGroupApplyResp);
+}
+message GetGroupInfoByIdReq{
+}
+
+message GetGroupInfoByIdResp{
+}
+
+message GetGroupInfoByIdsReq{
+}
+
+message GetGroupInfoByIdsResp{
+}
+
+message CreateGroupInfoReq{
+}
+
+message CreateGroupInfoResp{
+}
+
+message UpdateGroupInfoReq{
+}
+
+message UpdateGroupInfoResp{
+}
+
+message DeleteGroupInfoReq{
+}
+
+message DeleteGroupInfoResp{
+}
+
+message GetGroupMemberByIdReq{
+}
+
+message GetGroupMemberByIdResp{
+}
+
+message GetGroupMemberByIdsReq{
+}
+
+message GetGroupMemberByIdsResp{
+}
+
+message CreateGroupMemberReq{
+}
+
+message CreateGroupMemberResp{
+}
+
+message UpdateGroupMemberReq{
+}
+
+message UpdateGroupMemberResp{
+}
+
+message DeleteGroupMemberReq{
+}
+
+message DeleteGroupMemberResp{
+}
+
+message GetGroupApplyByIdReq{
+}
+
+message GetGroupApplyByIdResp{
+}
+
+message GetGroupApplyByIdsReq{
+}
+
+message GetGroupApplyByIdsResp{
+}
+
+message CreateGroupApplyReq{
+}
+
+message CreateGroupApplyResp{
+}
+
+message UpdateGroupApplyReq{
+}
+
+message UpdateGroupApplyResp{
+}
+
+message DeleteGroupApplyReq{
+}
+
+message DeleteGroupApplyResp{
+}
+
+// -- 中间结构 --------------------------
+
+message GroupInfo {
+  int64 gid = 1;
+  string name = 2;
+  int64 owner = 3;
+  string comment = 4;
+}
+
+message GroupApply {
+  int64 gid = 1;
+  int64 applicant = 2;
+  int64 handler = 3;
+  uint32 flag = 4;
+}
+
+message GroupMember {
+  int64 gid = 1;
+  int64 uid = 2;
+  int64 auth = 3;
+}

@@ -1,57 +1,80 @@
 package user
 
 import (
-	"fmt"
-	"math/rand"
+	"context"
 
-	"github.com/adnpa/IM/internal/handler/forms"
 	"github.com/adnpa/IM/internal/model"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/common/db/mongodb"
+	"github.com/adnpa/IM/pkg/common/pb"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-type UserService struct{}
-
-// todo 后面参数和返回都是proto定义的
-
-func (s *UserService) CreateUser(req forms.RegisterForm) (*model.User, error) {
-	if mongodb.Exist("user", bson.M{"mobile": req.Mobile}) {
-		return nil, fmt.Errorf("registed already")
-	}
-
-	salt := utils.RandomSalt()
-	pwd := utils.HashPassword(req.Password, salt)
-
-	newUser := &model.User{
-		Mobile: req.Mobile,
-		Passwd: pwd,
-		Token:  fmt.Sprintf("%08d", rand.Int31()),
-	}
-
-	err := mongodb.Insert("user", newUser)
-	return newUser, err
+type UserService struct {
+	pb.UnimplementedUserServer
 }
 
-func (s *UserService) GetUserByMobile(req forms.PwdLoginForm) (*model.User, error) {
-	user := &model.User{}
-	err := mongodb.GetDecode("user", bson.M{"mobile": req.Mobile}, user)
+func Model2PB(u model.User) *pb.UserInfo {
+	return &pb.UserInfo{
+		Id:       int32(u.Id),
+		PassWord: u.Passwd,
+		Nickname: u.Nickname,
+		Mobile:   u.Mobile,
+	}
+}
+
+func (s *UserService) GetUserByPage(_ context.Context, _ *pb.GetUserByPageReq) (*pb.GetUserByPageResp, error) {
+	panic("not implemented") // TODO: Implement
+}
+
+func (s *UserService) GetUserByMobile(_ context.Context, in *pb.GetUserByMobileReq) (*pb.GetUserByMobileResp, error) {
+	user := model.User{}
+	err := mongodb.GetDecode("user", bson.M{"mobile": in.Mobile}, &user)
 	if err != nil {
 		return nil, err
 	}
-
-	if req.Password != user.Passwd {
-		return nil, fmt.Errorf("password not match")
-	}
-
-	// 刷新token,安全
-	// user.Token = fmt.Sprintf("%08d", rand.Int31())
-	// mongodb.Update("user", user)
-
-	// srvUrl := discovery.GetService("chat")
-	srvUrl := ""
-	return &LoginResp{
-		Token:      user.Token,
-		ServiceUrl: srvUrl,
+	return &pb.GetUserByMobileResp{
+		Usr: Model2PB(user),
 	}, nil
+}
+
+func (s *UserService) GetUserByEmail(_ context.Context, _ *pb.GetUserByEmailReq) (*pb.GetUserByEmailResp, error) {
+	panic("not implemented") // TODO: Implement
+}
+
+func (s *UserService) GetUserById(_ context.Context, _ *pb.GetUserByIdReq) (*pb.GetUserByIdResp, error) {
+	panic("not implemented") // TODO: Implement
+}
+
+func (s *UserService) GetUserByIds(_ context.Context, _ *pb.GetUserByIdsReq) (*pb.GetUserByIdsResp, error) {
+	panic("not implemented") // TODO: Implement
+}
+
+func (s *UserService) CreateUser(_ context.Context, in *pb.CreateUserReq) (*pb.CreateUserResp, error) {
+	salt := utils.RandomSalt()
+	hashPwd := utils.HashPassword(in.PassWord, salt)
+	u := model.User{
+		Nickname: in.Nickname,
+		Mobile:   in.Mobile,
+		Salt:     string(salt),
+		Passwd:   hashPwd,
+	}
+	return &pb.CreateUserResp{}, mongodb.Insert("user", &u)
+}
+
+func (s *UserService) UpdateUser(_ context.Context, in *pb.UpdateUserReq) (*pb.UpdateUserResp, error) {
+	panic("not implemented") // TODO: Implement
+}
+
+func (s *UserService) DeleteUser(_ context.Context, in *pb.DeleteUserReq) (*pb.DeleteUserResp, error) {
+	mongodb.Delete("user", bson.M{"id": in.Id})
+	return &pb.DeleteUserResp{}, nil
+}
+
+func (s *UserService) CheckPassWord(_ context.Context, _ *pb.CheckPassWordReq) (*pb.CheckPassWordResp, error) {
+	panic("not implemented") // TODO: Implement
+}
+
+func (s *UserService) mustEmbedUnimplementedUserServer() {
+	panic("not implemented") // TODO: Implement
 }

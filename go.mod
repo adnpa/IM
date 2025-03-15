@@ -9,7 +9,7 @@ require (
 	go.etcd.io/etcd/api/v3 v3.5.17
 	go.etcd.io/etcd/client/v3 v3.5.17
 	google.golang.org/grpc v1.68.1
-	google.golang.org/protobuf v1.36.1
+	google.golang.org/protobuf v1.36.5
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gen v0.3.26
