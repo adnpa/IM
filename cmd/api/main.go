@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/adnpa/IM/internal/handler"
-	"github.com/adnpa/IM/internal/middleware"
+	"github.com/adnpa/IM/internal/middlewares"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -13,27 +13,56 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.Use(middleware.LoggerMiddleware())
+	r.Use(middlewares.LoggerMiddleware())
 	r.Use(cors.Default())
 
-	authRouterGroup := r.Group("/auth")
+	userRouterGroup := r.Group("/user")
 	{
-		authRouterGroup.GET("/register", handler.Register)
-		authRouterGroup.GET("/token", handler.Login)
+		userRouterGroup.POST("/register", handler.Register)
+		userRouterGroup.POST("/pwd_login", handler.PasswordLogin)
+
+		// todo
+		// authRouterGroup.GET("detail", middlewares.JWTAuth(), handler.GetUserDetail)
+		// authRouterGroup.PATCH("update", middlewares.JWTAuth(), handler.UpdateUser)
 	}
 
 	friendGroup := r.Group("/friend")
 	{
-		friendGroup.GET("/get_friends", handler.GetFriendList)
-		friendGroup.GET("/add_friend", handler.AddFriend)
+		friendGroup.GET("/friend_info_list", handler.GetFriendList)
+
+		// todo
+
+		// friendGroup.GET("/self_apply_list", handler.GetFriendList)
+		// friendGroup.GET("/apply_list", handler.GetFriendList)
+
+		// friendGroup.POST("/apply_add_friend", handler.AddFriend)
+		// friendGroup.POST("/handle_apply", handler.AddFriend)
+
+		// friendGroup.POST("/delete_friend", handler.AddFriend)
 	}
 
 	groupGroup := r.Group("/group")
 	{
-		groupGroup.GET("/get_groups", handler.GetGroups)
-		groupGroup.POST("/create_group", handler.CreateGroup)
-		groupGroup.GET("/apply_group", handler.ApplyGroup)
+		groupGroup.GET("/group_info_list", handler.GetGroups)
+
+		// todo
+
+		// groupGroup.POST("/create_group", handler.CreateGroup)
+		// groupGroup.POST("/delete_group", handler.CreateGroup)
+
+		// groupGroup.GET("/self_apply_list", handler.ApplyGroup)
+		// groupGroup.GET("/apply_list", handler.ApplyGroup)
+
+		// groupGroup.POST("/appoint", handler.ApplyGroup)
+		// groupGroup.POST("/handle_apply", handler.ApplyGroup)
+		// groupGroup.POST("/remove_member", handler.ApplyGroup)
+		// groupGroup.POST("/block", handler.ApplyGroup)
 	}
+
+	// searchGroup := r.Group("/search")
+	// {
+
+	// }
 
 	ginPort := flag.Int("port", 10000, "get ginServerPort from cmd,default 10000 as port")
 	flag.Parse()

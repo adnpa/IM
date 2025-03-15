@@ -4,44 +4,37 @@ import (
 	"fmt"
 	"math/rand"
 
+	"github.com/adnpa/IM/internal/handler/forms"
+	"github.com/adnpa/IM/internal/model"
+	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/common/db/mongodb"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
 type UserService struct{}
 
-type RegisterReq struct {
-	Nickname string
-	Mobile   string
-	Email    string
-	Password string
-}
+// todo 后面参数和返回都是proto定义的
 
-func (s *UserService) Register(req RegisterReq) error {
-
+func (s *UserService) CreateUser(req forms.RegisterForm) (*model.User, error) {
 	if mongodb.Exist("user", bson.M{"mobile": req.Mobile}) {
-		return fmt.Errorf("registed already")
+		return nil, fmt.Errorf("registed already")
 	}
-	newUser := &User{
-		Mobile:   req.Mobile,
-		Nickname: req.Nickname,
-		Passwd:   req.Password,
-		Token:    fmt.Sprintf("%08d", rand.Int31()),
+
+	salt := utils.RandomSalt()
+	pwd := utils.HashPassword(req.Password, salt)
+
+	newUser := &model.User{
+		Mobile: req.Mobile,
+		Passwd: pwd,
+		Token:  fmt.Sprintf("%08d", rand.Int31()),
 	}
-	return mongodb.Insert("user", newUser)
+
+	err := mongodb.Insert("user", newUser)
+	return newUser, err
 }
 
-type LoginReq struct {
-	Mobile   string
-	Password string
-}
-type LoginResp struct {
-	Token      string
-	ServiceUrl string
-}
-
-func (s *UserService) Login(req LoginReq) (*LoginResp, error) {
-	user := &User{}
+func (s *UserService) GetUserByMobile(req forms.PwdLoginForm) (*model.User, error) {
+	user := &model.User{}
 	err := mongodb.GetDecode("user", bson.M{"mobile": req.Mobile}, user)
 	if err != nil {
 		return nil, err
@@ -52,8 +45,8 @@ func (s *UserService) Login(req LoginReq) (*LoginResp, error) {
 	}
 
 	// 刷新token,安全
-	user.Token = fmt.Sprintf("%08d", rand.Int31())
-	mongodb.Update("user", user)
+	// user.Token = fmt.Sprintf("%08d", rand.Int31())
+	// mongodb.Update("user", user)
 
 	// srvUrl := discovery.GetService("chat")
 	srvUrl := ""

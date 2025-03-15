@@ -9,7 +9,7 @@ curl "http://localhost:10000/friend/add_friend?own=1&fri=2"
 
 curl "http://localhost:10000/group/get_groups?uid=1"
 
-curl "http://localhost:10000/group/apply_group?gid=1741777196031&uid=2"
+curl "http://localhost:10000/group/apply_group?gid=1741777196031&uid=1"
 
 
 curl "http://localhost:10000/group/?handle_apply=1"

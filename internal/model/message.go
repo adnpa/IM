@@ -1,17 +1,9 @@
-package chat
-
-import (
-	"context"
-	"fmt"
-
-	"github.com/adnpa/IM/pkg/common/db/mongodb"
-	"go.mongodb.org/mongo-driver/bson"
-)
+package model
 
 type MsgType int
 
 const (
-	TypMsgAckFromServer MsgType = iota
+	TypMsgAckFromServerForSender MsgType = iota
 	TypMsgAckFromClient
 	TypOfflineMsg
 	TypOfflineAck
@@ -19,6 +11,7 @@ const (
 	TypGroup
 	TypSingle
 	TypSyncMsg
+	TypMsgAckFromServerForRecver
 )
 
 type MediaType int
@@ -30,7 +23,7 @@ const (
 type CommonMsg struct {
 	Cmd    MsgType
 	Single *Message
-	Msgs   []*Message
+	Msgs   []Message
 }
 
 // pk msgId
@@ -45,7 +38,8 @@ type Message struct {
 	Url      string  `json:"url,omitempty" form:"url"`         // 服务URL
 	Memo     string  `json:"memo,omitempty" form:"memo"`       // 备注
 	Amount   int     `json:"amount,omitempty" form:"amount"`   // 数字相关，如语音长度等
-	RecverId int64
+	Seq      int64   `json:"seq,omitempty"`
+	RecverId int64   `json:"recver_id,omitempty"`
 }
 
 // 弃用，和Message合并
@@ -56,18 +50,3 @@ type Message struct {
 // 	From       int64
 // 	Content    string
 // }
-
-func GetAllMsg(id int64) ([]*Message, error) {
-	var result []*Message
-	cur, err := mongodb.GetAll("message", bson.M{
-		"$or": []bson.M{
-			{"from": id},
-			{"to": id},
-		}})
-	if err != nil {
-		fmt.Println("ffffffffffffff")
-		return nil, nil
-	}
-	err = cur.All(context.Background(), &result)
-	return result, err
-}

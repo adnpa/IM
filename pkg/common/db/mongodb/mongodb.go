@@ -12,7 +12,6 @@ import (
 
 const (
 	DB_Name = "im"
-	// CollectionChat = "msg"
 )
 
 // var conn *Conn
@@ -89,16 +88,19 @@ func Delete(name string, filter interface{}) error {
 	return err
 }
 
+func Update(name string, filter interface{}, update interface{}) error {
+	ctx, cancelFunc := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancelFunc()
+	c, err := NewConn()
+	if err != nil {
+		return err
+	}
+	defer c.Close()
 
-func Update(name string, data interface{}) error {
-	return nil
+	coll := c.delegate.Database(DB_Name).Collection(name)
+	_, err = coll.UpdateOne(ctx, filter, update)
+	return err
 }
-
-// func
-
-// z_db_lib:handle(){
-
-// }
 
 type Conn struct {
 	delegate *mongo.Client

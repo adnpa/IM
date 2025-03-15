@@ -1,13 +1,14 @@
 package chat
 
 import (
+	"github.com/adnpa/IM/internal/model"
 	"github.com/adnpa/IM/internal/service/conversation"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/common/db/mongodb"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func StoreMessage(msg *Message) error {
+func StoreMessage(msg *model.Message) error {
 	oldConv := &conversation.Conversation{}
 	err := mongodb.GetDecode("conversation", bson.M{
 		"$or": []bson.M{

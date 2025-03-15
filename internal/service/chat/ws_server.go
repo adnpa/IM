@@ -4,6 +4,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/adnpa/IM/internal/model"
+	"github.com/adnpa/IM/internal/service/offline"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/adnpa/IM/pkg/common/logger"
@@ -27,22 +29,24 @@ func init() {
 type WsConn struct {
 	*websocket.Conn
 	w *sync.Mutex
+
+	Seq int64
 }
 
 type WSServer struct {
 	wsAddr     string
 	maxConnNum int
 	upgrader   *websocket.Upgrader
-	connUserM  map[*WsConn]string
-	userConnM  map[string]*WsConn
+	mapConnUid map[*WsConn]string
+	mapUidConn map[string]*WsConn
 }
 
 func (ws *WSServer) Init(wsPort int) {
 	ip := utils.ServerIP
 	ws.wsAddr = ip + ":" + utils.IntToString(wsPort)
 	ws.maxConnNum = config.Config.LongConnSvr.WebsocketMaxConnNum
-	ws.connUserM = make(map[*WsConn]string)
-	ws.userConnM = make(map[string]*WsConn)
+	ws.mapConnUid = make(map[*WsConn]string)
+	ws.mapUidConn = make(map[string]*WsConn)
 	ws.upgrader = &websocket.Upgrader{
 		HandshakeTimeout: time.Duration(config.Config.LongConnSvr.WebsocketTimeOut) * time.Second,
 		ReadBufferSize:   config.Config.LongConnSvr.WebsocketMaxMsgLen,
@@ -68,13 +72,14 @@ func (ws *WSServer) wsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			SendId := query.Get("uid")
-			newConn := &WsConn{conn, new(sync.Mutex)}
+			newConn := &WsConn{conn, new(sync.Mutex), 1}
 			ws.AddWsConn(SendId, newConn)
 			numId, _ := strconv.ParseInt(SendId, 10, 64)
 			logger.Infof("user connect chat server", "id", numId)
-			msgs, _ := GetAllMsg(numId)
+			// 全量离线消息推送
+			msgs := offline.GetOfflineMsg(numId)
 			logger.Info("Start to sync msgs", zap.Any("msgs:", msgs))
-			ws.SendMsg(newConn, CommonMsg{Cmd: TypSyncMsg, Msgs: msgs})
+			ws.SendMsg(newConn, model.CommonMsg{Cmd: model.TypSyncMsg, Msgs: msgs})
 			logger.Infof("Sync msgs succ, end Login=================================")
 			go ws.readMsg(newConn)
 		}
@@ -100,65 +105,6 @@ func (ws *WSServer) headerCheck(w http.ResponseWriter, r *http.Request) bool {
 	// 	return false
 	// }
 	return true
-}
-
-// -------------------------------------------------------
-// 连接管理
-// -------------------------------------------------------
-func (ws *WSServer) GetWsConn(uid int64) *WsConn {
-	rwLock.RLock()
-	defer rwLock.RUnlock()
-
-	strUid := strconv.FormatInt(uid, 10)
-	if conn, ok := ws.userConnM[strUid]; ok {
-		return conn
-	}
-	return nil
-}
-
-func (ws *WSServer) AddWsConn(id string, c *WsConn) {
-	rwLock.Lock()
-	defer rwLock.Unlock()
-
-	if oldConn, ok := ws.userConnM[id]; ok {
-		err := oldConn.Close()
-		delete(ws.connUserM, c)
-		if err != nil {
-			log.Println("close old conn error:", err)
-		}
-	} else {
-		log.Println("first login", id)
-	}
-
-	ws.connUserM[c] = id
-	ws.userConnM[id] = c
-	logger.Infof("connect succ", "online users", ws.connUserM)
-}
-
-func (ws *WSServer) DelUserConn(conn *WsConn) {
-	rwLock.Lock()
-	defer rwLock.Unlock()
-
-	if uid, ok := ws.connUserM[conn]; ok {
-		if _, ok = ws.userConnM[uid]; ok {
-			delete(ws.userConnM, uid)
-		}
-		delete(ws.connUserM, conn)
-	}
-	err := conn.Close()
-	if err != nil {
-		log.Println("close conn error:", err)
-	}
-}
-
-func (ws *WSServer) GetUid(conn *WsConn) string {
-	rwLock.RLock()
-	defer rwLock.RUnlock()
-
-	if conn, ok := ws.connUserM[conn]; ok {
-		return conn
-	}
-	return ""
 }
 
 // -------------------------------------------------------

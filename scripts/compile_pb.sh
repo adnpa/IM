@@ -8,9 +8,7 @@ OUTPUT_DIR="../pb"
 
 cd "$PROTO_DIR"
 
-# 循环遍历目录中的所有 .proto 文件
 for proto_file in *.proto; do
-    # 检查文件是否存在
     if [ -f "$proto_file" ]; then
         echo "Compiling $proto_file..."
         protoc --go_out="$OUTPUT_DIR" --go-grpc_out="$OUTPUT_DIR" -I="$PROTO_DIR" "$proto_file"

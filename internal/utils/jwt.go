@@ -1,12 +1,11 @@
 package utils
 
 import (
+	"time"
+
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/golang-jwt/jwt/v5"
-	"time"
 )
-
-//https://oauth.net/2/
 
 type Claims struct {
 	UID      string
@@ -19,10 +18,9 @@ func secret() jwt.Keyfunc {
 	return func(token *jwt.Token) (interface{}, error) { return []byte(config.Config.Jwt.Secret), nil }
 }
 
-func BuildClaims(uid string, platform int32, ttl int64) Claims {
+func BuildClaims(uid string, ttl int64) Claims {
 	claims := Claims{
-		UID:      uid,
-		Platform: platform,
+		UID: uid,
 	}
 
 	if ttl > 0 {
@@ -34,8 +32,8 @@ func BuildClaims(uid string, platform int32, ttl int64) Claims {
 	return claims
 }
 
-func GenerateToken(uid string, platform int32) (string, int64, error) {
-	claims := BuildClaims(uid, platform, config.Config.Jwt.Expire)
+func GenerateToken(uid string) (string, int64, error) {
+	claims := BuildClaims(uid, config.Config.Jwt.Expire)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(config.Config.Jwt.Secret)
 	return tokenString, config.Config.Jwt.Expire, err
@@ -55,7 +53,7 @@ func ParseToken(tokenString string) (*Claims, error) {
 
 	//仅一端登录
 	//允许多端登录
-
+	// token.Claims.GetExpirationTime()
 	return nil, nil
 }
 

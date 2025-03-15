@@ -1,36 +1,75 @@
 package handler
 
 import (
+	"net/http"
 	"strconv"
 
+	"github.com/adnpa/IM/internal/constant"
+	"github.com/adnpa/IM/internal/handler/forms"
 	"github.com/adnpa/IM/internal/service/user"
-	"github.com/adnpa/IM/pkg/common/db/mongodb"
+	"github.com/adnpa/IM/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func Register(c *gin.Context) {
-	uid, _ := strconv.ParseInt(c.Query("id"), 10, 64)
-	mongodb.Insert("user", &user.User{Id: uid})
-	// srv := &user.UserService{}
-	// utils.NowSecond()
-	// params := user.RegisterReq{}
-	// if err := c.BindJSON(&params); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": err.Error()})
-	// 	return
-	// }
+	form := forms.RegisterForm{}
+	if err := c.ShouldBind(&form); err != nil {
+		c.JSON(http.StatusInternalServerError, ErrInfo(constant.ErrArgs))
+		return
+	}
 
-	// srv.Register(params)
-	// logger.Info("end", zap.Any("args", pbData))
+	//todo validate code
+
+	srv := &user.UserService{}
+	user, err := srv.CreateUser(form)
+	if err != nil {
+		c.JSON(http.StatusOK, ErrInfo(constant.UserExist))
+		return
+	}
+
+	token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(user.Id, 10))
+	if err != nil {
+		c.JSON(http.StatusOK, ErrInfo(constant.TokenGenErr))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"id":     user.Id,
+		"token":  token,
+		"expire": expiredAt,
+	})
 }
 
-func Login(c *gin.Context) {
-	// srv := &user.UserService{}
+func PasswordLogin(c *gin.Context) {
+	form := forms.PwdLoginForm{}
+	if err := c.ShouldBind(&form); err != nil {
+		c.JSON(http.StatusInternalServerError, ErrInfo(constant.ErrArgs))
+		return
+	}
 
-	// params := user.LoginReq{}
-	// if err := c.BindJSON(&params); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"errCode": 400, "errMsg": err.Error()})
-	// 	return
-	// }
+	// todo 验证码
 
-	// srv.Login(params)
+	srv := &user.UserService{}
+	user, err := srv.GetUserByMobile(form)
+	if err != nil {
+		c.JSON(http.StatusOK, ErrInfo(constant.UserNotExist))
+		return
+	}
+
+	if utils.DoPasswordsMatch(user.Passwd, form.Password, []byte(user.Salt)) {
+		token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(user.Id, 10))
+		if err != nil {
+			c.JSON(http.StatusOK, ErrInfo(constant.TokenGenErr))
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"id":     user.Id,
+			"token":  token,
+			"expire": expiredAt,
+		})
+	}
+	c.JSON(http.StatusOK, ErrInfo(constant.PasswordNotMatch))
 }
+
+// helper
