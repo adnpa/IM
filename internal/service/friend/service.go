@@ -52,6 +52,7 @@ func (s *FriendService) CreateFriend(_ context.Context, in *pb.CreateFriendReq) 
 }
 
 func (s *FriendService) DeleteFriend(_ context.Context, _ *pb.DeleteFriendReq) (*pb.DeleteFriendResp, error) {
+	// mongodb.Delete("friend", "")
 	panic("not implemented") // TODO: Implement
 }
 

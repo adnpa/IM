@@ -37,6 +37,7 @@ type UserClient interface {
 	GetUserByPage(ctx context.Context, in *GetUserByPageReq, opts ...grpc.CallOption) (*GetUserByPageResp, error)
 	GetUserByMobile(ctx context.Context, in *GetUserByMobileReq, opts ...grpc.CallOption) (*GetUserByMobileResp, error)
 	GetUserByEmail(ctx context.Context, in *GetUserByEmailReq, opts ...grpc.CallOption) (*GetUserByEmailResp, error)
+	// rpc GetUserByUsername(GetUserByEmailReq) returns (GetUserByEmailResp);
 	GetUserById(ctx context.Context, in *GetUserByIdReq, opts ...grpc.CallOption) (*GetUserByIdResp, error)
 	GetUserByIds(ctx context.Context, in *GetUserByIdsReq, opts ...grpc.CallOption) (*GetUserByIdsResp, error)
 	CreateUser(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*CreateUserResp, error)
@@ -150,6 +151,7 @@ type UserServer interface {
 	GetUserByPage(context.Context, *GetUserByPageReq) (*GetUserByPageResp, error)
 	GetUserByMobile(context.Context, *GetUserByMobileReq) (*GetUserByMobileResp, error)
 	GetUserByEmail(context.Context, *GetUserByEmailReq) (*GetUserByEmailResp, error)
+	// rpc GetUserByUsername(GetUserByEmailReq) returns (GetUserByEmailResp);
 	GetUserById(context.Context, *GetUserByIdReq) (*GetUserByIdResp, error)
 	GetUserByIds(context.Context, *GetUserByIdsReq) (*GetUserByIdsResp, error)
 	CreateUser(context.Context, *CreateUserReq) (*CreateUserResp, error)

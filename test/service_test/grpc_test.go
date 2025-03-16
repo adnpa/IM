@@ -1,4 +1,4 @@
-package grpctest
+package service_test
 
 import (
 	"context"

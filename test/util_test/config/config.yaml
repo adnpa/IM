@@ -1,0 +1,67 @@
+serverip: 127.0.0.1
+serverversion: 1.0.0
+
+etcd:
+  etcdSchema: goIM
+  etcdAddr: [ 192.168.1.129:2379 ]
+
+
+mysql:
+  dbMysqlAddress: [ 192.168.1.129:3306 ]
+  dbMysqlUserName: root
+  dbMysqlPassword: root
+  dbMysqlDatabaseName: goim
+  dbTableName: eMsg
+  dbMsgTableNum: 1
+  dbMaxOpenConns: 20
+  dbMaxIdleConns: 10
+  dbMaxLifeTime: 120
+
+mongo:
+  dbAddress: [ 192.168.1.129:27017 ]
+  dbDirect: false
+  dbTimeout: 10
+  dbDatabase: 
+  dbSource: admin
+  dbUserName:
+  dbPassword:
+  dbMaxPoolSize: 20
+  dbRetainChatRecords: 7
+
+jwt:
+  secret: im
+  expire: 604800 #    7*24*60*60
+
+
+rpcport: #rpc服务端口 默认即可
+  UserPort: [ 10100 ]
+  FriendPort: [ 10200 ]
+  OfflineMessagePort: [ 10300 ]
+  OnlineRelayPort: [ 10400 ]
+  GroupPort: [ 10500 ]
+  AuthPort: [ 10600 ]
+  PushPort: [ 10700 ]
+  StatisticsPort: [ 10800 ]
+  MessageCmsPort: [ 10900 ]
+  AdminCmsPort: [ 11000 ]
+  c2c:
+    callbackBeforeSendMsg:
+      switch: false
+      timeoutStrategy: 1 #1:send
+    callbackAfterSendMsg:
+      switch: false
+  state:
+    stateChange:
+      switch: false
+
+rpcregistername: #rpc注册服务名，默认即可
+  UserName: User
+  FriendName: Friend
+  OfflineMessageName: OfflineMessage
+  PushName: Push
+  OnlineMessageRelayName: OnlineMessageRelay
+  GroupName: Group
+  AuthName: Auth
+  StatisticsName: Statistics
+  MessageCMSName: MessageCMS
+  AdminCMSName: AdminCMS

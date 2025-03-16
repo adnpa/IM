@@ -1,0 +1,9 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+
+message common_msg{
+    string version = 1;
+
+    bytes body = 4; 
+}

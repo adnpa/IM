@@ -5,7 +5,7 @@
 
 PROJECT_ROOT="/home/hz/Code/go/IM"
 PROTO_DIR="$PROJECT_ROOT/proto"
-OUTPUT_DIR="$PROJECT_ROOT/internal/api"
+OUTPUT_DIR="$PROJECT_ROOT/pkg/common/pb"
 
 cd "$PROTO_DIR"
 # protoc --proto_path=proto --go_out=../internal/api hello.proto

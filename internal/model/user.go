@@ -1,6 +1,8 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 type Sex int
 
@@ -11,17 +13,18 @@ const (
 )
 
 type User struct {
-	Id         int64
-	Mobile     string
-	Passwd     string
-	Avatar     string
-	Sex        Sex
-	Nickname   string
-	Salt       string
-	OnlineTime int64 //上线时间
-	Token      string
-	Memo       string
-	Createat   time.Time
+	Id         int64     `json:"id,omitempty"`
+	Mobile     string    `json:"mobile,omitempty"`
+	Email      string    `json:"email,omitempty"`
+	Passwd     string    `json:"passwd,omitempty"`
+	Salt       []byte    `json:"salt,omitempty"`
+	Nickname   string    `json:"nickname,omitempty"`
+	Avatar     string    `json:"avatar,omitempty"`
+	Sex        Sex       `json:"sex,omitempty"`
+	OnlineTime int64     `json:"online_time,omitempty"` //上线时间
+	Token      string    `json:"token,omitempty"`
+	Memo       string    `json:"memo,omitempty"`
+	Createat   time.Time `json:"createat,omitempty"`
 }
 
 // type User struct {

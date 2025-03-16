@@ -38,12 +38,16 @@ func (s *UserService) GetUserByMobile(_ context.Context, in *pb.GetUserByMobileR
 	}, nil
 }
 
-func (s *UserService) GetUserByEmail(_ context.Context, _ *pb.GetUserByEmailReq) (*pb.GetUserByEmailResp, error) {
-	panic("not implemented") // TODO: Implement
+func (s *UserService) GetUserByEmail(_ context.Context, in *pb.GetUserByEmailReq) (*pb.GetUserByEmailResp, error) {
+	u := model.User{}
+	mongodb.GetDecode("user", bson.M{"email": in.Email}, &u)
+	return &pb.GetUserByEmailResp{Usr: &pb.UserInfo{PassWord: u.Passwd, Salt: u.Salt}}, nil
 }
 
-func (s *UserService) GetUserById(_ context.Context, _ *pb.GetUserByIdReq) (*pb.GetUserByIdResp, error) {
-	panic("not implemented") // TODO: Implement
+func (s *UserService) GetUserById(_ context.Context, in *pb.GetUserByIdReq) (*pb.GetUserByIdResp, error) {
+	u := model.User{}
+	mongodb.GetDecode("user", bson.M{"id": in.Id}, &u)
+	return &pb.GetUserByIdResp{Usr: &pb.UserInfo{PassWord: u.Passwd, Salt: u.Salt}}, nil
 }
 
 func (s *UserService) GetUserByIds(_ context.Context, _ *pb.GetUserByIdsReq) (*pb.GetUserByIdsResp, error) {
@@ -52,13 +56,15 @@ func (s *UserService) GetUserByIds(_ context.Context, _ *pb.GetUserByIdsReq) (*p
 
 func (s *UserService) CreateUser(_ context.Context, in *pb.CreateUserReq) (*pb.CreateUserResp, error) {
 	salt := utils.RandomSalt()
-	hashPwd := utils.HashPassword(in.PassWord, salt)
+	hashPwd := utils.HashPassword(in.Password, salt)
 	u := model.User{
 		Nickname: in.Nickname,
 		Mobile:   in.Mobile,
-		Salt:     string(salt),
+		Email:    in.Email,
+		Salt:     salt,
 		Passwd:   hashPwd,
 	}
+	// logger.Info("", zap.Any("", u))
 	return &pb.CreateUserResp{}, mongodb.Insert("user", &u)
 }
 
@@ -71,8 +77,10 @@ func (s *UserService) DeleteUser(_ context.Context, in *pb.DeleteUserReq) (*pb.D
 	return &pb.DeleteUserResp{}, nil
 }
 
-func (s *UserService) CheckPassWord(_ context.Context, _ *pb.CheckPassWordReq) (*pb.CheckPassWordResp, error) {
-	panic("not implemented") // TODO: Implement
+func (s *UserService) CheckPassWord(_ context.Context, in *pb.CheckPassWordReq) (*pb.CheckPassWordResp, error) {
+	return &pb.CheckPassWordResp{
+		Match: utils.DoPasswordsMatch(in.EncryptedPassword, in.Password, in.Salt),
+	}, nil
 }
 
 func (s *UserService) mustEmbedUnimplementedUserServer() {

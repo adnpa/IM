@@ -6,6 +6,7 @@ service User {
   rpc GetUserByPage(GetUserByPageReq) returns (GetUserByPageResp);
   rpc GetUserByMobile(GetUserByMobileReq) returns (GetUserByMobileResp);
   rpc GetUserByEmail(GetUserByEmailReq) returns (GetUserByEmailResp);
+  // rpc GetUserByUsername(GetUserByEmailReq) returns (GetUserByEmailResp);
   rpc GetUserById(GetUserByIdReq) returns (GetUserByIdResp);
   rpc GetUserByIds(GetUserByIdsReq) returns (GetUserByIdsResp);
   rpc CreateUser(CreateUserReq) returns (CreateUserResp);
@@ -47,9 +48,10 @@ message CreateUserReq {
   string nickname = 1;
   string password = 2;
   string mobile = 3;
+  string email = 4;
 }
 
-message CreateUserResp {}
+message CreateUserResp { int64 uid = 1; }
 
 message UpdateUserReq {
   int32 id = 1;
@@ -67,19 +69,20 @@ message DeleteUserResp {}
 message CheckPassWordReq {
   string password = 1;
   string encryptedPassword = 2;
+  bytes salt = 3;
 }
 
 message CheckPassWordResp { bool match = 1; }
-
 
 // -- 中间结构 ------------------------------
 
 message UserInfo {
   int32 id = 1;
   string passWord = 2;
-  string mobile = 3;
-  string nickname = 4;
-  uint64 birthDay = 5;
-  string gender = 6;
-  int32 role = 7;
+  bytes salt = 3;
+  string mobile = 4;
+  string nickname = 5;
+  uint64 birthDay = 6;
+  string gender = 7;
+  int32 role = 8;
 }

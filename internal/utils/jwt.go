@@ -35,7 +35,7 @@ func BuildClaims(uid string, ttl int64) Claims {
 func GenerateToken(uid string) (string, int64, error) {
 	claims := BuildClaims(uid, config.Config.Jwt.Expire)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(config.Config.Jwt.Secret)
+	tokenString, err := token.SignedString([]byte(config.Config.Jwt.Secret))
 	return tokenString, config.Config.Jwt.Expire, err
 }
 

@@ -3,9 +3,7 @@ package group
 import (
 	"context"
 
-	"github.com/adnpa/IM/pkg/common/db/mongodb"
 	"github.com/adnpa/IM/pkg/common/pb"
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 // s *GroupService pb.GroupServer
@@ -79,15 +77,15 @@ func (s *GroupService) mustEmbedUnimplementedGroupServer() {
 	panic("not implemented") // TODO: Implement
 }
 
-func (s *GroupService) CreateGroup(info *GroupInfo) {
-	mongodb.Insert("group_info", info)
-}
+// func (s *GroupService) CreateGroup(info *GroupInfo) {
+// 	mongodb.Insert("group_info", info)
+// }
 
-func (s *GroupService) Disband(gid int64) {
-	mongodb.Delete("group_info", bson.M{"id": gid})
-}
+// func (s *GroupService) Disband(gid int64) {
+// 	mongodb.Delete("group_info", bson.M{"id": gid})
+// }
 
-func (s *GroupService) GroupApply() {}
+// func (s *GroupService) GroupApply() {}
 
 // type ApplyFlag int64
 

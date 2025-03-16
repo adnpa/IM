@@ -1,14 +1,20 @@
 package handler
 
 import (
+	"context"
+	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/adnpa/IM/internal/constant"
 	"github.com/adnpa/IM/internal/handler/forms"
-	"github.com/adnpa/IM/internal/service/user"
 	"github.com/adnpa/IM/internal/utils"
+	"github.com/adnpa/IM/pkg/common/logger"
+	"github.com/adnpa/IM/pkg/common/pb"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func Register(c *gin.Context) {
@@ -20,21 +26,35 @@ func Register(c *gin.Context) {
 
 	//todo validate code
 
-	srv := &user.UserService{}
-	user, err := srv.CreateUser(form)
+	// todo 简化--------------------------------------------------
+	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		c.JSON(http.StatusOK, ErrInfo(constant.UserExist))
-		return
+		log.Fatalf("did not connect: %v", err)
 	}
+	defer conn.Close()
+	cli := pb.NewUserClient(conn)
 
-	token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(user.Id, 10))
+	resp, err := cli.CreateUser(context.Background(), &pb.CreateUserReq{
+		Nickname: form.Username,
+		Mobile:   form.Mobile,
+		Email:    form.Email,
+		Password: form.Password,
+	})
 	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer conn.Close()
+	// --------------------------------------------------------
+
+	token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(resp.Uid, 10))
+	if err != nil {
+		logger.Error("gen token error", zap.Error(err))
 		c.JSON(http.StatusOK, ErrInfo(constant.TokenGenErr))
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"id":     user.Id,
+		"id":     resp.Uid,
 		"token":  token,
 		"expire": expiredAt,
 	})
@@ -49,27 +69,41 @@ func PasswordLogin(c *gin.Context) {
 
 	// todo 验证码
 
-	srv := &user.UserService{}
-	user, err := srv.GetUserByMobile(form)
+	// todo 简化--------------------------------------------------
+	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer conn.Close()
+	cli := pb.NewUserClient(conn)
+
+	uResp, err := cli.GetUserByEmail(context.Background(), &pb.GetUserByEmailReq{Email: form.Email})
 	if err != nil {
 		c.JSON(http.StatusOK, ErrInfo(constant.UserNotExist))
 		return
 	}
-
-	if utils.DoPasswordsMatch(user.Passwd, form.Password, []byte(user.Salt)) {
-		token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(user.Id, 10))
-		if err != nil {
-			c.JSON(http.StatusOK, ErrInfo(constant.TokenGenErr))
-			return
-		}
-
-		c.JSON(http.StatusOK, gin.H{
-			"id":     user.Id,
-			"token":  token,
-			"expire": expiredAt,
-		})
+	resp, err := cli.CheckPassWord(context.Background(), &pb.CheckPassWordReq{
+		Password:          form.Password,
+		EncryptedPassword: uResp.Usr.PassWord,
+		Salt:              uResp.Usr.Salt})
+	if err != nil || !resp.Match {
+		c.JSON(http.StatusOK, ErrInfo(constant.UserNotExist))
+		return
 	}
-	c.JSON(http.StatusOK, ErrInfo(constant.PasswordNotMatch))
+	// --------------------------------------------------------
+
+	token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(int64(uResp.Usr.Id), 10))
+	if err != nil {
+		logger.Error("gen token error", zap.Error(err))
+		c.JSON(http.StatusOK, ErrInfo(constant.TokenGenErr))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"id":     uResp.Usr.Id,
+		"token":  token,
+		"expire": expiredAt,
+	})
 }
 
 // helper
