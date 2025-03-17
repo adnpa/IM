@@ -10,17 +10,18 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-type UserService struct {
-	pb.UnimplementedUserServer
-}
-
 func Model2PB(u model.User) *pb.UserInfo {
 	return &pb.UserInfo{
 		Id:       int32(u.Id),
 		PassWord: u.Passwd,
 		Nickname: u.Nickname,
 		Mobile:   u.Mobile,
+		Email:    u.Email,
 	}
+}
+
+type UserService struct {
+	pb.UnimplementedUserServer
 }
 
 func (s *UserService) GetUserByPage(_ context.Context, _ *pb.GetUserByPageReq) (*pb.GetUserByPageResp, error) {
@@ -41,13 +42,13 @@ func (s *UserService) GetUserByMobile(_ context.Context, in *pb.GetUserByMobileR
 func (s *UserService) GetUserByEmail(_ context.Context, in *pb.GetUserByEmailReq) (*pb.GetUserByEmailResp, error) {
 	u := model.User{}
 	mongodb.GetDecode("user", bson.M{"email": in.Email}, &u)
-	return &pb.GetUserByEmailResp{Usr: &pb.UserInfo{PassWord: u.Passwd, Salt: u.Salt}}, nil
+	return &pb.GetUserByEmailResp{Usr: Model2PB(u)}, nil
 }
 
 func (s *UserService) GetUserById(_ context.Context, in *pb.GetUserByIdReq) (*pb.GetUserByIdResp, error) {
 	u := model.User{}
 	mongodb.GetDecode("user", bson.M{"id": in.Id}, &u)
-	return &pb.GetUserByIdResp{Usr: &pb.UserInfo{PassWord: u.Passwd, Salt: u.Salt}}, nil
+	return &pb.GetUserByIdResp{Usr: Model2PB(u)}, nil
 }
 
 func (s *UserService) GetUserByIds(_ context.Context, _ *pb.GetUserByIdsReq) (*pb.GetUserByIdsResp, error) {
@@ -64,7 +65,6 @@ func (s *UserService) CreateUser(_ context.Context, in *pb.CreateUserReq) (*pb.C
 		Salt:     salt,
 		Passwd:   hashPwd,
 	}
-	// logger.Info("", zap.Any("", u))
 	return &pb.CreateUserResp{}, mongodb.Insert("user", &u)
 }
 

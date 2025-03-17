@@ -3,9 +3,9 @@
         "path": "/usr/local/bin/protoc",
         "compile_on_save": false,
         "options": [
-            "--proto_path=proto",
-            "--go_out=${workspaceRoot}/pkg/common/pb",
-            "--go-grpc_out=${workspaceRoot}/pkg/common/pb"
+            "--proto_path=api",
+            "--go_out=api/pb",
+            "--go-grpc_out=api/pb"
         ]
     }
 }

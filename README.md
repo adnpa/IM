@@ -18,3 +18,13 @@ http
 
 ws
 聊天
+
+
+注册中心 consul
+配置中心 nacos
+
+数据 
+聊天数据 mongodb
+缓存 redis
+
+

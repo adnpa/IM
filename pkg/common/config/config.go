@@ -1,40 +1,11 @@
 package config
 
-import (
-	"io"
-	"os"
-
-	"gopkg.in/yaml.v3"
-)
-
 var Config config
 
 type config struct {
 	ServerIP      string `yaml:"serverip"`
 	ServerVersion string `yaml:"serverversion"`
 
-	Mysql struct {
-		DBAddress      []string `yaml:"dbMysqlAddress"`
-		DBUserName     string   `yaml:"dbMysqlUserName"`
-		DBPassword     string   `yaml:"dbMysqlPassword"`
-		DBDatabaseName string   `yaml:"dbMysqlDatabaseName"`
-		DBTableName    string   `yaml:"DBTableName"`
-		DBMsgTableNum  int      `yaml:"dbMsgTableNum"`
-		DBMaxOpenConns int      `yaml:"dbMaxOpenConns"`
-		DBMaxIdleConns int      `yaml:"dbMaxIdleConns"`
-		DBMaxLifeTime  int      `yaml:"dbMaxLifeTime"`
-	}
-	Mongo struct {
-		DBAddress           []string `yaml:"dbAddress"`
-		DBDirect            bool     `yaml:"dbDirect"`
-		DBTimeout           int      `yaml:"dbTimeout"`
-		DBDatabase          string   `yaml:"dbDatabase"`
-		DBSource            string   `yaml:"dbSource"`
-		DBUserName          string   `yaml:"dbUserName"`
-		DBPassword          string   `yaml:"dbPassword"`
-		DBMaxPoolSize       int      `yaml:"dbMaxPoolSize"`
-		DBRetainChatRecords int      `yaml:"dbRetainChatRecords"`
-	}
 	Etcd struct {
 		EtcdSchema string   `yaml:"etcdSchema"`
 		EtcdAddr   []string `yaml:"etcdAddr"`
@@ -94,18 +65,60 @@ type config struct {
 	}
 }
 
-func init() {
-	//path, _ := os.Getwd()
-	//log.Println(path)
-	cfgFile, err := os.Open("./config/config.yaml")
-	if err != nil {
-		panic(err)
-	}
-	bytes, err := io.ReadAll(cfgFile)
-	if err != nil {
-		panic(err)
-	}
-	if err = yaml.Unmarshal(bytes, &Config); err != nil {
-		panic(err)
-	}
+// 数据库配置
+
+type Mongo struct {
+	DBAddress           []string `yaml:"dbAddress"`
+	DBDirect            bool     `yaml:"dbDirect"`
+	DBTimeout           int      `yaml:"dbTimeout"`
+	DBDatabase          string   `yaml:"dbDatabase"`
+	DBSource            string   `yaml:"dbSource"`
+	DBUserName          string   `yaml:"dbUserName"`
+	DBPassword          string   `yaml:"dbPassword"`
+	DBMaxPoolSize       int      `yaml:"dbMaxPoolSize"`
+	DBRetainChatRecords int      `yaml:"dbRetainChatRecords"`
 }
+
+type MysqlConfig struct {
+	Host     string `mapstructure:"host" json:"host"`
+	Port     int    `mapstructure:"port" json:"port"`
+	Name     string `mapstructure:"db" json:"db"`
+	User     string `mapstructure:"user" json:"user"`
+	Password string `mapstructure:"password" json:"password"`
+}
+
+type ServerConfig struct {
+	Name string
+}
+
+// 服务发现
+
+type ConsulConfig struct {
+	Host string
+	Port int
+}
+
+// 配置中心
+type NacosConfig struct {
+	Host      string `mapstructure:"host"`
+	Port      uint64 `mapstructure:"port"`
+	Namespace string `mapstructure:"namespace"`
+	User      string `mapstructure:"user"`
+	Password  string `mapstructure:"password"`
+	DataId    string `mapstructure:"dataid"`
+	Group     string `mapstructure:"group"`
+}
+
+// func init() {
+// 	cfgFile, err := os.Open("./config/config.yaml")
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	bytes, err := io.ReadAll(cfgFile)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	if err = yaml.Unmarshal(bytes, &Config); err != nil {
+// 		panic(err)
+// 	}
+// }

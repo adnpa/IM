@@ -3,7 +3,6 @@ networks:
   #  front-tier:
   back-tier:
 
-
 services:
   #  app:
   #    build: .
@@ -15,15 +14,24 @@ services:
   #    networks:
   #      - back-tier
   #
-  # db:
-  #   image: mysql
-  #   restart: always
-  #   ports:
-  #     - "3306:3306"
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: example
-  #   networks:
-  #     - back-tier
+  badger:
+    image: "consul:1.15.4"
+    container_name: badger
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    command: agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0
+    restart: always
+
+  db:
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    networks:
+      - back-tier
 
   mongo:
     image: mongo
@@ -64,3 +72,33 @@ services:
   #   networks:
   #     - back-tier
 
+  # nacos:
+  #   image: nacos/nacos-server:2.0.2
+  #   container_name: nacos-standalone
+  #   environment:
+  #     - PREFER_HOST_MODE=hostname
+  #     - MODE=standalone
+  #     - NACOS_AUTH_IDENTITY_KEY=serverIdentity
+  #     - NACOS_AUTH_IDENTITY_VALUE=security
+  #     - NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789
+  #   volumes:
+  #     - ./nacos/standalone-logs/:/home/nacos/logs
+  #   ports:
+  #     - "8848:8848"
+  #     - "9848:9848"
+  # prometheus:
+  #   container_name: prometheus
+  #   image: prom/prometheus:latest
+  #   volumes:
+  #     - ./config/prometheus-standalone.yaml:/etc/prometheus/prometheus.yml
+  #   ports:
+  #     - "9090:9090"
+  #   depends_on:
+  #     - nacos
+  #   restart: on-failure
+  # grafana:
+  #   container_name: grafana
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - 3000:3000
+  #   restart: on-failure

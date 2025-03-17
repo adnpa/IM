@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	// errors.New()
 	// 依赖服务
 	// chat.Init()
 	// go chat.Run()

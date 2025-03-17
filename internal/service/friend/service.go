@@ -16,7 +16,9 @@ import (
 // s *FriendService pb.FriendServer
 
 func Model2PB(model.Friend) *pb.FriendInfo {
-	return &pb.FriendInfo{}
+	return &pb.FriendInfo{
+		
+	}
 }
 
 type FriendService struct {

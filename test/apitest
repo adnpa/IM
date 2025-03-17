@@ -16,3 +16,17 @@ curl "http://localhost:10000/group/?handle_apply=1"
 
 curl -X POST -H "Content-Type: application/json" -d '{"name":"MyFirstGroup"}' "http://localhost:10000/group/create_group?uid=1"
 
+
+
+docker run \
+    -d \
+    -p 8500:8500 \
+    -p 8600:8600/udp \
+    --name=badger \
+    consul:1.15.4 agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0
+
+
+
+docker run \
+   --name=fox \
+   consul agent -node=client-1 -retry-join=172.17.0.2
