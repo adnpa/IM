@@ -1,0 +1,110 @@
+2025-03-18 20:21:11,486 INFO Starting Nacos v2.0.2 on f5024875a02e with PID 1 (/home/nacos/target/nacos-server.jar started by root in /home/nacos)
+
+2025-03-18 20:21:11,486 INFO The following profiles are active: standalone
+
+2025-03-18 20:21:15,227 INFO Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@3773862a' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+
+2025-03-18 20:21:15,236 INFO Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+
+2025-03-18 20:21:15,574 INFO Tomcat initialized with port(s): 8848 (http)
+
+2025-03-18 20:21:15,617 INFO Starting service [Tomcat]
+
+2025-03-18 20:21:15,617 INFO Starting Servlet engine: [Apache Tomcat/9.0.38]
+
+2025-03-18 20:21:15,946 INFO At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+
+2025-03-18 20:21:15,989 INFO Initializing Spring embedded WebApplicationContext
+
+2025-03-18 20:21:15,989 INFO Root WebApplicationContext: initialization completed in 4429 ms
+
+2025-03-18 20:21:16,502 INFO HikariPool-1 - Starting...
+
+2025-03-18 20:21:16,507 WARN Registered driver with driverClassName=org.apache.derby.jdbc.EmbeddedDriver was not found, trying direct instantiation.
+
+2025-03-18 20:21:17,004 INFO HikariPool-1 - Driver does not support get/set network timeout for connections. (Feature not implemented: No details.)
+
+2025-03-18 20:21:17,029 INFO HikariPool-1 - Start completed.
+
+2025-03-18 20:21:17,742 INFO Nacos-related cluster resource initialization
+
+2025-03-18 20:21:17,751 INFO The cluster resource is initialized
+
+2025-03-18 20:21:18,204 INFO Reflections took 38 ms to scan 1 urls, producing 5 keys and 10 values 
+
+2025-03-18 20:21:18,237 INFO Reflections took 6 ms to scan 1 urls, producing 4 keys and 23 values 
+
+2025-03-18 20:21:18,250 INFO Reflections took 4 ms to scan 1 urls, producing 5 keys and 19 values 
+
+2025-03-18 20:21:18,261 INFO Reflections took 2 ms to scan 1 urls, producing 2 keys and 12 values 
+
+2025-03-18 20:21:18,874 INFO Reflections took 52 ms to scan 2 urls, producing 3 keys and 6 values 
+
+2025-03-18 20:21:18,926 INFO Reflections took 49 ms to scan 2 urls, producing 4 keys and 9 values 
+
+2025-03-18 20:21:18,973 INFO Reflections took 45 ms to scan 2 urls, producing 3 keys and 10 values 
+
+2025-03-18 20:21:18,977 INFO Reflections took 2 ms to scan 1 urls, producing 2 keys and 2 values 
+
+2025-03-18 20:21:19,006 INFO Reflections took 28 ms to scan 2 urls, producing 1 keys and 5 values 
+
+2025-03-18 20:21:19,036 INFO Reflections took 29 ms to scan 2 urls, producing 1 keys and 7 values 
+
+2025-03-18 20:21:19,066 INFO Reflections took 29 ms to scan 2 urls, producing 2 keys and 8 values 
+
+2025-03-18 20:21:19,068 INFO Reflections took 1 ms to scan 1 urls, producing 1 keys and 1 values 
+
+2025-03-18 20:21:20,343 INFO Initializing ExecutorService 'applicationTaskExecutor'
+
+2025-03-18 20:21:20,494 INFO Adding welcome page: class path resource [static/index.html]
+
+2025-03-18 20:21:20,916 INFO Creating filter chain: Ant [pattern='/**'], []
+
+2025-03-18 20:21:20,947 INFO Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@c35af2a, org.springframework.security.web.context.SecurityContextPersistenceFilter@2b8bd798, org.springframework.security.web.header.HeaderWriterFilter@2e807c54, org.springframework.security.web.csrf.CsrfFilter@3e104d4b, org.springframework.security.web.authentication.logout.LogoutFilter@3e7c4815, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@39c385d6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6629ad09, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@44550792, org.springframework.security.web.session.SessionManagementFilter@242a209e, org.springframework.security.web.access.ExceptionTranslationFilter@45e1aa48]
+
+2025-03-18 20:21:21,048 INFO Initializing ExecutorService 'taskScheduler'
+
+2025-03-18 20:21:21,068 INFO Exposing 16 endpoint(s) beneath base path '/actuator'
+
+2025-03-18 20:21:21,167 INFO Tomcat started on port(s): 8848 (http) with context path '/nacos'
+
+2025-03-18 20:21:21,170 INFO Started Nacos in 10.484 seconds (JVM running for 11.152)
+
+2025-03-18 20:21:21,171 INFO Nacos started successfully in stand alone mode. use embedded storage
+
+2025-03-18 20:21:23,103 INFO Initializing Spring DispatcherServlet 'dispatcherServlet'
+
+2025-03-18 20:21:23,103 INFO Initializing Servlet 'dispatcherServlet'
+
+2025-03-18 20:21:23,114 INFO Completed initialization in 11 ms
+
+2025-03-18 20:38:05,851 WARN clearConfigHistory start
+
+2025-03-18 20:38:05,874 INFO [capacityManagement] start correct usage
+
+2025-03-18 20:38:05,882 INFO [capacityManagement] end correct usage, cost: 0s
+
+2025-03-18 20:48:05,854 WARN clearConfigHistory start
+
+2025-03-18 20:48:05,882 INFO [capacityManagement] start correct usage
+
+2025-03-18 20:48:05,882 INFO [capacityManagement] end correct usage, cost: 0s
+
+2025-03-18 20:58:05,856 WARN clearConfigHistory start
+
+2025-03-18 20:58:05,882 INFO [capacityManagement] start correct usage
+
+2025-03-18 20:58:05,884 INFO [capacityManagement] end correct usage, cost: 0s
+
+2025-03-18 21:08:05,857 WARN clearConfigHistory start
+
+2025-03-18 21:08:05,884 INFO [capacityManagement] start correct usage
+
+2025-03-18 21:08:05,884 INFO [capacityManagement] end correct usage, cost: 0s
+
+2025-03-18 21:18:06,389 WARN clearConfigHistory start
+
+2025-03-18 21:18:06,408 INFO [capacityManagement] start correct usage
+
+2025-03-18 21:18:06,408 INFO [capacityManagement] end correct usage, cost: 0s
+

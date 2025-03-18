@@ -10,8 +10,10 @@ import (
 	"syscall"
 
 	"github.com/adnpa/IM/api/pb"
+	"github.com/adnpa/IM/app/offline/global"
 	"github.com/adnpa/IM/app/offline/initialize"
 	"github.com/adnpa/IM/app/offline/service"
+	"github.com/adnpa/IM/internal/utils"
 	"github.com/google/uuid"
 	"github.com/hashicorp/consul/api"
 	"go.uber.org/zap"
@@ -26,7 +28,7 @@ func main() {
 	initialize.InitConfig()
 	initialize.InitDB()
 
-	var port = flag.Int("port", 50051, "The server port")
+	var port = flag.Int("port", 50054, "The server port")
 
 	flag.Parse()
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
@@ -34,7 +36,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterUserServer(s, &service.UserService{})
+	pb.RegisterOfflineServer(s, &service.OfflineService{})
 	log.Printf("server listening at %v", lis.Addr())
 	// 支持grpc健康检查
 	healthcheck := health.NewServer()
@@ -50,7 +52,7 @@ func main() {
 
 	// 注意,check service是检查连接,连接是什么就用哪种类型,这里是tcp连接
 	check := api.AgentServiceCheck{
-		GRPC:                           "localhost:50051",
+		GRPC:                           fmt.Sprintf("%s:50051", utils.ServerIP),
 		Timeout:                        "3s",
 		Interval:                       "10s",
 		DeregisterCriticalServiceAfter: "10s",
@@ -59,9 +61,9 @@ func main() {
 	serverId := uuid.NewString()
 	registeration := api.AgentServiceRegistration{
 		ID:      serverId,
-		Address: "192.168.151.66",
-		Port:    50051,
-		Name:    "user-srv",
+		Address: utils.ServerIP,
+		Port:    *port,
+		Name:    global.ServerConfig.Name,
 		// Tags:    tags,
 		Check: &check,
 	}
@@ -72,9 +74,6 @@ func main() {
 	}
 
 	// 开启服务
-	// if err := s.Serve(lis); err != nil {
-	// 	log.Fatalf("failed to serve: %v", err)
-	// }
 	go func() {
 		err = s.Serve(lis)
 		if err != nil {

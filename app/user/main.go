@@ -10,8 +10,10 @@ import (
 	"syscall"
 
 	"github.com/adnpa/IM/api/pb"
+	"github.com/adnpa/IM/app/user/global"
 	"github.com/adnpa/IM/app/user/initialize"
 	"github.com/adnpa/IM/app/user/service"
+	"github.com/adnpa/IM/internal/utils"
 	"github.com/google/uuid"
 	"github.com/hashicorp/consul/api"
 	"go.uber.org/zap"
@@ -49,8 +51,9 @@ func main() {
 	}
 
 	// 注意,check service是检查连接,连接是什么就用哪种类型,这里是tcp连接
+	// 不能用localhost，否则失败
 	check := api.AgentServiceCheck{
-		GRPC:                           "localhost:50051",
+		GRPC:                           fmt.Sprintf("%s:%d", utils.ServerIP, *port),
 		Timeout:                        "3s",
 		Interval:                       "10s",
 		DeregisterCriticalServiceAfter: "10s",
@@ -59,9 +62,9 @@ func main() {
 	serverId := uuid.NewString()
 	registeration := api.AgentServiceRegistration{
 		ID:      serverId,
-		Address: "192.168.151.66",
-		Port:    50051,
-		Name:    "user-srv",
+		Address: utils.ServerIP,
+		Port:    *port,
+		Name:    global.ServerConfig.Name,
 		// Tags:    tags,
 		Check: &check,
 	}

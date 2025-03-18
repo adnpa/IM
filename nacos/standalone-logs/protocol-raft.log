@@ -1,6 +1,0 @@
-2025-03-18 02:41:01,102 INFO shutdown jraft server
-
-2025-03-18 02:41:01,103 INFO ========= The raft protocol is starting to close =========
-
-2025-03-18 02:41:01,874 INFO ========= The raft protocol has been closed =========
-

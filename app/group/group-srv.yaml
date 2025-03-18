@@ -3,5 +3,5 @@ port: 8848
 namespace: "9bc64a27-6584-46a8-b0e0-e7dac094ec2d"
 user: "nacos"
 password: "nacos"
-dataid: "user-srv"
+dataid: "group-srv"
 group: "dev"

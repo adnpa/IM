@@ -17,7 +17,9 @@ const (
 type MediaType int
 
 const (
-	TextMessage MediaType = 1
+	TextMessage  MediaType = 1
+	VoiceMessage MediaType = 2
+	VideoMessage MediaType = 3
 )
 
 type CommonMsg struct {

@@ -1,0 +1,90 @@
+2025-03-18 20:21:19,503 INFO SPI service [com.alipay.sofa.jraft.JRaftServiceFactory - com.alipay.sofa.jraft.core.DefaultJRaftServiceFactory] loading.
+
+2025-03-18 20:21:19,557 INFO SPI service [com.alipay.sofa.jraft.rpc.RaftRpcFactory - com.alipay.sofa.jraft.rpc.impl.GrpcRaftRpcFactory] loading.
+
+2025-03-18 20:21:19,666 INFO SPI service [com.alipay.sofa.jraft.util.JRaftSignalHandler - com.alipay.sofa.jraft.NodeDescribeSignalHandler] loading.
+
+2025-03-18 20:21:19,666 INFO SPI service [com.alipay.sofa.jraft.util.JRaftSignalHandler - com.alipay.sofa.jraft.NodeMetricsSignalHandler] loading.
+
+2025-03-18 20:21:19,667 INFO SPI service [com.alipay.sofa.jraft.util.JRaftSignalHandler - com.alipay.sofa.jraft.ThreadPoolMetricsSignalHandler] loading.
+
+2025-03-18 20:21:19,669 INFO SPI service [com.alipay.sofa.jraft.util.timer.RaftTimerFactory - com.alipay.sofa.jraft.util.timer.DefaultRaftTimerFactory] loading.
+
+2025-03-18 20:21:19,675 INFO The number of active nodes increment to 1.
+
+2025-03-18 20:21:19,825 INFO Starts FSMCaller successfully.
+
+2025-03-18 20:21:19,831 WARN No data for snapshot reader /home/nacos/data/protocol/raft/naming_persistent_service_v2/snapshot.
+
+2025-03-18 20:21:19,844 INFO Node <naming_persistent_service_v2/f5024875a02e:7848> init, term=0, lastLogId=LogId [index=0, term=0], conf=f5024875a02e:7848, oldConf=.
+
+2025-03-18 20:21:19,845 INFO Node <naming_persistent_service_v2/f5024875a02e:7848> start vote and grant vote self, term=0.
+
+2025-03-18 20:21:19,863 INFO Save raft meta, path=/home/nacos/data/protocol/raft/naming_persistent_service_v2/meta-data, term=1, votedFor=f5024875a02e:7848, cost time=13 ms
+
+2025-03-18 20:21:19,863 INFO Node <naming_persistent_service_v2/f5024875a02e:7848> become leader of group, term=1, conf=f5024875a02e:7848, oldConf=.
+
+2025-03-18 20:21:19,866 INFO -Djraft.recyclers.maxCapacityPerThread: 4096.
+
+2025-03-18 20:21:19,868 WARN RPC server is not started in RaftGroupService.
+
+2025-03-18 20:21:19,868 INFO Start the RaftGroupService successfully.
+
+2025-03-18 20:21:19,875 INFO onLeaderStart: term=1.
+
+2025-03-18 20:21:19,890 INFO The number of active nodes increment to 2.
+
+2025-03-18 20:21:19,919 INFO Starts FSMCaller successfully.
+
+2025-03-18 20:21:19,919 WARN No data for snapshot reader /home/nacos/data/protocol/raft/naming_instance_metadata/snapshot.
+
+2025-03-18 20:21:19,920 INFO Node <naming_instance_metadata/f5024875a02e:7848> init, term=0, lastLogId=LogId [index=0, term=0], conf=f5024875a02e:7848, oldConf=.
+
+2025-03-18 20:21:19,921 INFO Node <naming_instance_metadata/f5024875a02e:7848> start vote and grant vote self, term=0.
+
+2025-03-18 20:21:19,923 INFO Save raft meta, path=/home/nacos/data/protocol/raft/naming_instance_metadata/meta-data, term=1, votedFor=f5024875a02e:7848, cost time=2 ms
+
+2025-03-18 20:21:19,923 INFO Node <naming_instance_metadata/f5024875a02e:7848> become leader of group, term=1, conf=f5024875a02e:7848, oldConf=.
+
+2025-03-18 20:21:19,923 WARN RPC server is not started in RaftGroupService.
+
+2025-03-18 20:21:19,923 INFO Start the RaftGroupService successfully.
+
+2025-03-18 20:21:19,924 INFO onLeaderStart: term=1.
+
+2025-03-18 20:21:19,926 INFO The number of active nodes increment to 3.
+
+2025-03-18 20:21:19,934 WARN Channel in TRANSIENT_FAILURE state: f5024875a02e:7848.
+
+2025-03-18 20:21:19,934 WARN Channel in SHUTDOWN state: f5024875a02e:7848.
+
+2025-03-18 20:21:19,951 INFO Starts FSMCaller successfully.
+
+2025-03-18 20:21:19,951 WARN No data for snapshot reader /home/nacos/data/protocol/raft/naming_service_metadata/snapshot.
+
+2025-03-18 20:21:19,951 INFO Node <naming_service_metadata/f5024875a02e:7848> init, term=0, lastLogId=LogId [index=0, term=0], conf=f5024875a02e:7848, oldConf=.
+
+2025-03-18 20:21:19,952 INFO Node <naming_service_metadata/f5024875a02e:7848> start vote and grant vote self, term=0.
+
+2025-03-18 20:21:19,954 INFO Save raft meta, path=/home/nacos/data/protocol/raft/naming_service_metadata/meta-data, term=1, votedFor=f5024875a02e:7848, cost time=2 ms
+
+2025-03-18 20:21:19,954 INFO Node <naming_service_metadata/f5024875a02e:7848> become leader of group, term=1, conf=f5024875a02e:7848, oldConf=.
+
+2025-03-18 20:21:19,954 WARN RPC server is not started in RaftGroupService.
+
+2025-03-18 20:21:19,954 INFO Start the RaftGroupService successfully.
+
+2025-03-18 20:21:19,955 INFO onLeaderStart: term=1.
+
+2025-03-18 20:44:06,504 INFO Deleting snapshot /home/nacos/data/protocol/raft/naming_persistent_service_v2/snapshot/snapshot_1.
+
+2025-03-18 20:44:06,504 INFO Renaming /home/nacos/data/protocol/raft/naming_persistent_service_v2/snapshot/temp to /home/nacos/data/protocol/raft/naming_persistent_service_v2/snapshot/snapshot_1.
+
+2025-03-18 20:52:15,626 INFO Deleting snapshot /home/nacos/data/protocol/raft/naming_service_metadata/snapshot/snapshot_1.
+
+2025-03-18 20:52:15,626 INFO Renaming /home/nacos/data/protocol/raft/naming_service_metadata/snapshot/temp to /home/nacos/data/protocol/raft/naming_service_metadata/snapshot/snapshot_1.
+
+2025-03-18 20:54:49,886 INFO Deleting snapshot /home/nacos/data/protocol/raft/naming_instance_metadata/snapshot/snapshot_1.
+
+2025-03-18 20:54:49,886 INFO Renaming /home/nacos/data/protocol/raft/naming_instance_metadata/snapshot/temp to /home/nacos/data/protocol/raft/naming_instance_metadata/snapshot/snapshot_1.
+
