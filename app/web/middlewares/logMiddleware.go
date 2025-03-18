@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/adnpa/IM/pkg/common/logger"
+	"github.com/adnpa/IM/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )

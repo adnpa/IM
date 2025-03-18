@@ -4,8 +4,8 @@ import (
 	"flag"
 	"strconv"
 
-	"github.com/adnpa/IM/internal/handler"
-	"github.com/adnpa/IM/internal/middlewares"
+	"github.com/adnpa/IM/app/web/handler"
+	"github.com/adnpa/IM/app/web/middlewares"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
