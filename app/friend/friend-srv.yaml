@@ -1,0 +1,8 @@
+host: '127.0.0.1'
+port: 8848
+namespace: '9ce6c088-a8e9-4867-a14f-94fe0937056b'
+user: 'nacos'
+password: 'nacos'
+dataid: 'friend-srv'
+group: 'dev'
+

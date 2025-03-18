@@ -51,21 +51,21 @@ func AllService() map[string]*api.AgentService {
 	return data
 }
 
-func FilterService(name string) {
+// func FilterService(name string) {
 
-	cfg := api.DefaultConfig()
-	cfg.Address = "localhost:8500"
-	cli, err := api.NewClient(cfg)
-	if err != nil {
-		panic(err)
-	}
+// 	cfg := api.DefaultConfig()
+// 	cfg.Address = "localhost:8500"
+// 	cli, err := api.NewClient(cfg)
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	data, err := cli.Agent().ServicesWithFilter(`Service == ""`)
-	if err != nil {
-		panic(err)
-	}
-	return data
-}
+// 	data, err := cli.Agent().ServicesWithFilter(`Service == ""`)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	return data
+// }
 
 func UnRegister() {
 	Register("loaclhost", 11000, "user-web", []string{"maxsho", "bobby"}, "user-web")

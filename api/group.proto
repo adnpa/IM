@@ -4,131 +4,99 @@ option go_package = ".;pb";
 service Group {
   // 群聊基础信息管理
   rpc GetGroupInfoById(GetGroupInfoByIdReq) returns (GetGroupInfoByIdResp);
-  rpc GetGroupInfoByIds(GetGroupInfoByIdsReq) returns (GetGroupInfoByIdsResp);
   rpc CreateGroupInfo(CreateGroupInfoReq) returns (CreateGroupInfoResp);
   rpc UpdateGroupInfo(UpdateGroupInfoReq) returns (UpdateGroupInfoResp);
   rpc DeleteGroupInfo(DeleteGroupInfoReq) returns (DeleteGroupInfoResp);
   // 成员管理
-  rpc GetGroupMemberById(GetGroupMemberByIdReq) returns (GetGroupMemberByIdResp);
-  rpc GetGroupMemberByIds(GetGroupMemberByIdsReq) returns (GetGroupMemberByIdsResp);
+  rpc GetGroupMemberById(GetGroupMemberByIdReq)
+      returns (GetGroupMemberByIdResp);
   rpc CreateGroupMember(CreateGroupMemberReq) returns (CreateGroupMemberResp);
   rpc UpdateGroupMember(UpdateGroupMemberReq) returns (UpdateGroupMemberResp);
   rpc DeleteGroupMember(DeleteGroupMemberReq) returns (DeleteGroupMemberResp);
   // 申请管理
-  rpc GetGroupApplyById(GetGroupApplyByIdReq) returns (GetGroupApplyByIdResp);
-  rpc GetGroupApplyByIds(GetGroupApplyByIdsReq) returns (GetGroupApplyByIdsResp);
+  rpc GetGroupApplyByGroupId(GetGroupApplyByGroupIdReq)
+      returns (GetGroupApplyByGroupIdResp);
+  rpc GetGroupApplyByUserId(GetGroupApplyByUserIdReq)
+      returns (GetGroupApplyByUserIdResp);
   rpc CreateGroupApply(CreateGroupApplyReq) returns (CreateGroupApplyResp);
   rpc UpdateGroupApply(UpdateGroupApplyReq) returns (UpdateGroupApplyResp);
   rpc DeleteGroupApply(DeleteGroupApplyReq) returns (DeleteGroupApplyResp);
 }
-message GetGroupInfoByIdReq{
-}
+message GetGroupInfoByIdReq { int64 GroupId = 1; }
 
-message GetGroupInfoByIdResp{
-}
+message GetGroupInfoByIdResp { GroupInfo group_info = 1; }
 
-message GetGroupInfoByIdsReq{
-}
+message CreateGroupInfoReq { GroupInfo group_info = 1; }
 
-message GetGroupInfoByIdsResp{
-}
+message CreateGroupInfoResp { int64 group_id = 1; }
 
-message CreateGroupInfoReq{
-}
+message UpdateGroupInfoReq { GroupInfo group_info = 1; }
 
-message CreateGroupInfoResp{
-}
+message UpdateGroupInfoResp { bool succ = 1; }
 
-message UpdateGroupInfoReq{
-}
+message DeleteGroupInfoReq { int64 group_id = 1; }
 
-message UpdateGroupInfoResp{
-}
+message DeleteGroupInfoResp { bool succ = 1; }
 
-message DeleteGroupInfoReq{
-}
+message GetGroupMemberByIdReq { int64 GroupId = 1; }
 
-message DeleteGroupInfoResp{
-}
+message GetGroupMemberByIdResp { repeated GroupMember members = 1; }
 
-message GetGroupMemberByIdReq{
-}
+message CreateGroupMemberReq { GroupMember member = 1; }
 
-message GetGroupMemberByIdResp{
-}
+message CreateGroupMemberResp { bool succ = 1; }
 
-message GetGroupMemberByIdsReq{
-}
+message UpdateGroupMemberReq { GroupMember member = 1; }
 
-message GetGroupMemberByIdsResp{
-}
+message UpdateGroupMemberResp { bool succ = 1; }
 
-message CreateGroupMemberReq{
-}
+message DeleteGroupMemberReq { int64 group_id = 1; }
 
-message CreateGroupMemberResp{
-}
+message DeleteGroupMemberResp { bool succ = 1; }
 
-message UpdateGroupMemberReq{
-}
+message GetGroupApplyByGroupIdReq { int64 group_id = 1; }
 
-message UpdateGroupMemberResp{
-}
+message GetGroupApplyByGroupIdResp { repeated GroupApply group_apply_list = 1; }
 
-message DeleteGroupMemberReq{
-}
+message GetGroupApplyByUserIdReq { int32 user_id = 1; }
 
-message DeleteGroupMemberResp{
-}
+message GetGroupApplyByUserIdResp { repeated GroupApply group_apply_list = 1; }
 
-message GetGroupApplyByIdReq{
-}
+message CreateGroupApplyReq { GroupApply apply = 1; }
 
-message GetGroupApplyByIdResp{
-}
+message CreateGroupApplyResp { bool succ = 1; }
 
-message GetGroupApplyByIdsReq{
-}
+message UpdateGroupApplyReq { GroupApply apply = 1; }
 
-message GetGroupApplyByIdsResp{
-}
+message UpdateGroupApplyResp { bool succ = 1; }
 
-message CreateGroupApplyReq{
-}
+message DeleteGroupApplyReq { int64 group_id = 1; }
 
-message CreateGroupApplyResp{
-}
-
-message UpdateGroupApplyReq{
-}
-
-message UpdateGroupApplyResp{
-}
-
-message DeleteGroupApplyReq{
-}
-
-message DeleteGroupApplyResp{
-}
+message DeleteGroupApplyResp { bool succ = 1; }
 
 // -- 中间结构 --------------------------
 
 message GroupInfo {
-  int64 gid = 1;
-  string name = 2;
-  int64 owner = 3;
-  string comment = 4;
-}
-
-message GroupApply {
-  int64 gid = 1;
-  int64 applicant = 2;
-  int64 handler = 3;
-  uint32 flag = 4;
+  int64 group_id = 1;     // 群聊ID，主键，自增
+  string group_name = 2;  // 群聊名称
+  int32 creator_id = 3;   // 创建者用户ID
+  string avatar_url = 4;  // 群聊头像URL
+  string description = 5; // 群聊描述
+  int32 max_members = 6;  // 群聊最大成员数
+  int32 status = 7;       // 群聊状态（0:正常，1:解散）
 }
 
 message GroupMember {
-  int64 gid = 1;
-  int64 uid = 2;
-  int64 auth = 3;
+  int64 id = 1;       // 主键，自增
+  int64 group_id = 2; // 群聊ID，外键
+  int32 user_id = 3;  // 用户ID
+  int32 role = 5;   // 成员角色（0:普通成员，1:管理员，2:群主）
+  int32 status = 6; // 成员状态（0:正常，1:已退出）
+}
+
+message GroupApply {
+  int64 group_id = 1;
+  int32 applicant_id = 2;
+  int32 status = 3;
+  int32 handler_id = 4;
 }
