@@ -46,7 +46,7 @@ func Register(c *gin.Context) {
 	defer conn.Close()
 	// --------------------------------------------------------
 
-	token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(resp.Uid, 10))
+	token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(int64(resp.Uid), 10))
 	if err != nil {
 		logger.Error("gen token error", zap.Error(err))
 		c.JSON(http.StatusOK, ErrInfo(constant.TokenGenErr))

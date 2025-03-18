@@ -3,42 +3,37 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
-	"net"
 	"os"
 	"os/signal"
 	"syscall"
 
-	"github.com/adnpa/IM/api/pb"
-	"github.com/adnpa/IM/app/friend/initialize"
-	"github.com/adnpa/IM/app/friend/service"
+	"github.com/adnpa/IM/app/online/initialize"
+	"github.com/adnpa/IM/app/online/service"
 	"github.com/google/uuid"
 	"github.com/hashicorp/consul/api"
 	"go.uber.org/zap"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/health"
-	healthgrpc "google.golang.org/grpc/health/grpc_health_v1"
 )
 
 func main() {
-	// 初始化
-	// initialize.InitLogger()
+	// errors.New()
+	// 依赖服务
+	// chat.Init()
+	// go chat.Run()
+
+	// conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	// if err != nil {
+	// 	logger.Panic("Failed to connect to RabbitMQ", zap.Error(err))
+	// }
+	// defer conn.Close()
+	// go rabbitmq.NewConsumer(conn).Run()
+
 	initialize.InitConfig()
 	initialize.InitDB()
 
 	var port = flag.Int("port", 50051, "The server port")
-
 	flag.Parse()
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	s := grpc.NewServer()
-	pb.RegisterUserServer(s, &service.UserService{})
-	log.Printf("server listening at %v", lis.Addr())
-	// 支持grpc健康检查
-	healthcheck := health.NewServer()
-	healthgrpc.RegisterHealthServer(s, healthcheck)
+	wsServer := &service.WSServer{}
+	wsServer.Init(*port)
 
 	// 服务注册
 	cfg := api.DefaultConfig()
@@ -48,9 +43,8 @@ func main() {
 		panic(err)
 	}
 
-	// 注意,check service是检查连接,连接是什么就用哪种类型,这里是tcp连接
 	check := api.AgentServiceCheck{
-		GRPC:                           "localhost:50051",
+		HTTP:                           fmt.Sprintf("localhost:%d", *port),
 		Timeout:                        "3s",
 		Interval:                       "10s",
 		DeregisterCriticalServiceAfter: "10s",
@@ -61,7 +55,7 @@ func main() {
 		ID:      serverId,
 		Address: "192.168.151.66",
 		Port:    50051,
-		Name:    "user-srv",
+		Name:    "ws-srv",
 		// Tags:    tags,
 		Check: &check,
 	}
@@ -72,13 +66,10 @@ func main() {
 	}
 
 	// 开启服务
-	// if err := s.Serve(lis); err != nil {
-	// 	log.Fatalf("failed to serve: %v", err)
-	// }
 	go func() {
-		err = s.Serve(lis)
+		err = wsServer.Run()
 		if err != nil {
-			panic("failed to start grpc:" + err.Error())
+			panic("failed to start ws server:" + err.Error())
 		}
 	}()
 

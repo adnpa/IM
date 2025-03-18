@@ -1,0 +1,22 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+import "message.proto";
+
+service Offline {
+  rpc GetOfflineMsg(GetOfflineMsgReq) returns (GetOfflineMsgResp);
+  rpc PutMsg(PutMsgReq) returns (PutMsgResp);
+  rpc RemoveMsg(RemoveMsgReq) returns (RemoveMsgResp);
+}
+
+message GetOfflineMsgReq { int32 uid = 1; }
+
+message GetOfflineMsgResp { repeated msg.chat_msg msgs = 1; }
+
+message PutMsgReq { msg.chat_msg msg = 1; }
+
+message PutMsgResp { bool succ = 1; }
+
+message RemoveMsgReq { repeated int64 msg_ids = 1; }
+
+message RemoveMsgResp { bool succ = 1; }

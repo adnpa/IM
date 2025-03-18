@@ -1,10 +1,10 @@
-package chat
+package service
 
 import (
 	"log"
 	"strconv"
 
-	"github.com/adnpa/IM/pkg/common/logger"
+	"github.com/adnpa/IM/pkg/logger"
 )
 
 // -------------------------------------------------------
@@ -12,8 +12,8 @@ import (
 // -------------------------------------------------------
 
 func (ws *WSServer) GetWsConn(uid int64) (*WsConn, bool) {
-	rwLock.RLock()
-	defer rwLock.RUnlock()
+	ws.rwLock.RLock()
+	defer ws.rwLock.RUnlock()
 
 	strUid := strconv.FormatInt(uid, 10)
 	if conn, ok := ws.mapUidConn[strUid]; ok {
@@ -23,8 +23,8 @@ func (ws *WSServer) GetWsConn(uid int64) (*WsConn, bool) {
 }
 
 func (ws *WSServer) AddWsConn(id string, c *WsConn) {
-	rwLock.Lock()
-	defer rwLock.Unlock()
+	ws.rwLock.Lock()
+	defer ws.rwLock.Unlock()
 
 	if oldConn, ok := ws.mapUidConn[id]; ok {
 		err := oldConn.Close()
@@ -42,8 +42,8 @@ func (ws *WSServer) AddWsConn(id string, c *WsConn) {
 }
 
 func (ws *WSServer) DelUserConn(conn *WsConn) {
-	rwLock.Lock()
-	defer rwLock.Unlock()
+	ws.rwLock.Lock()
+	defer ws.rwLock.Unlock()
 
 	if uid, ok := ws.mapConnUid[conn]; ok {
 		if _, ok = ws.mapUidConn[uid]; ok {
@@ -58,8 +58,8 @@ func (ws *WSServer) DelUserConn(conn *WsConn) {
 }
 
 func (ws *WSServer) GetUid(conn *WsConn) string {
-	rwLock.RLock()
-	defer rwLock.RUnlock()
+	ws.rwLock.RLock()
+	defer ws.rwLock.RUnlock()
 
 	if conn, ok := ws.mapConnUid[conn]; ok {
 		return conn

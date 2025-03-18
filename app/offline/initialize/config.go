@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/adnpa/IM/app/friend/global"
+	"github.com/adnpa/IM/app/offline/global"
 	"github.com/adnpa/IM/pkg/logger"
 	"github.com/nacos-group/nacos-sdk-go/v2/clients"
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"

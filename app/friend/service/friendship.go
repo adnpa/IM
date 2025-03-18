@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/adnpa/IM/api/pb"
+	"github.com/adnpa/IM/app/friend/global"
 	"github.com/adnpa/IM/app/friend/model"
-	"github.com/adnpa/IM/app/user/global"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

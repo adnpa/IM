@@ -1,4 +1,4 @@
-
+  
 
 https://bytebytego.com/courses/system-design-interview/design-a-chat-system
 
@@ -99,13 +99,7 @@ https://bytebytego.com/courses/system-design-interview/design-a-chat-system
 
 假设有 1M 个并发用户的情况下，假设每个用户连接需要服务器上 10K 的内存（这是一个非常粗略的数字，并且非常依赖于语言选择），它只需要大约 10GB 的内存来容纳一个盒子上的所有连接。
 
-* 聊天服务器便于发送/接收消息。 
-* 在线状态服务器管理在线/离线状态。 
-* API 服务器处理所有事务，包括用户登录、注册、更改个人资料等。
-* 通知服务器发送推送通知。 
-* 键值存储用于存储聊天历史记录。当离线用户上线时，她将看到她之前的所有聊天历史记录。
-
-
+* 54rett
 
 
 

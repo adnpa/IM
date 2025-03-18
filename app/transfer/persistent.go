@@ -1,41 +1,33 @@
 package chat
 
-import (
-	"github.com/adnpa/IM/internal/model"
-	"github.com/adnpa/IM/internal/service/conversation"
-	"github.com/adnpa/IM/internal/utils"
-	"github.com/adnpa/IM/pkg/common/db/mongodb"
-	"go.mongodb.org/mongo-driver/bson"
-)
-
-func StoreMessage(msg *model.Message) error {
-	oldConv := &conversation.Conversation{}
-	err := mongodb.GetDecode("conversation", bson.M{
-		"$or": []bson.M{
-			{
-				"$and": []bson.M{
-					{"left_user_id": msg.To},
-					{"right_user_id": msg.From},
-				},
-			},
-			{
-				"$and": []bson.M{
-					{"left_user_id": msg.From},
-					{"right_user_id": msg.To},
-				},
-			},
-		},
-	}, oldConv)
-	if err != nil {
-		oldConv.Id = utils.NowMilliSecond()
-		oldConv.LeftUserId = msg.From
-		oldConv.RightUserId = msg.To
-	}
-	oldConv.MsgIds = append(oldConv.MsgIds, msg.Id)
-	mongodb.Insert("conversation", oldConv)
-	// mongodb.Insert("conversation", )
-	return mongodb.Insert("message", msg)
-}
+// func StoreMessage(msg *model.Message) error {
+// 	oldConv := &conversation.Conversation{}
+// 	err := mongodb.GetDecode("conversation", bson.M{
+// 		"$or": []bson.M{
+// 			{
+// 				"$and": []bson.M{
+// 					{"left_user_id": msg.To},
+// 					{"right_user_id": msg.From},
+// 				},
+// 			},
+// 			{
+// 				"$and": []bson.M{
+// 					{"left_user_id": msg.From},
+// 					{"right_user_id": msg.To},
+// 				},
+// 			},
+// 		},
+// 	}, oldConv)
+// 	if err != nil {
+// 		oldConv.Id = utils.NowMilliSecond()
+// 		oldConv.LeftUserId = msg.From
+// 		oldConv.RightUserId = msg.To
+// 	}
+// 	oldConv.MsgIds = append(oldConv.MsgIds, msg.Id)
+// 	mongodb.Insert("conversation", oldConv)
+// 	// mongodb.Insert("conversation", )
+// 	return mongodb.Insert("message", msg)
+// }
 
 // import (
 // 	"github.com/IBM/sarama"

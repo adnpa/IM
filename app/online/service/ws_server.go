@@ -1,30 +1,23 @@
-package chat
+package service
 
 import (
 	"strconv"
 	"time"
 
-	"github.com/adnpa/IM/internal/model"
-	"github.com/adnpa/IM/internal/service/offline"
+	"github.com/adnpa/IM/app/online/model"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/common/config"
-	"github.com/adnpa/IM/pkg/common/logger"
+	"github.com/adnpa/IM/pkg/logger"
 	"github.com/gorilla/websocket"
 	"go.uber.org/zap"
 
-	"log"
 	"net/http"
 	"sync"
 )
 
 var (
 	MyServer *WSServer
-	rwLock   *sync.RWMutex
 )
-
-func init() {
-	rwLock = &sync.RWMutex{}
-}
 
 type WsConn struct {
 	*websocket.Conn
@@ -39,6 +32,7 @@ type WSServer struct {
 	upgrader   *websocket.Upgrader
 	mapConnUid map[*WsConn]string
 	mapUidConn map[string]*WsConn
+	rwLock     *sync.RWMutex
 }
 
 func (ws *WSServer) Init(wsPort int) {
@@ -54,33 +48,26 @@ func (ws *WSServer) Init(wsPort int) {
 	}
 }
 
-func (ws *WSServer) Run() {
-	log.Printf("Listening and serving ws on %s", ws.wsAddr)
-	http.HandleFunc("/ws", ws.wsHandler)
-	err := http.ListenAndServe(ws.wsAddr, nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
-	}
+func (ws *WSServer) Run() error {
+	http.HandleFunc("/ws", ws.HandleConn)
+	return http.ListenAndServe(ws.wsAddr, nil)
 }
 
-func (ws *WSServer) wsHandler(w http.ResponseWriter, r *http.Request) {
+func (ws *WSServer) HandleConn(w http.ResponseWriter, r *http.Request) {
 	if ws.headerCheck(w, r) {
 		query := r.URL.Query()
-		// 升级为ws连接
 		conn, err := ws.upgrader.Upgrade(w, r, nil)
 		if err != nil {
 			return
 		} else {
+			logger.Info("", zap.Any("", query), zap.Any("", conn))
 			SendId := query.Get("uid")
 			newConn := &WsConn{conn, new(sync.Mutex), 1}
 			ws.AddWsConn(SendId, newConn)
 			numId, _ := strconv.ParseInt(SendId, 10, 64)
-			logger.Infof("user connect chat server", "id", numId)
-			// 全量离线消息推送
-			msgs := offline.GetOfflineMsg(numId)
-			logger.Info("Start to sync msgs", zap.Any("msgs:", msgs))
+			// todo 暂时采用全量离线消息推送 后续结合会话多次推送
+			msgs, _ := ws.GetOfflineMsg(numId)
 			ws.SendMsg(newConn, model.CommonMsg{Cmd: model.TypSyncMsg, Msgs: msgs})
-			logger.Infof("Sync msgs succ, end Login=================================")
 			go ws.readMsg(newConn)
 		}
 	} else {
@@ -105,6 +92,11 @@ func (ws *WSServer) headerCheck(w http.ResponseWriter, r *http.Request) bool {
 	// 	return false
 	// }
 	return true
+}
+
+func (ws *WSServer) GetOfflineMsg(uid int64) ([]model.Message, error) {
+	// todo 离线服务获取消息
+	return nil, nil
 }
 
 // -------------------------------------------------------

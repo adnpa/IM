@@ -1,7 +1,7 @@
 package global
 
 import (
-	"github.com/adnpa/IM/app/group/config"
+	"github.com/adnpa/IM/app/user/config"
 	"gorm.io/gorm"
 )
 

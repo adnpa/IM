@@ -1,9 +1,26 @@
 syntax = "proto3";
 option go_package = ".;pb";
+package msg;
 
+// todo 后续改为tcp 字节流协议
+message common_msg {
+  string version = 1;
+  int32 cmd = 2;
+  int32 size = 3;
+  bytes body = 4;
+}
 
-message common_msg{
-    string version = 1;
-
-    bytes body = 4; 
+message chat_msg {
+  int64 id = 1;         // 消息ID
+  int32 typ = 2;        // 消息类型
+  int64 from = 3;       // 发送者ID
+  int64 to = 4;         // 接收者ID或群组ID
+  int32 media = 5;      // 媒体类型
+  string content = 6;   // 消息内容
+  string pic = 7;       // 缩略图URL
+  string url = 8;       // 服务URL
+  string memo = 9;      // 备注
+  int32 amount = 10;    // 数字相关，如语音长度等
+  int64 seq = 11;       // 序列号
+  int64 recver_id = 12; // 接收者ID
 }

@@ -10,8 +10,8 @@ import (
 	"syscall"
 
 	"github.com/adnpa/IM/api/pb"
-	"github.com/adnpa/IM/app/user/initialize"
-	"github.com/adnpa/IM/app/user/service"
+	"github.com/adnpa/IM/app/group/initialize"
+	"github.com/adnpa/IM/app/group/service"
 	"github.com/google/uuid"
 	"github.com/hashicorp/consul/api"
 	"go.uber.org/zap"
