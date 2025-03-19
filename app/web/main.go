@@ -40,22 +40,22 @@ func main() {
 		friendGroup.POST("/delete_friend", handler.DeleteFriend)
 	}
 
-	groupGroup := r.Group("/group")
-	{
-		// TODO: 完成接口
-		// groupGroup.GET("/group_info_list", handler.GetGroups)
+	// groupGroup := r.Group("/group")
+	// {
+	// TODO: 完成接口
+	// groupGroup.GET("/group_info_list", handler.GetGroups)
 
-		// groupGroup.GET("/self_apply_list", handler.GetGroupApplyList)
-		// groupGroup.GET("/apply_list", handler.GetGroupApplyList)
+	// groupGroup.GET("/self_apply_list", handler.GetGroupApplyList)
+	// groupGroup.GET("/apply_list", handler.GetGroupApplyList)
 
-		// groupGroup.POST("/create_group", handler.CreateGroup)
-		// groupGroup.POST("/delete_group", handler.CreateGroup)
+	// groupGroup.POST("/create_group", handler.CreateGroup)
+	// groupGroup.POST("/delete_group", handler.CreateGroup)
 
-		// groupGroup.POST("/appoint", handler.ApplyGroup)
-		// groupGroup.POST("/handle_apply", handler.ApplyGroup)
-		// groupGroup.POST("/remove_member", handler.ApplyGroup)
-		// groupGroup.POST("/block", handler.ApplyGroup)
-	}
+	// groupGroup.POST("/appoint", handler.ApplyGroup)
+	// groupGroup.POST("/handle_apply", handler.ApplyGroup)
+	// groupGroup.POST("/remove_member", handler.ApplyGroup)
+	// groupGroup.POST("/block", handler.ApplyGroup)
+	// }
 
 	// TODO: 搜索服务
 	// searchGroup := r.Group("/search")
