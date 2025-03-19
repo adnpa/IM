@@ -61,16 +61,17 @@ services:
   #   networks:
   #     - back-tier
 
-  # etcd:
-  #   image: "bitnami/etcd:latest"
-  #   environment:
-  #     - ALLOW_NONE_AUTHENTICATION=yes
-  #     - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
-  #   ports:
-  #     - 2379:2379
-  #     - 2380:2380
-  #   networks:
-  #     - back-tier
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./rabbitmq_data:/var/lib/rabbitmq # 数据持久化
+    environment:
+      RABBITMQ_DEFAULT_USER: admin # 默认用户名
+      RABBITMQ_DEFAULT_PASS: password # 默认密码
+    restart: always # 容器退出时自动重启
 
   nacos:
     image: nacos/nacos-server:2.0.2
@@ -106,4 +107,3 @@ services:
       - 3000:3000
     # restart: on-failure
     restart: always
-

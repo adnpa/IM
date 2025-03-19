@@ -17,6 +17,8 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 .idea/
+logs/
+rabbitmq_data/
 
 # Go workspace file
 go.work

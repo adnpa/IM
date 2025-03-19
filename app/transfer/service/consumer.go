@@ -3,6 +3,7 @@ package service
 import (
 	"log"
 
+	"github.com/adnpa/IM/api/pb"
 	"github.com/adnpa/IM/pkg/logger"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -14,6 +15,8 @@ func NewConsumer(c *amqp.Connection) *Consumer {
 }
 
 type Consumer struct {
+	pb.UnimplementedTransferServer
+
 	conn *amqp.Connection
 }
 

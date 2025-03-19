@@ -2,26 +2,53 @@ package tests
 
 import (
 	"context"
-	"fmt"
+	"log"
 	"testing"
+	"time"
 
-	"github.com/adnpa/IM/api/pb"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 func TestSendMsg(t *testing.T) {
-	conn, err := grpc.NewClient("192.168.8.37:50056", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	sendMsg := "Hello World!"
+
+	conn, err := amqp.Dial("amqp://admin:password@localhost:5672/")
 	if err != nil {
-		t.Fatalf("did not connect: %v", err)
+		t.Error(err)
 	}
 	defer conn.Close()
 
-	c := pb.NewPresenceClient(conn)
-	resp, err := c.SendMsg(context.Background(), &pb.SendMsgReq{UserId: 1})
-	// if err != nil {
-	// 	t.Error(err)
-	// }
-	t.Log(err)
-	fmt.Println(resp)
+	ch, err := conn.Channel()
+	if err != nil {
+		t.Error(err)
+	}
+	defer ch.Close()
+
+	q, err := ch.QueueDeclare(
+		"hello", // name
+		false,   // durable
+		false,   // delete when unused
+		false,   // exclusive
+		false,   // no-wait
+		nil,     // arguments
+	)
+	if err != nil {
+		t.Error(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	err = ch.PublishWithContext(ctx,
+		"",     // exchange
+		q.Name, // routing key
+		false,  // mandatory
+		false,  // immediate
+		amqp.Publishing{
+			ContentType: "text/plain",
+			Body:        []byte(sendMsg),
+		})
+	if err != nil {
+		t.Error(err)
+	}
+	log.Printf(" [x] Sent %s\n", sendMsg)
 }
