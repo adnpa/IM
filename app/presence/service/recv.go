@@ -1,9 +1,8 @@
 package service
 
 import (
+	"context"
 	"log"
-
-	amqp "github.com/rabbitmq/amqp091-go"
 
 	"github.com/adnpa/IM/app/presence/global"
 	"github.com/adnpa/IM/pkg/logger"
@@ -16,6 +15,11 @@ func (ws *WSServer) readMsg(conn *WsConn) {
 		messageType, data, err := conn.ReadMessage()
 		if err != nil {
 			ws.DelUserConn(conn)
+			redisConn, err := global.RedisPool.Get(context.Background())
+			if err != nil {
+				return
+			}
+			redisConn.Del(ws.GetUid(conn))
 			return
 		}
 		if messageType == websocket.PingMessage {
@@ -29,10 +33,5 @@ func (ws *WSServer) readMsg(conn *WsConn) {
 
 // msg *pb.ChatMsg
 func SendMq(body interface{}) error {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
-	if err != nil {
-		logger.Panic("Failed to connect to RabbitMQ", zap.Error(err))
-	}
-	defer conn.Close()
 	return global.Producer.Send("msg", body)
 }

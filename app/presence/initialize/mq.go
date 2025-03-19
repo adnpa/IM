@@ -10,7 +10,7 @@ import (
 )
 
 func InitProducer() {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	conn, err := amqp.Dial("amqp://admin:passwd@localhost:5672/")
 	if err != nil {
 		logger.Panic("Failed to connect to RabbitMQ", zap.Error(err))
 	}

@@ -26,7 +26,8 @@ func (s *OfflineService) GetOfflineMsg(_ context.Context, in *pb.GetOfflineMsgRe
 func (s *OfflineService) PutMsg(_ context.Context, in *pb.PutMsgReq) (*pb.PutMsgResp, error) {
 	var msg model.Message
 	copier.Copy(&msg, in)
-
+	// todo inbox logic
+	// userId := in.UserId
 	err := mongodb.Insert(COLL_NAME, msg)
 	if err != nil {
 		return nil, err
