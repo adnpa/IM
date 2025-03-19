@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/adnpa/IM/app/online/global"
+	"github.com/adnpa/IM/app/presence/global"
 	"github.com/adnpa/IM/pkg/logger"
 	"github.com/nacos-group/nacos-sdk-go/v2/clients"
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
@@ -16,7 +16,7 @@ import (
 
 func InitConfig() {
 	p, _ := os.Getwd()
-	configFileName := "user-srv.yaml"
+	configFileName := "presence-srv.yaml"
 
 	v := viper.New()
 	v.SetConfigFile(configFileName)

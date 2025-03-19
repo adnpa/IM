@@ -32,8 +32,6 @@ func (ws *WSServer) AddWsConn(id string, c *WsConn) {
 		if err != nil {
 			log.Println("close old conn error:", err)
 		}
-	} else {
-		log.Println("first login", id)
 	}
 
 	ws.mapConnUid[c] = id

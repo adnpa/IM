@@ -70,3 +70,5 @@ func AllService() map[string]*api.AgentService {
 func UnRegister() {
 	Register("loaclhost", 11000, "user-web", []string{"maxsho", "bobby"}, "user-web")
 }
+
+// 负载均衡和服务发现

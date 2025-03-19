@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+import "message.proto";
+
+service Presence { rpc SendMsg(SendMsgReq) returns (SendMsgResp); }
+
+message SendMsgReq {
+  int32 user_id = 1;
+  msg.chat_msg msg = 2;
+}
+
+message SendMsgResp {
+    bool succ = 1;
+}

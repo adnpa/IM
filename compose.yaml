@@ -74,6 +74,7 @@ services:
 
   nacos:
     image: nacos/nacos-server:2.0.2
+    restart: always
     container_name: nacos-standalone
     environment:
       - PREFER_HOST_MODE=hostname
@@ -95,10 +96,14 @@ services:
       - "9090:9090"
     depends_on:
       - nacos
-    restart: on-failure
+    # restart: on-failure
+    restart: always
+
   grafana:
     container_name: grafana
     image: grafana/grafana:latest
     ports:
       - 3000:3000
-    restart: on-failure
+    # restart: on-failure
+    restart: always
+

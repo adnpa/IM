@@ -1,8 +1,10 @@
-2025-03-18 20:36:25,452 INFO [dump-task] add task. groupKey=user-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d, taskKey=user-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d+false+null
+2025-03-19 15:26:38,444 INFO [dump-all-ok] user-srv+dev, 1742301385411, length=208, md5=5d703f74ab12bf258babda26cc013030
 
-2025-03-18 20:36:48,668 INFO [dump-task] add task. groupKey=group-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d, taskKey=group-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d+false+null
+2025-03-19 15:26:38,444 INFO [dump-all-ok] group-srv+dev, 1742301408662, length=209, md5=c51a2e68fc1db0cd160c99838f79b0b8
 
-2025-03-18 20:37:00,791 INFO [dump-task] add task. groupKey=friend-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d, taskKey=friend-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d+false+null
+2025-03-19 15:26:38,445 INFO [dump-all-ok] friend-srv+dev, 1742301420708, length=210, md5=4f24f81638a1b9b5bc40973961fabe3c
 
-2025-03-18 20:41:44,689 INFO [dump-task] add task. groupKey=offline-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d, taskKey=offline-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d+false+null
+2025-03-19 15:26:38,445 INFO [dump-all-ok] offline-srv+dev, 1742301704684, length=211, md5=6587a943910efed0dd0f9789df9a737d
+
+2025-03-19 15:29:56,140 INFO [dump-task] add task. groupKey=presence-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d, taskKey=presence-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d+false+null
 

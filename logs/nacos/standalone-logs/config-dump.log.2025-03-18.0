@@ -1,0 +1,8 @@
+2025-03-18 20:36:25,452 INFO [dump-task] add task. groupKey=user-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d, taskKey=user-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d+false+null
+
+2025-03-18 20:36:48,668 INFO [dump-task] add task. groupKey=group-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d, taskKey=group-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d+false+null
+
+2025-03-18 20:37:00,791 INFO [dump-task] add task. groupKey=friend-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d, taskKey=friend-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d+false+null
+
+2025-03-18 20:41:44,689 INFO [dump-task] add task. groupKey=offline-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d, taskKey=offline-srv+dev+9bc64a27-6584-46a8-b0e0-e7dac094ec2d+false+null
+

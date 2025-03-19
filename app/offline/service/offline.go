@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/adnpa/IM/api/pb"
-	"github.com/adnpa/IM/app/online/model"
+	"github.com/adnpa/IM/app/offline/model"
 	"github.com/adnpa/IM/pkg/common/db/mongodb"
 	"github.com/jinzhu/copier"
 	"go.mongodb.org/mongo-driver/bson"

@@ -20,10 +20,10 @@ var (
 )
 
 func TestXxx(t *testing.T) {
-	var err = MyError{Code: 123}
-	err2 := errors.New("err2")
-	t.Log(errors.New("err1") == errors.New("err1"))
-	t.Log(errors.As(err, &MyError{}))
-	wrapErr := fmt.Errorf("error on validation %w", err)
-	t.Log(errors.Unwrap(wrapErr))
+	// var err = MyError{Code: 123}
+	// err2 := errors.New("err2")
+	// t.Log(errors.New("err1") == errors.New("err1"))
+	// t.Log(errors.As(err, &MyError{}))
+	// wrapErr := fmt.Errorf("error on validation %w", err)
+	// t.Log(errors.Unwrap(wrapErr))
 }
