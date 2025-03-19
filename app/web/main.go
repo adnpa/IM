@@ -34,7 +34,6 @@ func main() {
 		friendGroup.GET("/friend_info_list", handler.GetFriendList)
 		friendGroup.GET("/friend_detail", handler.GetFriendDetail)
 		friendGroup.GET("/self_apply_list", handler.GetUserSelfApplyList)
-		friendGroup.GET("/apply_list", handler.GetUserApplyList)
 		friendGroup.POST("/apply_add_friend", handler.ApplyAddFriend)
 		friendGroup.POST("/handle_apply", handler.HandleApplyFriend)
 		friendGroup.POST("/delete_friend", handler.DeleteFriend)

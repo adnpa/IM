@@ -8,16 +8,25 @@ service Friend {
   rpc DeleteFriend(DeleteFriendReq) returns (DeleteFriendResp);
   rpc UpdateFriend(UpdateFriendReq) returns (UpdateFriendResp);
 
+  rpc IsFriend(IsFriendReq) returns (IsFriendResp);
   rpc GetFriendApply(GetFriendApplyReq) returns (GetFriendApplyResp);
 
-  rpc GetFriendApplyByFromId(GetFriendApplyByFromIdReq)
-      returns (GetFriendApplyByFromIdResp);
-  rpc GetFriendApplyByToId(GetFriendApplyByToIdReq)
-      returns (GetFriendApplyByToIdResp);
+  // rpc GetFriendApplyByFromId(GetFriendApplyByFromIdReq)
+  //     returns (GetFriendApplyByFromIdResp);
+  // rpc GetFriendApplyByToId(GetFriendApplyByToIdReq)
+  //     returns (GetFriendApplyByToIdResp);
 
   rpc CreateFriendApply(CreateFriendApplyReq) returns (CreateFriendApplyResp);
   rpc UpdateFriendApply(UpdateFriendApplyReq) returns (UpdateFriendApplyResp);
   rpc DeleteFriendApply(DeleteFriendApplyReq) returns (DeleteFriendApplyResp);
+}
+
+message IsFriendReq{
+  int32 left = 1;
+  int32 right = 2;
+}
+message IsFriendResp{
+  bool is_friend = 1;
 }
 
 message GetFriendsByUserIdReq { int32 uid = 1; }
@@ -29,7 +38,7 @@ message CreateFriendReq { Friendship info = 1; }
 message CreateFriendResp { bool success = 1; }
 
 message DeleteFriendReq {
-  int32 uid = 1;
+  int32 user_id = 1;
   int32 friend_id = 2;
 }
 
@@ -39,17 +48,17 @@ message UpdateFriendReq { Friendship info = 1; }
 
 message UpdateFriendResp { Friendship info = 1; }
 
-message GetFriendApplyReq {}
+message GetFriendApplyReq { int32 user_id = 1; }
 
-message GetFriendApplyResp {}
+message GetFriendApplyResp { repeated FriendApply friend_applys = 1; }
 
-message GetFriendApplyByFromIdReq { int32 from_id = 1; }
+// message GetFriendApplyByFromIdReq { int32 from_id = 1; }
 
-message GetFriendApplyByFromIdResp { repeated FriendApply friend_apply = 1; }
+// message GetFriendApplyByFromIdResp { repeated FriendApply friend_apply = 1; }
 
-message GetFriendApplyByToIdReq { int32 to_id = 1; }
+// message GetFriendApplyByToIdReq { int32 to_id = 1; }
 
-message GetFriendApplyByToIdResp { repeated FriendApply friend_apply = 1; }
+// message GetFriendApplyByToIdResp { repeated FriendApply friend_apply = 1; }
 
 message CreateFriendApplyReq { FriendApply friend_apply = 1; }
 

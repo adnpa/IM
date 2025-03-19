@@ -20,52 +20,20 @@ func FriendApplyModel2PB(apply model.FriendApply) *pb.FriendApply {
 }
 
 func (s *FriendService) GetFriendApply(_ context.Context, req *pb.GetFriendApplyReq) (*pb.GetFriendApplyResp, error) {
-	// var apply model.FriendApply
-	// result := global.DB.First(&apply, req.Id)
-	// if result.Error != nil {
-	// 	return nil, status.Errorf(codes.NotFound, "申请不存在")
-	// }
-
-	// return &pb.GetFriendApplyResp{Apply: &pb.FriendApply{
-	// 	Id:          apply.ID,
-	// 	FromId:      apply.FromID,
-	// 	ToId:        apply.ToID,
-	// 	Status:      apply.Status,
-	// 	ApplyReason: apply.ApplyReason,
-	// 	CreatedAt:   apply.CreatedAt.Format(time.RFC3339),
-	// 	UpdatedAt:   apply.UpdatedAt.Format(time.RFC3339),
-	// }}, nil
-	return &pb.GetFriendApplyResp{}, nil
-}
-
-func (s *FriendService) GetFriendApplyByFromId(_ context.Context, req *pb.GetFriendApplyByFromIdReq) (*pb.GetFriendApplyByFromIdResp, error) {
-	var applies []model.FriendApply
-	result := global.DB.Where(&model.FriendApply{FromID: req.FromId}).Find(&applies)
-	if result.Error != nil {
-		return nil, status.Errorf(codes.Internal, "查询失败: %v", result.Error)
+	var friendApplys []model.FriendApply
+	var pbFriendApplys []*pb.FriendApply
+	err := global.DB.Where(&model.FriendApply{FromID: req.UserId}).Or(&model.FriendApply{ToID: req.UserId}).Find(&friendApplys).Error
+	if err != nil {
+		return nil, err
 	}
 
-	var pbApplies []*pb.FriendApply
-	for _, a := range applies {
-		pbApplies = append(pbApplies, FriendApplyModel2PB(a))
+	for _, i := range friendApplys {
+		pbFriendApplys = append(pbFriendApplys, FriendApplyModel2PB(i))
 	}
 
-	return &pb.GetFriendApplyByFromIdResp{FriendApply: pbApplies}, nil
-}
-
-func (s *FriendService) GetFriendApplyByToId(_ context.Context, req *pb.GetFriendApplyByToIdReq) (*pb.GetFriendApplyByToIdResp, error) {
-	var applies []model.FriendApply
-	result := global.DB.Where(&model.FriendApply{ToID: req.ToId}).Find(&applies)
-	if result.Error != nil {
-		return nil, status.Errorf(codes.Internal, "查询失败: %v", result.Error)
-	}
-
-	var pbApplies []*pb.FriendApply
-	for _, a := range applies {
-		pbApplies = append(pbApplies, FriendApplyModel2PB(a))
-	}
-
-	return &pb.GetFriendApplyByToIdResp{FriendApply: pbApplies}, nil
+	return &pb.GetFriendApplyResp{
+		FriendApplys: pbFriendApplys,
+	}, nil
 }
 
 func (s *FriendService) CreateFriendApply(_ context.Context, req *pb.CreateFriendApplyReq) (*pb.CreateFriendApplyResp, error) {

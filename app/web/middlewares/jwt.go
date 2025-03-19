@@ -3,6 +3,7 @@ package middlewares
 import (
 	"net/http"
 
+	"github.com/adnpa/IM/app/web/constant"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/gin-gonic/gin"
 )
@@ -30,8 +31,8 @@ func JWTAuth() gin.HandlerFunc {
 			return
 		}
 
-		c.Set("claims", claims)
-		c.Set("userId", claims.ID)
+		c.Set(constant.CLAIMS_KEY, claims)
+		c.Set(constant.USER_ID_KEY, claims.UID)
 
 		c.Next()
 	}

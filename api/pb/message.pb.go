@@ -22,7 +22,7 @@ const (
 )
 
 // 当前用json
-// todo 后续改为tcp 字节流协议
+// TODO: 后续改为tcp 字节流协议
 type CommonMsg struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Version       string                 `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`

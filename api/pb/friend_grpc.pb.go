@@ -19,16 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Friend_GetFriendsByUserId_FullMethodName     = "/Friend/GetFriendsByUserId"
-	Friend_CreateFriend_FullMethodName           = "/Friend/CreateFriend"
-	Friend_DeleteFriend_FullMethodName           = "/Friend/DeleteFriend"
-	Friend_UpdateFriend_FullMethodName           = "/Friend/UpdateFriend"
-	Friend_GetFriendApply_FullMethodName         = "/Friend/GetFriendApply"
-	Friend_GetFriendApplyByFromId_FullMethodName = "/Friend/GetFriendApplyByFromId"
-	Friend_GetFriendApplyByToId_FullMethodName   = "/Friend/GetFriendApplyByToId"
-	Friend_CreateFriendApply_FullMethodName      = "/Friend/CreateFriendApply"
-	Friend_UpdateFriendApply_FullMethodName      = "/Friend/UpdateFriendApply"
-	Friend_DeleteFriendApply_FullMethodName      = "/Friend/DeleteFriendApply"
+	Friend_GetFriendsByUserId_FullMethodName = "/Friend/GetFriendsByUserId"
+	Friend_CreateFriend_FullMethodName       = "/Friend/CreateFriend"
+	Friend_DeleteFriend_FullMethodName       = "/Friend/DeleteFriend"
+	Friend_UpdateFriend_FullMethodName       = "/Friend/UpdateFriend"
+	Friend_IsFriend_FullMethodName           = "/Friend/IsFriend"
+	Friend_GetFriendApply_FullMethodName     = "/Friend/GetFriendApply"
+	Friend_CreateFriendApply_FullMethodName  = "/Friend/CreateFriendApply"
+	Friend_UpdateFriendApply_FullMethodName  = "/Friend/UpdateFriendApply"
+	Friend_DeleteFriendApply_FullMethodName  = "/Friend/DeleteFriendApply"
 )
 
 // FriendClient is the client API for Friend service.
@@ -39,9 +38,8 @@ type FriendClient interface {
 	CreateFriend(ctx context.Context, in *CreateFriendReq, opts ...grpc.CallOption) (*CreateFriendResp, error)
 	DeleteFriend(ctx context.Context, in *DeleteFriendReq, opts ...grpc.CallOption) (*DeleteFriendResp, error)
 	UpdateFriend(ctx context.Context, in *UpdateFriendReq, opts ...grpc.CallOption) (*UpdateFriendResp, error)
+	IsFriend(ctx context.Context, in *IsFriendReq, opts ...grpc.CallOption) (*IsFriendResp, error)
 	GetFriendApply(ctx context.Context, in *GetFriendApplyReq, opts ...grpc.CallOption) (*GetFriendApplyResp, error)
-	GetFriendApplyByFromId(ctx context.Context, in *GetFriendApplyByFromIdReq, opts ...grpc.CallOption) (*GetFriendApplyByFromIdResp, error)
-	GetFriendApplyByToId(ctx context.Context, in *GetFriendApplyByToIdReq, opts ...grpc.CallOption) (*GetFriendApplyByToIdResp, error)
 	CreateFriendApply(ctx context.Context, in *CreateFriendApplyReq, opts ...grpc.CallOption) (*CreateFriendApplyResp, error)
 	UpdateFriendApply(ctx context.Context, in *UpdateFriendApplyReq, opts ...grpc.CallOption) (*UpdateFriendApplyResp, error)
 	DeleteFriendApply(ctx context.Context, in *DeleteFriendApplyReq, opts ...grpc.CallOption) (*DeleteFriendApplyResp, error)
@@ -95,30 +93,20 @@ func (c *friendClient) UpdateFriend(ctx context.Context, in *UpdateFriendReq, op
 	return out, nil
 }
 
+func (c *friendClient) IsFriend(ctx context.Context, in *IsFriendReq, opts ...grpc.CallOption) (*IsFriendResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(IsFriendResp)
+	err := c.cc.Invoke(ctx, Friend_IsFriend_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *friendClient) GetFriendApply(ctx context.Context, in *GetFriendApplyReq, opts ...grpc.CallOption) (*GetFriendApplyResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetFriendApplyResp)
 	err := c.cc.Invoke(ctx, Friend_GetFriendApply_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *friendClient) GetFriendApplyByFromId(ctx context.Context, in *GetFriendApplyByFromIdReq, opts ...grpc.CallOption) (*GetFriendApplyByFromIdResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetFriendApplyByFromIdResp)
-	err := c.cc.Invoke(ctx, Friend_GetFriendApplyByFromId_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *friendClient) GetFriendApplyByToId(ctx context.Context, in *GetFriendApplyByToIdReq, opts ...grpc.CallOption) (*GetFriendApplyByToIdResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetFriendApplyByToIdResp)
-	err := c.cc.Invoke(ctx, Friend_GetFriendApplyByToId_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -163,9 +151,8 @@ type FriendServer interface {
 	CreateFriend(context.Context, *CreateFriendReq) (*CreateFriendResp, error)
 	DeleteFriend(context.Context, *DeleteFriendReq) (*DeleteFriendResp, error)
 	UpdateFriend(context.Context, *UpdateFriendReq) (*UpdateFriendResp, error)
+	IsFriend(context.Context, *IsFriendReq) (*IsFriendResp, error)
 	GetFriendApply(context.Context, *GetFriendApplyReq) (*GetFriendApplyResp, error)
-	GetFriendApplyByFromId(context.Context, *GetFriendApplyByFromIdReq) (*GetFriendApplyByFromIdResp, error)
-	GetFriendApplyByToId(context.Context, *GetFriendApplyByToIdReq) (*GetFriendApplyByToIdResp, error)
 	CreateFriendApply(context.Context, *CreateFriendApplyReq) (*CreateFriendApplyResp, error)
 	UpdateFriendApply(context.Context, *UpdateFriendApplyReq) (*UpdateFriendApplyResp, error)
 	DeleteFriendApply(context.Context, *DeleteFriendApplyReq) (*DeleteFriendApplyResp, error)
@@ -191,14 +178,11 @@ func (UnimplementedFriendServer) DeleteFriend(context.Context, *DeleteFriendReq)
 func (UnimplementedFriendServer) UpdateFriend(context.Context, *UpdateFriendReq) (*UpdateFriendResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFriend not implemented")
 }
+func (UnimplementedFriendServer) IsFriend(context.Context, *IsFriendReq) (*IsFriendResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsFriend not implemented")
+}
 func (UnimplementedFriendServer) GetFriendApply(context.Context, *GetFriendApplyReq) (*GetFriendApplyResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFriendApply not implemented")
-}
-func (UnimplementedFriendServer) GetFriendApplyByFromId(context.Context, *GetFriendApplyByFromIdReq) (*GetFriendApplyByFromIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFriendApplyByFromId not implemented")
-}
-func (UnimplementedFriendServer) GetFriendApplyByToId(context.Context, *GetFriendApplyByToIdReq) (*GetFriendApplyByToIdResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFriendApplyByToId not implemented")
 }
 func (UnimplementedFriendServer) CreateFriendApply(context.Context, *CreateFriendApplyReq) (*CreateFriendApplyResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateFriendApply not implemented")
@@ -302,6 +286,24 @@ func _Friend_UpdateFriend_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Friend_IsFriend_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsFriendReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FriendServer).IsFriend(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Friend_IsFriend_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FriendServer).IsFriend(ctx, req.(*IsFriendReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Friend_GetFriendApply_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetFriendApplyReq)
 	if err := dec(in); err != nil {
@@ -316,42 +318,6 @@ func _Friend_GetFriendApply_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FriendServer).GetFriendApply(ctx, req.(*GetFriendApplyReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Friend_GetFriendApplyByFromId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFriendApplyByFromIdReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FriendServer).GetFriendApplyByFromId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Friend_GetFriendApplyByFromId_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FriendServer).GetFriendApplyByFromId(ctx, req.(*GetFriendApplyByFromIdReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Friend_GetFriendApplyByToId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFriendApplyByToIdReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(FriendServer).GetFriendApplyByToId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Friend_GetFriendApplyByToId_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FriendServer).GetFriendApplyByToId(ctx, req.(*GetFriendApplyByToIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -434,16 +400,12 @@ var Friend_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Friend_UpdateFriend_Handler,
 		},
 		{
+			MethodName: "IsFriend",
+			Handler:    _Friend_IsFriend_Handler,
+		},
+		{
 			MethodName: "GetFriendApply",
 			Handler:    _Friend_GetFriendApply_Handler,
-		},
-		{
-			MethodName: "GetFriendApplyByFromId",
-			Handler:    _Friend_GetFriendApplyByFromId_Handler,
-		},
-		{
-			MethodName: "GetFriendApplyByToId",
-			Handler:    _Friend_GetFriendApplyByToId_Handler,
 		},
 		{
 			MethodName: "CreateFriendApply",

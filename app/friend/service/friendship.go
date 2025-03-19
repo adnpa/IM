@@ -26,6 +26,15 @@ type FriendService struct {
 	pb.UnimplementedFriendServer
 }
 
+func (s *FriendService) IsFriend(_ context.Context, in *pb.IsFriendReq) (*pb.IsFriendResp, error) {
+	var count int64
+	err := global.DB.Where(&model.Friendship{UserID: in.Left, FriendID: in.Right}).Or(&model.Friendship{UserID: in.Right, FriendID: in.Left}).Count(&count).Error
+	if err != nil {
+		return nil, err
+	}
+	return &pb.IsFriendResp{IsFriend: count > 0}, nil
+}
+
 func (s *FriendService) GetFriendsByUserId(_ context.Context, in *pb.GetFriendsByUserIdReq) (*pb.GetFriendsByUserIdResp, error) {
 	var friends []model.Friendship
 	err := global.DB.Where(&model.Friendship{UserID: in.Uid}).Find(&friends).Error
@@ -57,7 +66,7 @@ func (s *FriendService) CreateFriend(_ context.Context, in *pb.CreateFriendReq) 
 }
 
 func (s *FriendService) DeleteFriend(_ context.Context, req *pb.DeleteFriendReq) (*pb.DeleteFriendResp, error) {
-	result := global.DB.Where(&model.Friendship{UserID: req.Uid, FriendID: req.FriendId}).Delete(&model.Friendship{})
+	result := global.DB.Where(&model.Friendship{UserID: req.UserId, FriendID: req.FriendId}).Delete(&model.Friendship{})
 	if result.Error != nil {
 		return nil, status.Errorf(codes.Internal, "删除失败: %v", result.Error)
 	}
