@@ -16,7 +16,7 @@ import (
 
 func InitConfig() {
 	p, _ := os.Getwd()
-	configFileName := "user-srv.yaml"
+	configFileName := "web-srv.yaml"
 
 	v := viper.New()
 	v.SetConfigFile(configFileName)

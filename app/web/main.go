@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/adnpa/IM/app/web/handler"
+	"github.com/adnpa/IM/app/web/initialize"
 	"github.com/adnpa/IM/app/web/middlewares"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/gin-contrib/cors"
@@ -12,6 +13,9 @@ import (
 )
 
 func main() {
+	initialize.InitConfig()
+	initialize.InitSrvConn()
+
 	r := gin.Default()
 	r.Use(middlewares.LoggerMiddleware())
 	r.Use(cors.Default())
