@@ -7,14 +7,13 @@ import (
 	"strconv"
 
 	"github.com/adnpa/IM/api/pb"
+	"github.com/adnpa/IM/app/web/global"
 	"github.com/adnpa/IM/app/web/handler/forms"
 	"github.com/adnpa/IM/internal/constant"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 func Register(c *gin.Context) {
@@ -24,17 +23,9 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	//todo validate code
+	//TODO: validate code
 
-	// todo 简化--------------------------------------------------
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("did not connect: %v", err)
-	}
-	defer conn.Close()
-	cli := pb.NewUserClient(conn)
-
-	resp, err := cli.CreateUser(context.Background(), &pb.CreateUserReq{
+	resp, err := global.UserCli.CreateUser(context.Background(), &pb.CreateUserReq{
 		Nickname: form.Username,
 		Mobile:   form.Mobile,
 		Email:    form.Email,
@@ -43,8 +34,6 @@ func Register(c *gin.Context) {
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
-	defer conn.Close()
-	// --------------------------------------------------------
 
 	token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(int64(resp.Uid), 10))
 	if err != nil {
@@ -67,22 +56,14 @@ func PasswordLogin(c *gin.Context) {
 		return
 	}
 
-	// todo 验证码
+	// TODO: 验证码
 
-	// todo 简化--------------------------------------------------
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("did not connect: %v", err)
-	}
-	defer conn.Close()
-	cli := pb.NewUserClient(conn)
-
-	uResp, err := cli.GetUserByEmail(context.Background(), &pb.GetUserByEmailReq{Email: form.Email})
+	uResp, err := global.UserCli.GetUserByEmail(context.Background(), &pb.GetUserByEmailReq{Email: form.Email})
 	if err != nil {
 		c.JSON(http.StatusOK, ErrInfo(constant.UserNotExist))
 		return
 	}
-	resp, err := cli.CheckPassWord(context.Background(), &pb.CheckPassWordReq{
+	resp, err := global.UserCli.CheckPassWord(context.Background(), &pb.CheckPassWordReq{
 		Password:          form.Password,
 		EncryptedPassword: uResp.Usr.PassWord,
 		Salt:              uResp.Usr.Salt})
@@ -90,7 +71,6 @@ func PasswordLogin(c *gin.Context) {
 		c.JSON(http.StatusOK, ErrInfo(constant.UserNotExist))
 		return
 	}
-	// --------------------------------------------------------
 
 	token, expiredAt, err := utils.GenerateToken(strconv.FormatInt(int64(uResp.Usr.Id), 10))
 	if err != nil {
@@ -106,4 +86,3 @@ func PasswordLogin(c *gin.Context) {
 	})
 }
 
-// helper

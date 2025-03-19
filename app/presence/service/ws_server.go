@@ -85,7 +85,7 @@ func (ws *WSServer) HandleConn(w http.ResponseWriter, r *http.Request) {
 			newConn := &WsConn{conn, new(sync.Mutex), 1}
 			ws.AddWsConn(SendId, newConn)
 			numId, _ := strconv.ParseInt(SendId, 10, 64)
-			// todo 暂时采用全量离线消息推送 后续结合会话多次推送
+			// TODO: 暂时采用全量离线消息推送 后续结合会话多次推送
 			msgs, _ := ws.GetOfflineMsg(numId)
 			ws.sendMsg(newConn, model.CommonMsg{Cmd: model.TypSyncMsg, Msgs: msgs})
 			go ws.readMsg(newConn)
@@ -122,7 +122,7 @@ func (ws *WSServer) headerCheck(w http.ResponseWriter, r *http.Request) bool {
 }
 
 func (ws *WSServer) GetOfflineMsg(uid int64) ([]model.Message, error) {
-	// todo 离线服务获取消息
+	// TODO: 离线服务获取消息
 	return []model.Message{}, nil
 }
 

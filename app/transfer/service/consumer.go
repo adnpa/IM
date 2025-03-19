@@ -87,9 +87,9 @@ func (c *Consumer) handleSingle(msg *model.Message) error {
 		return fmt.Errorf("send msg to self is not support")
 	}
 
-	// todo 序列号去重
+	// TODO: 序列号去重
 
-	// todo 分布式id服务
+	// TODO: 分布式id服务
 	msg.Id = utils.NowMilliSecond()
 
 	pbMsg := &pb.ChatMsg{}

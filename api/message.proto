@@ -3,7 +3,7 @@ option go_package = ".;pb";
 package msg;
 
 // 当前用json
-// todo 后续改为tcp 字节流协议
+// TODO: 后续改为tcp 字节流协议
 message common_msg {
   string version = 1;
   int32 cmd = 2;

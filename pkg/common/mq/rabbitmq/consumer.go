@@ -60,7 +60,7 @@ func (c *Consumer) Run() {
 
 	for d := range msgs {
 		log.Printf("Received a message: %s", d.Body)
-		// todo handle msg
+		// TODO: handle msg
 		// chat.MyServer.HandleMsg()
 		d.Ack(false)
 	}
