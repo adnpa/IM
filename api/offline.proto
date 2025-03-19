@@ -13,7 +13,10 @@ message GetOfflineMsgReq { int32 uid = 1; }
 
 message GetOfflineMsgResp { repeated msg.chat_msg msgs = 1; }
 
-message PutMsgReq { msg.chat_msg msg = 1; }
+message PutMsgReq {
+  int32 user_id = 1;
+  msg.chat_msg msg = 2;
+}
 
 message PutMsgResp { bool succ = 1; }
 

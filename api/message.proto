@@ -2,6 +2,7 @@ syntax = "proto3";
 option go_package = ".;pb";
 package msg;
 
+// 当前用json
 // todo 后续改为tcp 字节流协议
 message common_msg {
   string version = 1;
@@ -13,7 +14,7 @@ message common_msg {
 message chat_msg {
   int64 id = 1;         // 消息ID
   int32 typ = 2;        // 消息类型
-  int64 from = 3;       // 发送者ID
+  int32 from = 3;       // 发送者ID
   int64 to = 4;         // 接收者ID或群组ID
   int32 media = 5;      // 媒体类型
   string content = 6;   // 消息内容
