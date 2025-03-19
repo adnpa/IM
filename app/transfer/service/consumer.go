@@ -52,10 +52,7 @@ func (c *Consumer) Run() {
 		false,  // no-wait
 		nil,    // args
 	)
-	if err != nil {
-		logger.Panic("Failed to register a consumer")
-	}
-	failOnError("Failed to register a consumer")
+	failOnError(err, "Failed to register a consumer")
 
 	for d := range msgs {
 		err := c.handleMsg(d.Body)
