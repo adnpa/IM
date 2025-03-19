@@ -26,8 +26,19 @@ type FriendService struct {
 	pb.UnimplementedFriendServer
 }
 
-func (s *FriendService) GetFriendsByUserId(_ context.Context, _ *pb.GetFriendsByUserIdReq) (*pb.GetFriendsByUserIdResp, error) {
-	panic("not implemented") // TODO: Implement
+func (s *FriendService) GetFriendsByUserId(_ context.Context, in *pb.GetFriendsByUserIdReq) (*pb.GetFriendsByUserIdResp, error) {
+	var friends []model.Friendship
+	err := global.DB.Where(&model.Friendship{UserID: in.Uid}).Find(&friends).Error
+	if err != nil {
+		return nil, err
+	}
+	var pbFriends []*pb.Friendship
+	for _, f := range friends {
+		pbFriends = append(pbFriends, FriendshipModel2PB(f))
+	}
+	return &pb.GetFriendsByUserIdResp{
+		Friends: pbFriends,
+	}, nil
 }
 
 func (s *FriendService) CreateFriend(_ context.Context, in *pb.CreateFriendReq) (*pb.CreateFriendResp, error) {
@@ -61,8 +72,4 @@ func (s *FriendService) UpdateFriend(_ context.Context, req *pb.UpdateFriendReq)
 	}
 
 	return &pb.UpdateFriendResp{}, nil
-}
-
-func (s *FriendService) mustEmbedUnimplementedFriendServer() {
-	panic("not implemented") // TODO: Implement
 }

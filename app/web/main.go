@@ -21,7 +21,6 @@ func main() {
 		userRouterGroup.POST("/register", handler.Register)
 		userRouterGroup.POST("/pwd_login", handler.PasswordLogin)
 
-		// TODO:fasdlkj
 		// authRouterGroup.GET("detail", middlewares.JWTAuth(), handler.GetUserDetail)
 		// authRouterGroup.PATCH("update", middlewares.JWTAuth(), handler.UpdateUser)
 	}
@@ -29,8 +28,6 @@ func main() {
 	friendGroup := r.Group("/friend")
 	{
 		friendGroup.GET("/friend_info_list", handler.GetFriendList)
-
-		// TODO:
 
 		// friendGroup.GET("/self_apply_list", handler.GetFriendList)
 		// friendGroup.GET("/apply_list", handler.GetFriendList)
@@ -44,8 +41,6 @@ func main() {
 	groupGroup := r.Group("/group")
 	{
 		groupGroup.GET("/group_info_list", handler.GetGroups)
-
-		// todo
 
 		// groupGroup.POST("/create_group", handler.CreateGroup)
 		// groupGroup.POST("/delete_group", handler.CreateGroup)
