@@ -32,25 +32,24 @@ func main() {
 	friendGroup := r.Group("/friend")
 	{
 		friendGroup.GET("/friend_info_list", handler.GetFriendList)
-
-		// friendGroup.GET("/self_apply_list", handler.GetFriendList)
-		// friendGroup.GET("/apply_list", handler.GetFriendList)
-
-		// friendGroup.POST("/apply_add_friend", handler.AddFriend)
-		// friendGroup.POST("/handle_apply", handler.AddFriend)
-
-		// friendGroup.POST("/delete_friend", handler.AddFriend)
+		friendGroup.GET("/friend_detail", handler.GetFriendDetail)
+		friendGroup.GET("/self_apply_list", handler.GetUserSelfApplyList)
+		friendGroup.GET("/apply_list", handler.GetUserApplyList)
+		friendGroup.POST("/apply_add_friend", handler.ApplyAddFriend)
+		friendGroup.POST("/handle_apply", handler.HandleApplyFriend)
+		friendGroup.POST("/delete_friend", handler.DeleteFriend)
 	}
 
 	groupGroup := r.Group("/group")
 	{
-		groupGroup.GET("/group_info_list", handler.GetGroups)
+		// TODO: 完成接口
+		// groupGroup.GET("/group_info_list", handler.GetGroups)
+
+		// groupGroup.GET("/self_apply_list", handler.GetGroupApplyList)
+		// groupGroup.GET("/apply_list", handler.GetGroupApplyList)
 
 		// groupGroup.POST("/create_group", handler.CreateGroup)
 		// groupGroup.POST("/delete_group", handler.CreateGroup)
-
-		// groupGroup.GET("/self_apply_list", handler.ApplyGroup)
-		// groupGroup.GET("/apply_list", handler.ApplyGroup)
 
 		// groupGroup.POST("/appoint", handler.ApplyGroup)
 		// groupGroup.POST("/handle_apply", handler.ApplyGroup)
@@ -58,6 +57,7 @@ func main() {
 		// groupGroup.POST("/block", handler.ApplyGroup)
 	}
 
+	// TODO: 搜索服务
 	// searchGroup := r.Group("/search")
 	// {
 
