@@ -3,13 +3,23 @@ option go_package = ".;pb";
 
 import "message.proto";
 
-service Presence { rpc SendMsg(SendMsgReq) returns (SendMsgResp); }
+service Presence {
+  rpc IsOnline(IsOnlineReq) returns (IsOnlineResp);
+  rpc SendMsg(SendMsgReq) returns (SendMsgResp);
+}
 
 message SendMsgReq {
   int32 user_id = 1;
   msg.chat_msg msg = 2;
 }
 
-message SendMsgResp {
-    bool succ = 1;
+message SendMsgResp { bool succ = 1; }
+
+message IsOnlineReq {
+  int32 user_id  =1;
+}
+
+message IsOnlineResp {
+  bool is_online = 1;
+  string server_id = 2;
 }

@@ -19,13 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Presence_SendMsg_FullMethodName = "/Presence/SendMsg"
+	Presence_IsOnline_FullMethodName = "/Presence/IsOnline"
+	Presence_SendMsg_FullMethodName  = "/Presence/SendMsg"
 )
 
 // PresenceClient is the client API for Presence service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PresenceClient interface {
+	IsOnline(ctx context.Context, in *IsOnlineReq, opts ...grpc.CallOption) (*IsOnlineResp, error)
 	SendMsg(ctx context.Context, in *SendMsgReq, opts ...grpc.CallOption) (*SendMsgResp, error)
 }
 
@@ -35,6 +37,16 @@ type presenceClient struct {
 
 func NewPresenceClient(cc grpc.ClientConnInterface) PresenceClient {
 	return &presenceClient{cc}
+}
+
+func (c *presenceClient) IsOnline(ctx context.Context, in *IsOnlineReq, opts ...grpc.CallOption) (*IsOnlineResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(IsOnlineResp)
+	err := c.cc.Invoke(ctx, Presence_IsOnline_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *presenceClient) SendMsg(ctx context.Context, in *SendMsgReq, opts ...grpc.CallOption) (*SendMsgResp, error) {
@@ -51,6 +63,7 @@ func (c *presenceClient) SendMsg(ctx context.Context, in *SendMsgReq, opts ...gr
 // All implementations must embed UnimplementedPresenceServer
 // for forward compatibility.
 type PresenceServer interface {
+	IsOnline(context.Context, *IsOnlineReq) (*IsOnlineResp, error)
 	SendMsg(context.Context, *SendMsgReq) (*SendMsgResp, error)
 	mustEmbedUnimplementedPresenceServer()
 }
@@ -62,6 +75,9 @@ type PresenceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedPresenceServer struct{}
 
+func (UnimplementedPresenceServer) IsOnline(context.Context, *IsOnlineReq) (*IsOnlineResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsOnline not implemented")
+}
 func (UnimplementedPresenceServer) SendMsg(context.Context, *SendMsgReq) (*SendMsgResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMsg not implemented")
 }
@@ -84,6 +100,24 @@ func RegisterPresenceServer(s grpc.ServiceRegistrar, srv PresenceServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Presence_ServiceDesc, srv)
+}
+
+func _Presence_IsOnline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsOnlineReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PresenceServer).IsOnline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Presence_IsOnline_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PresenceServer).IsOnline(ctx, req.(*IsOnlineReq))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Presence_SendMsg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -111,6 +145,10 @@ var Presence_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "Presence",
 	HandlerType: (*PresenceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "IsOnline",
+			Handler:    _Presence_IsOnline_Handler,
+		},
 		{
 			MethodName: "SendMsg",
 			Handler:    _Presence_SendMsg_Handler,

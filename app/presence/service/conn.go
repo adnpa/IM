@@ -1,11 +1,27 @@
 package service
 
 import (
+	"context"
 	"log"
 	"strconv"
 
+	"github.com/adnpa/IM/api/pb"
+	"github.com/adnpa/IM/app/presence/global"
 	"github.com/adnpa/IM/pkg/logger"
 )
+
+func (ws *WSServer) IsOnline(_ context.Context, in *pb.IsOnlineReq) (*pb.IsOnlineResp, error) {
+	cli, err := global.RedisPool.Get(context.Background())
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := cli.Get(string(in.UserId))
+	if err != nil {
+		return nil, err
+	}
+	return &pb.IsOnlineResp{IsOnline: true, ServerId: resp}, nil
+}
 
 // -------------------------------------------------------
 // 连接管理

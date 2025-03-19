@@ -93,6 +93,7 @@ func (ws *WSServer) HandleConn(w http.ResponseWriter, r *http.Request) {
 			// redis记录用户连接的服务器 心跳刷新ttl
 			conn, err := global.RedisPool.Get(context.Background())
 			if err != nil {
+				logger.Error("push redis fail", zap.Error(err))
 				return
 			}
 			conn.SetNX(SendId, ws.serverId, 6*time.Minute)

@@ -53,13 +53,13 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:123456@mongo:27017/
       ME_CONFIG_BASICAUTH: false
 
-  # redis:
-  #   image: "redis:alpine"
-  #   restart: always
-  #   ports:
-  #     - "6379:6379"
-  #   networks:
-  #     - back-tier
+  redis:
+    image: "redis"
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - back-tier
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -75,7 +75,7 @@ services:
 
   nacos:
     image: nacos/nacos-server:2.0.2
-    restart: always
+    # restart: always
     container_name: nacos-standalone
     environment:
       - PREFER_HOST_MODE=hostname
@@ -88,6 +88,7 @@ services:
     ports:
       - "8848:8848"
       - "9848:9848"
+  
   prometheus:
     container_name: prometheus
     image: prom/prometheus:latest
