@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/adnpa/IM/app/web/constant"
 	"github.com/adnpa/IM/internal/utils"
@@ -17,13 +18,13 @@ import (
 
 func JWTAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		token := c.Request.Header.Get("x-token")
+		authHeader := c.Request.Header.Get("authorization")
+		token := strings.TrimPrefix(authHeader, "Bearer ")
 		if token == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{"msg": "请登录"})
 			c.Abort()
 			return
 		}
-
 		claims, err := utils.ParseToken(token)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, "未登陆")

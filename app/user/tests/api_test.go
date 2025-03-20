@@ -34,7 +34,15 @@ func TestCreateUser(t *testing.T) {
 	defer conn.Close()
 
 	c := pb.NewUserClient(conn)
-	c.CreateUser(context.Background(), &pb.CreateUserReq{})
+	resp, err := c.CreateUser(context.Background(), &pb.CreateUserReq{
+		Nickname: "dddd",
+		Mobile:   "444444",
+		Email:    "dddd@gmail.com",
+		Password: "111111",
+	})
+	t.Log(resp)
+	t.Log(err)
+	t.Log()
 }
 
 func TestMatch(t *testing.T) {
@@ -46,12 +54,13 @@ func TestMatch(t *testing.T) {
 
 	c := pb.NewUserClient(conn)
 
-	u, _ := c.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: 0})
+	u, _ := c.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: 101})
 
-	resp, _ := c.CheckPassWord(context.Background(), &pb.CheckPassWordReq{
-		Password:          "",
+	resp, err := c.CheckPassWord(context.Background(), &pb.CheckPassWordReq{
+		Password:          "111111",
 		EncryptedPassword: u.Usr.PassWord,
 		Salt:              u.Usr.Salt,
 	})
 	t.Log(resp.Match)
+	t.Log(err)
 }

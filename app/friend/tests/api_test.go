@@ -11,19 +11,37 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func TestGetUser(t *testing.T) {
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+func TestGetFriends(t *testing.T) {
+	conn, err := grpc.NewClient("localhost:50053", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	c := pb.NewUserClient(conn)
-	resp, err := c.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: 1})
+	c := pb.NewFriendClient(conn)
+	resp, err := c.GetFriendsByUserId(context.Background(), &pb.GetFriendsByUserIdReq{Uid: 101})
 	if err != nil {
 		t.Error(err)
 	}
-	fmt.Println(resp.Usr)
+	fmt.Println(resp)
+	t.Log(err)
+}
+
+func TestGetFriendApplys(t *testing.T) {
+	conn, err := grpc.NewClient("localhost:50053", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		t.Fatalf("did not connect: %v", err)
+	}
+	defer conn.Close()
+
+	c := pb.NewFriendClient(conn)
+	resp, err := c.GetFriendApply(context.Background(), &pb.GetFriendApplyReq{UserId: 101})
+	if err != nil {
+		t.Error(err)
+	}
+	fmt.Println(resp.FriendApplys)
+	t.Log(err)
+
 }
 
 func TestCreateUser(t *testing.T) {

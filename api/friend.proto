@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;pb";
 
 service Friend {
-  rpc GetFriendsByUserId(GetFriendsByUserIdReq)
+  rpc GetFriendsByUserId(=-[]-])
       returns (GetFriendsByUserIdResp);
   rpc CreateFriend(CreateFriendReq) returns (CreateFriendResp);
   rpc DeleteFriend(DeleteFriendReq) returns (DeleteFriendResp);
@@ -21,13 +21,11 @@ service Friend {
   rpc DeleteFriendApply(DeleteFriendApplyReq) returns (DeleteFriendApplyResp);
 }
 
-message IsFriendReq{
+message IsFriendReq {
   int32 left = 1;
   int32 right = 2;
 }
-message IsFriendResp{
-  bool is_friend = 1;
-}
+message IsFriendResp { bool is_friend = 1; }
 
 message GetFriendsByUserIdReq { int32 uid = 1; }
 

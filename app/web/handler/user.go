@@ -43,7 +43,7 @@ func Register(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"id":     resp.Uid,
+		"uid":     resp.Uid,
 		"token":  token,
 		"expire": expiredAt,
 	})

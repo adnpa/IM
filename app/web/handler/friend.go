@@ -9,7 +9,9 @@ import (
 	"github.com/adnpa/IM/app/web/global"
 	"github.com/adnpa/IM/app/web/handler/forms"
 	"github.com/adnpa/IM/app/web/utils"
+	"github.com/adnpa/IM/pkg/logger"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type FriendInfo struct {
@@ -25,8 +27,10 @@ type GetFriendResp struct {
 
 func GetFriendList(c *gin.Context) {
 	uid, _ := utils.GetUserId(c)
+	logger.Info("uid", zap.Any("", uid))
 	resp, err := global.FriendCli.GetFriendsByUserId(context.Background(), &pb.GetFriendsByUserIdReq{Uid: int32(uid)})
 	if err != nil {
+		logger.Error("get friend list", zap.Error(err))
 		c.JSON(http.StatusOK, ErrInfo(code.ErrInternal))
 		return
 	}
@@ -49,7 +53,7 @@ func ApplyAddFriend(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusOK, ErrInfo(code.ErrArgs))
 	}
-
+	
 	isResp, err := global.FriendCli.IsFriend(context.Background(), &pb.IsFriendReq{Left: friendApply.From, Right: friendApply.To})
 	if err != nil {
 		c.JSON(http.StatusOK, ErrInfo(code.ErrInternal))

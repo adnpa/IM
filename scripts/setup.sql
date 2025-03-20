@@ -102,7 +102,7 @@ CREATE TABLE `group_apply` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`application_id`),
+  PRIMARY KEY (`id`),
   KEY `idx_group_id` (`group_id`),
   KEY `idx_applicant_id` (`applicant_id`),
   KEY `fk_group_application_ibfk_1` (`handler_id`),

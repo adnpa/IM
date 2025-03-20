@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 	"strconv"
+	"time"
 
 	"github.com/adnpa/IM/app/web/handler"
 	"github.com/adnpa/IM/app/web/initialize"
 	"github.com/adnpa/IM/app/web/middlewares"
-	"github.com/adnpa/IM/internal/utils"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +18,17 @@ func main() {
 
 	r := gin.Default()
 	r.Use(middlewares.LoggerMiddleware())
-	r.Use(cors.Default())
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:9000"},
+		AllowMethods:     []string{"GET", "POST"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "https://github.com"
+		},
+		MaxAge: 12 * time.Hour,
+	}))
 
 	userRouterGroup := r.Group("/user")
 	{
@@ -29,10 +39,10 @@ func main() {
 		// authRouterGroup.PATCH("update", middlewares.JWTAuth(), handler.UpdateUser)
 	}
 
-	friendGroup := r.Group("/friend")
+	friendGroup := r.Group("/friend", middlewares.JWTAuth())
 	{
-		friendGroup.GET("/friend_info_list", handler.GetFriendList)
-		friendGroup.GET("/friend_detail", handler.GetFriendDetail)
+		friendGroup.GET("/info_list", handler.GetFriendList)
+		friendGroup.GET("/detail", handler.GetFriendDetail)
 		friendGroup.GET("/self_apply_list", handler.GetUserSelfApplyList)
 		friendGroup.POST("/apply_add_friend", handler.ApplyAddFriend)
 		friendGroup.POST("/handle_apply", handler.HandleApplyFriend)
@@ -57,12 +67,13 @@ func main() {
 	// }
 
 	// TODO: 搜索服务
-	// searchGroup := r.Group("/search")
-	// {
-
-	// }
+	// /search/friend?id=101
+	searchGroup := r.Group("/search")
+	{
+		searchGroup.GET("/friend", handler.SearchFriend)
+	}
 
 	ginPort := flag.Int("port", 10000, "get ginServerPort from cmd,default 10000 as port")
 	flag.Parse()
-	r.Run(utils.ServerIP + ":" + strconv.Itoa(*ginPort))
+	r.Run("localhost:" + strconv.Itoa(*ginPort))
 }

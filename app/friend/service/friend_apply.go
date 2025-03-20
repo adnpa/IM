@@ -30,7 +30,6 @@ func (s *FriendService) GetFriendApply(_ context.Context, req *pb.GetFriendApply
 	for _, i := range friendApplys {
 		pbFriendApplys = append(pbFriendApplys, FriendApplyModel2PB(i))
 	}
-
 	return &pb.GetFriendApplyResp{
 		FriendApplys: pbFriendApplys,
 	}, nil
