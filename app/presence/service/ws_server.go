@@ -76,14 +76,12 @@ func (ws *WSServer) HandleConn(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	token := query.Get("token")
 	if user_id, ok := ws.tokenCheck(token); ok {
-		logger.Info("user connect", zap.Any("url", r.URL))
+		logger.Info("user connect", zap.String("user_id", user_id), zap.Any("url", r.URL))
 		conn, err := ws.upgrader.Upgrade(w, r, nil)
 		if err != nil {
 			logger.Error("connect error", zap.Error(err))
 			return
 		} else {
-			logger.Info("", zap.Any("", query), zap.Any("", conn))
-
 			newConn := &WsConn{conn, new(sync.Mutex), 1}
 			ws.AddWsConn(user_id, newConn)
 			// numId, _ := strconv.ParseInt(user_id, 10, 64)

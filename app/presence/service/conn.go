@@ -8,6 +8,7 @@ import (
 	"github.com/adnpa/IM/api/pb"
 	"github.com/adnpa/IM/app/presence/global"
 	"github.com/adnpa/IM/pkg/logger"
+	"go.uber.org/zap"
 )
 
 func (ws *WSServer) IsOnline(_ context.Context, in *pb.IsOnlineReq) (*pb.IsOnlineResp, error) {
@@ -47,13 +48,12 @@ func (ws *WSServer) AddWsConn(id string, c *WsConn) {
 		err := oldConn.Close()
 		delete(ws.mapConnUid, c)
 		if err != nil {
-			log.Println("close old conn error:", err)
+			logger.Warn("close old conn error", zap.Error(err))
 		}
 	}
 
 	ws.mapConnUid[c] = id
 	ws.mapUidConn[id] = c
-	logger.Infof("connect succ", "online users", ws.mapConnUid)
 }
 
 func (ws *WSServer) DelUserConn(conn *WsConn) {

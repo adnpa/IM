@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
 
 	"github.com/adnpa/IM/api/pb"
 	"github.com/adnpa/IM/app/transfer/global"
@@ -66,13 +65,13 @@ func (c *Consumer) Run() {
 				return
 			}
 			err := c.handleMsg(d.Body)
-				if err != nil {
-				logger.Info("", zap.Error(err))
+			if err != nil {
+				logger.Error("handle msg fail, back to mq", zap.Error(err))
 				d.Nack(false, false)
 			} else {
 				d.Ack(false)
 			}
-			time.Sleep(5 * time.Second)
+			// time.Sleep(5 * time.Second)
 		case err := <-errChan:
 			if err != nil {
 				logger.Error("Channel closed", zap.Error(err))
@@ -86,24 +85,34 @@ func (c *Consumer) handleMsg(data []byte) error {
 	msg := &model.CommonMsg{}
 	err := json.Unmarshal(data, msg)
 	if err != nil {
+		logger.Warn("unmarshal fail", zap.Error(err))
 		return err
 	}
-	logger.Info("recv msg", zap.Any("msg", msg))
+	logger.Info("consume msg from mq", zap.Any("msg", msg))
 
 	switch msg.Cmd {
 	case model.TypSingle:
 		return c.handleSingle(&msg.ChatMsg)
 	case model.TypGroup:
 		// return c.handleGroup(msg)
+	case model.TypMsgAckFromClient:
+		msg.Cmd = model.TypMsgAckFromServerForRecver
+		_, err = global.PresenceCli.SendMsg(context.Background(),
+			&pb.SendMsgReq{UserId: int32(msg.ChatMsg.From),
+				Msg: &pb.ChatMsg{Typ: int32(model.TypMsgAckFromServerForRecver), Id: msg.AckMsg.Id, Seq: int64(msg.AckMsg.Seq)}})
+		if err != nil {
+			logger.Warn("call presence service fail", zap.Error(err))
+			return err
+		}
 	default:
-		logger.Info("unrecognized cmd")
+		logger.Warn("unrecognized cmd")
 	}
 	return nil
 }
 
 func (c *Consumer) handleSingle(msg *model.Message) error {
 	if msg.To == 0 || msg.From == 0 || msg.To == msg.From {
-		logger.Info("error format")
+		logger.Warn("error format", zap.Any("msg", msg))
 		return fmt.Errorf("bad msg format")
 	}
 
@@ -112,18 +121,19 @@ func (c *Consumer) handleSingle(msg *model.Message) error {
 	// TODO: 分布式id服务
 	msg.Id = utils.NowMilliSecond()
 
-	pbMsg := &pb.ChatMsg{}
+	pbMsg := &pb.ChatMsg{Typ: int32(msg.Cmd)}
 	copier.Copy(pbMsg, msg)
 
 	resp, err := global.PresenceCli.IsOnline(context.Background(), &pb.IsOnlineReq{UserId: int32(msg.To)})
 	if err != nil {
+		logger.Warn("call presence service fail", zap.Error(err))
 		return err
 	}
 
 	// 总是先入库 收到用户ack再把数据删掉
 	putMsgResp, err := global.OffineCli.PutMsg(context.Background(), &pb.PutMsgReq{UserId: int32(msg.To), Msg: pbMsg})
 	if err != nil || !putMsgResp.Succ {
-		logger.Info("put offline fail")
+		logger.Warn("call offline service fail", zap.Error(err))
 		return err
 	}
 
@@ -132,6 +142,7 @@ func (c *Consumer) handleSingle(msg *model.Message) error {
 		&pb.SendMsgReq{UserId: int32(msg.From),
 			Msg: &pb.ChatMsg{Typ: int32(model.TypMsgAckFromServerForSender), Id: msg.Id, Seq: msg.Seq}})
 	if err != nil {
+		logger.Warn("call presence service fail", zap.Error(err))
 		return err
 	}
 
@@ -139,6 +150,7 @@ func (c *Consumer) handleSingle(msg *model.Message) error {
 		logger.Info("user online, send")
 		_, err := global.PresenceCli.SendMsg(context.Background(), &pb.SendMsgReq{UserId: int32(msg.To), Msg: pbMsg})
 		if err != nil {
+			logger.Warn("call presence service fail", zap.Error(err))
 			return err
 		}
 	}

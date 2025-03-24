@@ -10,10 +10,13 @@ import (
 	"github.com/adnpa/IM/internal/model"
 	"github.com/adnpa/IM/pkg/logger"
 	"github.com/gorilla/websocket"
+	"github.com/jinzhu/copier"
 	"go.uber.org/zap"
 )
 
 func (ws *WSServer) SendMsg(_ context.Context, in *pb.SendMsgReq) (*pb.SendMsgResp, error) {
+	logger.Info("send msg to user", zap.Any("user_id", in.UserId), zap.Any("cmd", in.Msg.Typ), zap.Any("msg", in.Msg))
+
 	conn, ok := ws.GetWsConn(int64(in.UserId))
 
 	if conn == nil || !ok {
@@ -21,18 +24,23 @@ func (ws *WSServer) SendMsg(_ context.Context, in *pb.SendMsgReq) (*pb.SendMsgRe
 	}
 
 	var sendMsg model.CommonMsg
-	logger.Info("", zap.Any("", in.Msg.Typ), zap.Any("in", in))
 	sendMsg.Cmd = model.MsgType(in.Msg.Typ)
 	switch in.Msg.Typ {
 	case int32(model.TypMsgAckFromServerForSender):
 		sendMsg.AckMsg = model.AckMsg{Id: in.Msg.Id, Seq: int32(in.Msg.Seq)}
+	case int32(model.TypMsgAckFromServerForRecver):
+		sendMsg.AckMsg = model.AckMsg{Id: in.Msg.Id, Seq: int32(in.Msg.Seq)}
+	case int32(model.TypSingle):
+		cmsg := model.Message{}
+		copier.Copy(&cmsg, in.Msg)
+		sendMsg.ChatMsg = cmsg
 	}
 	data, err := json.Marshal(sendMsg)
-	logger.Info("send msg", zap.Any("user_id", in.UserId), zap.Any("uncode", sendMsg), zap.Any("msg", data))
 	if err != nil {
 		logger.Error("marshal", zap.Error(err))
 		return &pb.SendMsgResp{Succ: false}, err
 	}
+	logger.Info("end of send msg to user", zap.Any("user_id", in.UserId), zap.Any("resp msg", sendMsg))
 	err = ws.writeMsg(conn, websocket.TextMessage, data)
 	if err != nil {
 		logger.Error("write msg", zap.Error(err))
