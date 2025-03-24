@@ -16,11 +16,12 @@ func (ws *WSServer) IsOnline(_ context.Context, in *pb.IsOnlineReq) (*pb.IsOnlin
 		return nil, err
 	}
 
-	resp, err := cli.Get(string(in.UserId))
+	resp, err := cli.Get(strconv.Itoa(int(in.UserId)))
 	if err != nil {
 		return nil, err
 	}
-	return &pb.IsOnlineResp{IsOnline: true, ServerId: resp}, nil
+
+	return &pb.IsOnlineResp{IsOnline: resp != "", ServerId: resp}, nil
 }
 
 // -------------------------------------------------------

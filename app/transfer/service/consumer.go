@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/adnpa/IM/api/pb"
 	"github.com/adnpa/IM/app/transfer/global"
-	"github.com/adnpa/IM/app/transfer/model"
+	"github.com/adnpa/IM/internal/model"
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/logger"
 	"github.com/jinzhu/copier"
@@ -34,9 +35,11 @@ func (c *Consumer) Run() {
 	}
 	defer ch.Close()
 
+	errChan := make(chan *amqp.Error)
+
 	q, err := ch.QueueDeclare(
 		"im_message", // name
-		false,        // durable
+		true,         // durable
 		false,        // delete when unused
 		false,        // exclusive
 		false,        // no-wait
@@ -55,36 +58,53 @@ func (c *Consumer) Run() {
 	)
 	failOnError(err, "Failed to register a consumer")
 
-	for d := range msgs {
-		err := c.handleMsg(d.Body)
-		if err != nil {
-			d.Ack(false)
+	for {
+		select {
+		case d, ok := <-msgs:
+			if !ok {
+				logger.Info("Message channel closed")
+				return
+			}
+			err := c.handleMsg(d.Body)
+				if err != nil {
+				logger.Info("", zap.Error(err))
+				d.Nack(false, false)
+			} else {
+				d.Ack(false)
+			}
+			time.Sleep(5 * time.Second)
+		case err := <-errChan:
+			if err != nil {
+				logger.Error("Channel closed", zap.Error(err))
+			}
+			return
 		}
-		d.Ack(true)
 	}
 }
 
 func (c *Consumer) handleMsg(data []byte) error {
-	msg := &model.Message{}
+	msg := &model.CommonMsg{}
 	err := json.Unmarshal(data, msg)
 	if err != nil {
 		return err
 	}
-	logger.Debug("recv msg", zap.Any("msg", msg))
+	logger.Info("recv msg", zap.Any("msg", msg))
 
 	switch msg.Cmd {
 	case model.TypSingle:
-		c.handleSingle(msg)
+		return c.handleSingle(&msg.ChatMsg)
 	case model.TypGroup:
-		c.handleGroup(msg)
+		// return c.handleGroup(msg)
 	default:
+		logger.Info("unrecognized cmd")
 	}
 	return nil
 }
 
 func (c *Consumer) handleSingle(msg *model.Message) error {
-	if msg.To == msg.From {
-		return fmt.Errorf("send msg to self is not support")
+	if msg.To == 0 || msg.From == 0 || msg.To == msg.From {
+		logger.Info("error format")
+		return fmt.Errorf("bad msg format")
 	}
 
 	// TODO: 序列号去重
@@ -103,10 +123,20 @@ func (c *Consumer) handleSingle(msg *model.Message) error {
 	// 总是先入库 收到用户ack再把数据删掉
 	putMsgResp, err := global.OffineCli.PutMsg(context.Background(), &pb.PutMsgReq{UserId: int32(msg.To), Msg: pbMsg})
 	if err != nil || !putMsgResp.Succ {
+		logger.Info("put offline fail")
+		return err
+	}
+
+	// 回复ack
+	_, err = global.PresenceCli.SendMsg(context.Background(),
+		&pb.SendMsgReq{UserId: int32(msg.From),
+			Msg: &pb.ChatMsg{Typ: int32(model.TypMsgAckFromServerForSender), Id: msg.Id, Seq: msg.Seq}})
+	if err != nil {
 		return err
 	}
 
 	if resp.IsOnline {
+		logger.Info("user online, send")
 		_, err := global.PresenceCli.SendMsg(context.Background(), &pb.SendMsgReq{UserId: int32(msg.To), Msg: pbMsg})
 		if err != nil {
 			return err

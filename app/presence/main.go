@@ -28,6 +28,7 @@ func main() {
 	// 初始化
 	initialize.InitConfig()
 	initialize.InitDB()
+	initialize.InitProducer()
 
 	// var port = flag.Int("port", 50055, "The server port")
 	// flag.Parse()
@@ -37,6 +38,7 @@ func main() {
 	//grpc服务
 	s := grpc.NewServer()
 	pb.RegisterPresenceServer(s, wsServer)
+	// 支持grpc健康检查
 	healthcheck := health.NewServer()
 	healthgrpc.RegisterHealthServer(s, healthcheck)
 
@@ -49,7 +51,7 @@ func main() {
 	}
 
 	check := api.AgentServiceCheck{
-		GRPC:                           utils.ServerIP,
+		GRPC:                           fmt.Sprintf("%s:%d", utils.ServerIP, wsServer.PortGrpc),
 		Timeout:                        "3s",
 		Interval:                       "10s",
 		DeregisterCriticalServiceAfter: "10s",

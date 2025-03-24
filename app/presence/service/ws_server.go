@@ -2,12 +2,12 @@ package service
 
 import (
 	"context"
-	"strconv"
 	"time"
 
 	"github.com/adnpa/IM/api/pb"
 	"github.com/adnpa/IM/app/presence/global"
-	"github.com/adnpa/IM/app/presence/model"
+	"github.com/adnpa/IM/internal/model"
+	"github.com/adnpa/IM/internal/utils"
 	"github.com/adnpa/IM/pkg/common/config"
 	"github.com/adnpa/IM/pkg/logger"
 	"github.com/google/uuid"
@@ -73,21 +73,23 @@ func (ws *WSServer) ServerId() string {
 // }
 
 func (ws *WSServer) HandleConn(w http.ResponseWriter, r *http.Request) {
-	if ws.headerCheck(w, r) {
+	query := r.URL.Query()
+	token := query.Get("token")
+	if user_id, ok := ws.tokenCheck(token); ok {
 		logger.Info("user connect", zap.Any("url", r.URL))
-		query := r.URL.Query()
 		conn, err := ws.upgrader.Upgrade(w, r, nil)
 		if err != nil {
+			logger.Error("connect error", zap.Error(err))
 			return
 		} else {
 			logger.Info("", zap.Any("", query), zap.Any("", conn))
-			SendId := query.Get("uid")
+
 			newConn := &WsConn{conn, new(sync.Mutex), 1}
-			ws.AddWsConn(SendId, newConn)
-			numId, _ := strconv.ParseInt(SendId, 10, 64)
+			ws.AddWsConn(user_id, newConn)
+			// numId, _ := strconv.ParseInt(user_id, 10, 64)
 			// TODO: 暂时采用全量离线消息推送 后续结合会话多次推送
-			msgs, _ := ws.GetOfflineMsg(numId)
-			ws.sendMsg(newConn, model.CommonMsg{Cmd: model.TypSyncMsg, Msgs: msgs})
+			// msgs, _ := ws.GetOfflineMsg(numId)
+			// ws.sendMsg(newConn, model.CommonMsg{Cmd: model.TypSyncMsg, Msgs: msgs})
 			go ws.readMsg(newConn)
 
 			// redis记录用户连接的服务器 心跳刷新ttl
@@ -96,29 +98,24 @@ func (ws *WSServer) HandleConn(w http.ResponseWriter, r *http.Request) {
 				logger.Error("push redis fail", zap.Error(err))
 				return
 			}
-			conn.SetNX(SendId, ws.serverId, 6*time.Minute)
+			conn.SetNX(user_id, ws.serverId, 6*time.Minute)
 		}
 	}
 }
 
 // 验证登录
-func (ws *WSServer) headerCheck(w http.ResponseWriter, r *http.Request) bool {
-	// status := http.StatusUnauthorized
-	// query := r.URL.Query()
-	// if len(query["token"]) != 0 && len(query["sendID"]) != 0 && len(query["platformID"]) != 0 {
-	// 	if !utils.VerifyToken(query["token"][0], query["sendID"][0]) {
-	// 		w.Header().Set("Sec-Websocket-Version", "13")
-	// 		http.Error(w, http.StatusText(status), status)
-	// 		return false
-	// 	} else {
-	// 		return true
-	// 	}
-	// } else {
-	// 	w.Header().Set("Sec-Websocket-Version", "13")
-	// 	http.Error(w, http.StatusText(status), status)
-	// 	return false
-	// }
-	return true
+func (ws *WSServer) tokenCheck(token string) (string, bool) {
+	// authHeader := r.Header.Get("authorization")
+	// token := strings.TrimPrefix(authHeader, "Bearer ")
+	if token == "" {
+		return "", false
+	}
+	claims, err := utils.ParseToken(token)
+	if err != nil {
+		return "", false
+	}
+	// intUid, _ := strconv.ParseInt(claims.UID, 10, 64)
+	return claims.UID, true
 }
 
 func (ws *WSServer) GetOfflineMsg(uid int64) ([]model.Message, error) {

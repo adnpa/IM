@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/adnpa/IM/api/pb"
-	"github.com/adnpa/IM/app/offline/model"
+	"github.com/adnpa/IM/internal/model"
 	"github.com/adnpa/IM/pkg/common/db/mongodb"
 	"github.com/jinzhu/copier"
 	"go.mongodb.org/mongo-driver/bson"
@@ -25,7 +25,7 @@ func (s *OfflineService) GetOfflineMsg(_ context.Context, in *pb.GetOfflineMsgRe
 
 func (s *OfflineService) PutMsg(_ context.Context, in *pb.PutMsgReq) (*pb.PutMsgResp, error) {
 	var msg model.Message
-	copier.Copy(&msg, in)
+	copier.Copy(&msg, in.Msg)
 	// TODO inbox logic
 	// userId := in.UserId
 	err := mongodb.Insert(COLL_NAME, msg)

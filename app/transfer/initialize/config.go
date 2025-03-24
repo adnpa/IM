@@ -16,7 +16,7 @@ import (
 
 func InitConfig() {
 	p, _ := os.Getwd()
-	configFileName := "presence-srv.yaml"
+	configFileName := "transfer-srv.yaml"
 
 	v := viper.New()
 	v.SetConfigFile(configFileName)

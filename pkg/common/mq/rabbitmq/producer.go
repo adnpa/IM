@@ -2,7 +2,6 @@ package rabbitmq
 
 import (
 	"context"
-	"encoding/json"
 	"time"
 
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -23,7 +22,7 @@ func NewProducer(conn *amqp.Connection, topic string) *Producer {
 	}
 }
 
-func (c *Producer) Send(name string, body interface{}) error {
+func (c *Producer) Send(name string, data []byte) error {
 	ch, err := c.conn.Channel()
 	if err != nil {
 		return err
@@ -32,7 +31,7 @@ func (c *Producer) Send(name string, body interface{}) error {
 
 	q, err := ch.QueueDeclare(
 		name,  // name
-		true, // durable
+		true,  // durable
 		false, // delete when unused
 		false, // exclusive
 		false, // no-wait
@@ -45,7 +44,6 @@ func (c *Producer) Send(name string, body interface{}) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	encodedBody, _ := json.Marshal(body)
 	return ch.PublishWithContext(ctx,
 		"",     // exchange
 		q.Name, // routing key
@@ -53,6 +51,6 @@ func (c *Producer) Send(name string, body interface{}) error {
 		false,  // immediate
 		amqp.Publishing{
 			ContentType: "text/plain",
-			Body:        []byte(encodedBody),
+			Body:        data,
 		})
 }

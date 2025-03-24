@@ -26,12 +26,19 @@ func (ws *WSServer) readMsg(conn *WsConn) {
 			log.Println("ping msg from client")
 		}
 		// ws.handleMsg(conn, data)
-		SendMq(data)
+		err = SendMq(data)
+		if err != nil {
+			logger.Info("send msg fail", zap.Error(err))
+		}
 		logger.Info("msg", zap.Any("msg", data))
 	}
 }
 
 // msg *pb.ChatMsg
-func SendMq(body interface{}) error {
-	return global.Producer.Send("msg", body)
+// func SendMq(body interface{}) error {
+// 	return global.Producer.Send("im_message", body)
+// }
+
+func SendMq(data []byte) error {
+	return global.Producer.Send("im_message", data)
 }

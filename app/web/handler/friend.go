@@ -25,7 +25,14 @@ type GetFriendResp struct {
 	Friends []FriendInfo
 }
 
+type FrendInfoView struct {
+	FriendId int32  `json:"friend_id,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Avatar   string `json:"avatar,omitempty"`
+}
+
 func GetFriendList(c *gin.Context) {
+	var results []FrendInfoView
 	uid, _ := utils.GetUserId(c)
 	logger.Info("uid", zap.Any("", uid))
 	resp, err := global.FriendCli.GetFriendsByUserId(context.Background(), &pb.GetFriendsByUserIdReq{Uid: int32(uid)})
@@ -34,7 +41,23 @@ func GetFriendList(c *gin.Context) {
 		c.JSON(http.StatusOK, ErrInfo(code.ErrInternal))
 		return
 	}
-	c.JSON(http.StatusOK, resp.Friends)
+
+	for _, f := range resp.Friends {
+		tmp := FrendInfoView{
+			FriendId: f.FriendId,
+		}
+
+		u, err := global.UserCli.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: f.UserId})
+		if err != nil {
+			c.JSON(http.StatusOK, ErrInfo(code.ErrInternal))
+			return
+		}
+		tmp.Name = u.Usr.Nickname
+		tmp.Avatar = u.Usr.Avatar
+		results = append(results, tmp)
+	}
+
+	c.JSON(http.StatusOK, results)
 }
 
 func GetUserSelfApplyList(c *gin.Context) {
@@ -53,7 +76,7 @@ func ApplyAddFriend(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusOK, ErrInfo(code.ErrArgs))
 	}
-	
+
 	isResp, err := global.FriendCli.IsFriend(context.Background(), &pb.IsFriendReq{Left: friendApply.From, Right: friendApply.To})
 	if err != nil {
 		c.JSON(http.StatusOK, ErrInfo(code.ErrInternal))

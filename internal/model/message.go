@@ -3,7 +3,7 @@ package model
 type MsgType int
 
 const (
-	TypMsgAckFromServerForSender MsgType = iota
+	TypMsgAckFromServerForSender MsgType = iota + 1
 	TypMsgAckFromClient
 	TypOfflineMsg
 	TypOfflineAck
@@ -17,15 +17,18 @@ const (
 type MediaType int
 
 const (
-	TextMessage  MediaType = 1
-	VoiceMessage MediaType = 2
-	VideoMessage MediaType = 3
+	TextMessage MediaType = 1
 )
 
 type CommonMsg struct {
-	Cmd    MsgType
-	Single *Message
-	Msgs   []Message
+	Cmd     MsgType `json:"cmd,omitempty"`
+	ChatMsg Message `json:"chat_msg,omitempty"`
+	AckMsg  AckMsg  `json:"ack_msg,omitempty"`
+}
+
+type AckMsg struct {
+	Id  int64 `json:"id,omitempty"`
+	Seq int32 `json:"seq,omitempty"`
 }
 
 // pk msgId

@@ -3,12 +3,18 @@ package main
 import (
 	"log"
 
+	"github.com/adnpa/IM/app/transfer/initialize"
 	"github.com/adnpa/IM/app/transfer/service"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 func main() {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	// 初始化
+	initialize.InitConfig()
+	initialize.InitDB()
+	initialize.InitSrvConn()
+
+	conn, err := amqp.Dial("amqp://admin:password@localhost:5672/")
 	if err != nil {
 		panic(err)
 	}
@@ -19,10 +25,6 @@ func main() {
 	log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
 	select {}
 	// 	debug.SetMemoryLimit(512 * 1024 * 1024)
-
-	// 	// 初始化
-	// 	initialize.InitConfig()
-	// 	initialize.InitDB()
 
 	// 	// var port = flag.Int("port", 50055, "The server port")
 	// 	// flag.Parse()

@@ -24,7 +24,7 @@ const (
 type SendMsgReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Msg           *ChatMsg               `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Msg           *ChatMsg               `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"` // bytes msg = 2;
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

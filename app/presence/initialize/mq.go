@@ -10,10 +10,10 @@ import (
 )
 
 func InitProducer() {
-	conn, err := amqp.Dial("amqp://admin:passwd@localhost:5672/")
+	conn, err := amqp.Dial("amqp://admin:password@localhost:5672/")
 	if err != nil {
 		logger.Panic("Failed to connect to RabbitMQ", zap.Error(err))
 	}
-	defer conn.Close()
+	// defer conn.Close()
 	global.Producer = rabbitmq.NewProducer(conn, "transfer")
 }
