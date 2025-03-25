@@ -19,7 +19,7 @@ func TestGetUser(t *testing.T) {
 	defer conn.Close()
 
 	c := pb.NewUserClient(conn)
-	resp, err := c.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: 1})
+	resp, err := c.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: 101})
 	if err != nil {
 		t.Error(err)
 	}

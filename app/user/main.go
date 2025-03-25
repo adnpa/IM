@@ -44,7 +44,8 @@ func main() {
 
 	// 服务注册
 	cfg := api.DefaultConfig()
-	cfg.Address = "localhost:8500"
+	
+	cfg.Address =fmt.Sprintf("%s:%d", global.ServerConfig.ConsulInfo.Host, global.ServerConfig.ConsulInfo.Port)
 	cli, err := api.NewClient(cfg)
 	if err != nil {
 		panic(err)

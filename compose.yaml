@@ -4,16 +4,38 @@ networks:
   back-tier:
 
 services:
-  #  app:
-  #    build: .
-  #    depends_on:
-  #      - postgres
-  #      - redis
-  #    ports:
-  #      - "8081:8081"
-  #    networks:
-  #      - back-tier
-  #
+  user-srv:
+    build:
+      context: . # 指定构建上下文
+      dockerfile: deployments/user/Dockerfile # 指定 Dockerfile 路径
+    ports:
+      - "50051:50051" # 端口映射
+    networks:
+      - back-tier
+    volumes:
+      - ./app/user/user-srv.yaml:/build/user-srv.yaml
+    depends_on:
+      - nacos
+      - db
+      - redis
+      - badger
+
+  friend-srv:
+    build:
+      context: . # 指定构建上下文
+      dockerfile: deployments/friend/Dockerfile # 指定 Dockerfile 路径
+    ports:
+      - "50053:50053" # 端口映射
+    networks:
+      - back-tier
+    volumes:
+      - ./app/friend/friend-srv.yaml:/build/friend-srv.yaml
+    depends_on:
+      - nacos
+      - db
+      - redis
+      - badger
+
   badger:
     image: "consul:1.15.4"
     container_name: badger
@@ -22,6 +44,8 @@ services:
       - "8600:8600/udp"
     command: agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0
     restart: always
+    networks:
+      - back-tier
 
   db:
     image: mysql
@@ -41,6 +65,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
+    networks:
+      - back-tier
 
   mongo-express:
     image: mongo-express
@@ -52,6 +78,8 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: 123456
       ME_CONFIG_MONGODB_URL: mongodb://root:123456@mongo:27017/
       ME_CONFIG_BASICAUTH: false
+    networks:
+      - back-tier
 
   redis:
     image: "redis"
@@ -72,6 +100,8 @@ services:
       RABBITMQ_DEFAULT_USER: admin # 默认用户名
       RABBITMQ_DEFAULT_PASS: password # 默认密码
     restart: always # 容器退出时自动重启
+    networks:
+      - back-tier
 
   nacos:
     image: nacos/nacos-server:2.0.2
@@ -88,7 +118,9 @@ services:
     ports:
       - "8848:8848"
       - "9848:9848"
-  
+    networks:
+      - back-tier
+
   prometheus:
     container_name: prometheus
     image: prom/prometheus:latest
@@ -100,6 +132,8 @@ services:
       - nacos
     # restart: on-failure
     restart: always
+    networks:
+      - back-tier
 
   grafana:
     container_name: grafana
@@ -108,3 +142,5 @@ services:
       - 3000:3000
     # restart: on-failure
     restart: always
+    networks:
+      - back-tier

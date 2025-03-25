@@ -6,7 +6,6 @@ toolchain go1.23.4
 
 require (
 	github.com/IBM/sarama v1.43.3
-	github.com/brianvoe/gofakeit/v7 v7.2.1
 	github.com/gin-contrib/cors v1.7.3
 	github.com/gin-gonic/gin v1.10.0
 	github.com/gogo/protobuf v1.3.2
