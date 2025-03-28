@@ -20,14 +20,11 @@ func main() {
 	r.Use(middlewares.LoggerMiddleware())
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:9000"},
-		AllowMethods:     []string{"GET", "POST"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "https://github.com"
-		},
-		MaxAge: 12 * time.Hour,
+		MaxAge:           12 * time.Hour,
 	}))
 
 	userRouterGroup := r.Group("/user")
@@ -37,6 +34,12 @@ func main() {
 
 		// authRouterGroup.GET("detail", middlewares.JWTAuth(), handler.GetUserDetail)
 		// authRouterGroup.PATCH("update", middlewares.JWTAuth(), handler.UpdateUser)
+	}
+
+	ossRouterGroup := r.Group("/oss")
+	{
+		ossRouterGroup.POST("/upload", handler.Upload)
+		// ossRouterGroup.POST("/download")
 	}
 
 	friendGroup := r.Group("/friend", middlewares.JWTAuth())

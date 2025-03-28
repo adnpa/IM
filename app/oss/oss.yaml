@@ -3,5 +3,5 @@ port: 8848
 namespace: ""
 user: "nacos"
 password: "nacos"
-dataid: "offline-srv"
+dataid: "oss-srv"
 group: "dev"

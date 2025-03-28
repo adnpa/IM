@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = ".;pb";
 
 service Friend {
-  rpc GetFriendsByUserId(=-[]-])
+  rpc GetFriendsByUserId(GetFriendsByUserIdReq)
       returns (GetFriendsByUserIdResp);
   rpc CreateFriend(CreateFriendReq) returns (CreateFriendResp);
   rpc DeleteFriend(DeleteFriendReq) returns (DeleteFriendResp);

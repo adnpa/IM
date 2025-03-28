@@ -1,8 +1,7 @@
-host: '127.0.0.1'
+host: "127.0.0.1"
 port: 8848
-namespace: 'f3d1fc73-6718-42f9-8961-cf1c883dec97'
-user: 'nacos'
-password: 'nacos'
-dataid: 'presence-srv'
-group: 'dev'
-
+namespace: ""
+user: "nacos"
+password: "nacos"
+dataid: "presence-srv"
+group: "dev"

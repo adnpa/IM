@@ -96,6 +96,8 @@ github.com/aliyun/alibabacloud-dkms-gcs-go-sdk v0.5.1 h1:nJYyoFP+aqGKgPs9JeZgS1r
 github.com/aliyun/alibabacloud-dkms-gcs-go-sdk v0.5.1/go.mod h1:WzGOmFFTlUzXM03CJnHWMQ85UN6QGpOXZocCjwkiyOg=
 github.com/aliyun/alibabacloud-dkms-transfer-go-sdk v0.1.8 h1:QeUdR7JF7iNCvO/81EhxEr3wDwxk4YBoYZOq6E0AjHI=
 github.com/aliyun/alibabacloud-dkms-transfer-go-sdk v0.1.8/go.mod h1:xP0KIZry6i7oGPF24vhAPr1Q8vLZRcMcxtft5xDKwCU=
+github.com/aliyun/alibabacloud-oss-go-sdk-v2 v1.2.1 h1:sOhpJdR/+lbQniznp3cYSfwQlXbVkT0ccuiZScBrI6Y=
+github.com/aliyun/alibabacloud-oss-go-sdk-v2 v1.2.1/go.mod h1:FTzydeQVmR24FI0D6XWUOMKckjXehM/jgMn1xC+DA9M=
 github.com/aliyun/aliyun-secretsmanager-client-go v1.1.5 h1:8S0mtD101RDYa0LXwdoqgN0RxdMmmJYjq8g2mk7/lQ4=
 github.com/aliyun/aliyun-secretsmanager-client-go v1.1.5/go.mod h1:M19fxYz3gpm0ETnoKweYyYtqrtnVtrpKFpwsghbw+cQ=
 github.com/aliyun/credentials-go v1.1.2/go.mod h1:ozcZaMR5kLM7pwtCMEpVmQ242suV6qTJya2bDq4X1Tw=
@@ -368,6 +370,8 @@ github.com/jinzhu/now v1.1.5 h1:/o9tlHleP7gOFmsnYNz3RGnqzefHA47wQpKrrdTIwXQ=
 github.com/jinzhu/now v1.1.5/go.mod h1:d3SSVoowX0Lcu0IBviAWJpolVfI5UJVZZ7cO71lE/z8=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af h1:pmfjZENx5imkbgOkpRUYLnmbU7UEFbjtDA2hxJ1ichM=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af/go.mod h1:Nht3zPeWKUH0NzdCt2Blrr5ys8VGpn0CEB0cQHVjt7k=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/jpillora/backoff v1.0.0/go.mod h1:J/6gKK9jxlEcS3zixgDgUAsiuZ7yrSoa/FX5e0EB2j4=
 github.com/json-iterator/go v1.1.5/go.mod h1:+SdeFBvtyEkXs7REEP0seUULqWtbJapLOCVDaaPEHmU=
 github.com/json-iterator/go v1.1.6/go.mod h1:+SdeFBvtyEkXs7REEP0seUULqWtbJapLOCVDaaPEHmU=

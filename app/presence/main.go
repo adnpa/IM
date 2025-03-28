@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"runtime/debug"
 	"syscall"
 
 	"github.com/adnpa/IM/api/pb"
@@ -23,8 +22,6 @@ import (
 )
 
 func main() {
-	debug.SetMemoryLimit(512 * 1024 * 1024)
-
 	// 初始化
 	initialize.InitConfig()
 	initialize.InitDB()

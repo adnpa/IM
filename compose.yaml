@@ -4,12 +4,13 @@ networks:
   back-tier:
 
 services:
+  # --api service-----------------------------------------
   user-srv:
     build:
-      context: . # 指定构建上下文
-      dockerfile: deployments/user/Dockerfile # 指定 Dockerfile 路径
+      context: .
+      dockerfile: deployments/user/Dockerfile
     ports:
-      - "50051:50051" # 端口映射
+      - "50051:50051"
     networks:
       - back-tier
     volumes:
@@ -22,10 +23,10 @@ services:
 
   friend-srv:
     build:
-      context: . # 指定构建上下文
-      dockerfile: deployments/friend/Dockerfile # 指定 Dockerfile 路径
+      context: .
+      dockerfile: deployments/friend/Dockerfile
     ports:
-      - "50053:50053" # 端口映射
+      - "50053:50053"
     networks:
       - back-tier
     volumes:
@@ -36,6 +37,71 @@ services:
       - redis
       - badger
 
+  oss-srv:
+    build:
+      context: .
+      dockerfile: deployments/oss/Dockerfile
+    ports:
+      - "50057:50057"
+    networks:
+      - back-tier
+    volumes:
+      - ./app/oss/oss.yaml:/build/oss.yaml
+    depends_on:
+      - nacos
+      - db
+      - redis
+      - badger
+
+  # --chat service-----------------------------------------
+  presence-srv:
+    build:
+      context: .
+      dockerfile: deployments/presence/Dockerfile
+    ports:
+      - "50055:50055"
+      - "50056:50056"
+    networks:
+      - back-tier
+    volumes:
+      - ./app/presence/presence-srv.yaml:/build/presence-srv.yaml
+    depends_on:
+      - nacos
+      - db
+      - redis
+      - badger
+
+  transfer-srv:
+    build:
+      context: .
+      dockerfile: deployments/transfer/Dockerfile
+    networks:
+      - back-tier
+    volumes:
+      - ./app/transfer/transfer-srv.yaml:/build/transfer-srv.yaml
+    depends_on:
+      - nacos
+      - db
+      - redis
+      - badger
+
+  offline-srv:
+    build:
+      context: .
+      dockerfile: deployments/offline/Dockerfile
+    ports:
+      - "50054:50054"
+    networks:
+      - back-tier
+    volumes:
+      - ./app/offline/offline-srv.yaml:/build/offline-srv.yaml
+    depends_on:
+      - nacos
+      - db
+      - redis
+      - badger
+
+  # --third party service-----------------------------------------
   badger:
     image: "consul:1.15.4"
     container_name: badger

@@ -24,6 +24,7 @@ func TestGetFriends(t *testing.T) {
 		t.Error(err)
 	}
 	fmt.Println(resp)
+
 	t.Log(err)
 }
 

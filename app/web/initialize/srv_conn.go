@@ -25,6 +25,12 @@ func InitSrvConn() {
 	}
 	global.FriendCli = pb.NewFriendClient(friendConn)
 
+	ossConn, err := discovery.GetGrpcConn(consulCli, "oss-srv")
+	if err != nil {
+		panic(err)
+	}
+	global.OssCli = pb.NewOSSClient(ossConn)
+
 	// groupConn, err := discovery.GetGrpcConn(consulCli, "group-srv")
 	// if err != nil {
 	// 	panic(err)

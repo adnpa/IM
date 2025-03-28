@@ -9,6 +9,7 @@ var (
 	GroupCli     pb.GroupClient
 	FriendCli    pb.FriendClient
 	UserCli      pb.UserClient
+	OssCli       pb.OSSClient
 	ServerConfig config.ServerConfig
 	NacosConfig  config.NacosConfig
 )

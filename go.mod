@@ -6,6 +6,7 @@ toolchain go1.23.4
 
 require (
 	github.com/IBM/sarama v1.43.3
+	github.com/aliyun/alibabacloud-oss-go-sdk-v2 v1.2.1
 	github.com/gin-contrib/cors v1.7.3
 	github.com/gin-gonic/gin v1.10.0
 	github.com/gogo/protobuf v1.3.2
@@ -14,6 +15,7 @@ require (
 	github.com/gorilla/websocket v1.5.3
 	github.com/hashicorp/consul/api v1.31.2
 	github.com/jinzhu/copier v0.4.0
+	github.com/joho/godotenv v1.5.1
 	github.com/nacos-group/nacos-sdk-go/v2 v2.2.9
 	github.com/neo4j/neo4j-go-driver/v5 v5.27.0
 	github.com/rabbitmq/amqp091-go v1.10.0

@@ -11,7 +11,6 @@ import (
 func main() {
 	// 初始化
 	initialize.InitConfig()
-	initialize.InitDB()
 	initialize.InitSrvConn()
 
 	conn, err := amqp.Dial("amqp://admin:password@localhost:5672/")

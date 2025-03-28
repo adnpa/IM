@@ -19,7 +19,9 @@ func LoggerMiddleware() gin.HandlerFunc {
 
 		// 将请求体重新写回，以便后续处理
 		c.Request.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
-		logger.Info("Api Request", zap.String("query args", c.Request.URL.Path), zap.String("body args", string(bodyBytes)))
+		logger.Info("Api Request", zap.String("query args", c.Request.URL.Path))
+
+		// logger.Info("body", zap.Any("b", zap.String("body args", string(bodyBytes))))
 
 		// 继续处理请求
 		c.Next()
