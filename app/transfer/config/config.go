@@ -10,7 +10,7 @@ type NacosConfig struct {
 	Group     string `mapstructure:"group"`
 }
 
-type MysqlConfig struct {
+type RabbitMQConfig struct {
 	Host     string `mapstructure:"host" json:"host"`
 	Port     int    `mapstructure:"port" json:"port"`
 	Name     string `mapstructure:"db" json:"db"`
@@ -24,7 +24,7 @@ type ConsulConfig struct {
 }
 
 type ServerConfig struct {
-	Name       string       `mapstructure:"name" json:"name"`
-	MysqlInfo  MysqlConfig  `mapstructure:"mysql" json:"mysql"`
-	ConsulInfo ConsulConfig `mapstructure:"consul" json:"consul"`
+	Name         string         `mapstructure:"name" json:"name"`
+	RabbitMQInfo RabbitMQConfig `mapstructure:"rabbitmq" json:"rabbitmq"`
+	ConsulInfo   ConsulConfig   `mapstructure:"consul" json:"consul"`
 }

@@ -22,6 +22,6 @@ COPY --from=builder /build/offline-srv ./offline-srv
 # 复制配置文件（可选）
 COPY app/offline/offline-srv.yaml ./
 
-EXPOSE 50053
+EXPOSE 50054
 
 CMD ["./offline-srv"]

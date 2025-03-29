@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net"
@@ -12,47 +13,23 @@ import (
 	"github.com/adnpa/IM/internal/utils"
 	"github.com/google/uuid"
 	"github.com/hashicorp/consul/api"
-	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
 	healthgrpc "google.golang.org/grpc/health/grpc_health_v1"
 )
 
-// import (
-// 	"context"
-// 	"flag"
-// 	"log"
-
-// 	"github.com/aliyun/alibabacloud-oss-go-sdk-v2/oss"
-// 	"github.com/aliyun/alibabacloud-oss-go-sdk-v2/oss/credentials"
-// )
-
-// // 定义全局变量
-// var (
-// 	region     string // 存储区域
-// 	bucketName string // 存储空间名称
-// )
-
-// // init函数用于初始化命令行参数
-// func init() {
-// 	flag.StringVar(&region, "region", "", "The region in which the bucket is located.")
-// 	flag.StringVar(&bucketName, "bucket", "", "The name of the bucket.")
-// }
-
 func main() {
 	initialize.InitConfig()
 	initialize.InitAliOssCli()
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-	// dbURL := os.Getenv("OSS_ACCESS_KEY_ID")
-	// apiKey := os.Getenv("OSS_ACCESS_KEY_SECRET")
-	// log.Println(dbURL)
-	// log.Println(apiKey)
-	// log.Println(os.Getwd())
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", 50057))
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file", err)
+	// }
+
+	var port = flag.Int("port", 50057, "The server port")
+
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -70,7 +47,7 @@ func main() {
 	}
 
 	check := api.AgentServiceCheck{
-		GRPC:                           fmt.Sprintf("%s:%d", utils.ServerIP, 50057),
+		GRPC:                           fmt.Sprintf("%s:%d", utils.ServerIP, *port),
 		Timeout:                        "3s",
 		Interval:                       "10s",
 		DeregisterCriticalServiceAfter: "10s",
@@ -80,7 +57,7 @@ func main() {
 	registeration := api.AgentServiceRegistration{
 		ID:      serverId,
 		Address: utils.ServerIP,
-		Port:    50057,
+		Port:    *port,
 		Name:    global.ServerConfig.Name,
 		// Tags:    tags,
 		Check: &check,

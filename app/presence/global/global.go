@@ -1,7 +1,7 @@
 package global
 
 import (
-	"github.com/adnpa/IM/app/user/config"
+	"github.com/adnpa/IM/app/presence/config"
 	"github.com/adnpa/IM/pkg/common/mq/rabbitmq"
 	"github.com/adnpa/IM/pkg/common/storage"
 )

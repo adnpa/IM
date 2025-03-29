@@ -52,7 +52,7 @@ func main() {
 
 	// 注意,check service是检查连接,连接是什么就用哪种类型,这里是tcp连接
 	check := api.AgentServiceCheck{
-		GRPC:                           fmt.Sprintf("%s:50051", utils.ServerIP),
+		GRPC:                           fmt.Sprintf("%s:%d", utils.ServerIP, *port),
 		Timeout:                        "3s",
 		Interval:                       "10s",
 		DeregisterCriticalServiceAfter: "10s",

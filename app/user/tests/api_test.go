@@ -7,6 +7,8 @@ import (
 	"testing"
 
 	"github.com/adnpa/IM/api/pb"
+	"github.com/adnpa/IM/pkg/common/discovery"
+	"github.com/hashicorp/consul/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -27,17 +29,21 @@ func TestGetUser(t *testing.T) {
 }
 
 func TestCreateUser(t *testing.T) {
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	consulCli, err := api.NewClient(api.DefaultConfig())
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		panic(err)
 	}
-	defer conn.Close()
 
-	c := pb.NewUserClient(conn)
+	userConn, err := discovery.GetGrpcConn(consulCli, "user-srv")
+	if err != nil {
+		panic(err)
+	}
+	c := pb.NewUserClient(userConn)
+
 	resp, err := c.CreateUser(context.Background(), &pb.CreateUserReq{
-		Nickname: "dddd",
-		Mobile:   "444444",
-		Email:    "dddd@gmail.com",
+		Nickname: "bbbb",
+		Mobile:   "11111",
+		Email:    "bbbb@gmail.com",
 		Password: "111111",
 	})
 	t.Log(resp)

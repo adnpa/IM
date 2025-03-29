@@ -2,7 +2,7 @@
 networks:
   #  front-tier:
   back-tier:
-
+    driver: bridge
 services:
   # --api service-----------------------------------------
   user-srv:
@@ -18,7 +18,6 @@ services:
     depends_on:
       - nacos
       - db
-      - redis
       - badger
 
   friend-srv:
@@ -34,7 +33,6 @@ services:
     depends_on:
       - nacos
       - db
-      - redis
       - badger
 
   oss-srv:
@@ -47,6 +45,9 @@ services:
       - back-tier
     volumes:
       - ./app/oss/oss.yaml:/build/oss.yaml
+    environment:
+      OSS_ACCESS_KEY_ID: xxxx
+      OSS_ACCESS_KEY_SECRET: xxxx
     depends_on:
       - nacos
       - db
@@ -67,9 +68,9 @@ services:
       - ./app/presence/presence-srv.yaml:/build/presence-srv.yaml
     depends_on:
       - nacos
-      - db
-      - redis
       - badger
+      - redis
+      - rabbitmq
 
   transfer-srv:
     build:
@@ -81,10 +82,12 @@ services:
       - ./app/transfer/transfer-srv.yaml:/build/transfer-srv.yaml
     depends_on:
       - nacos
-      - db
-      - redis
       - badger
+      - rabbitmq
+      - presence-srv
+      - offline-srv
 
+      
   offline-srv:
     build:
       context: .
@@ -97,9 +100,8 @@ services:
       - ./app/offline/offline-srv.yaml:/build/offline-srv.yaml
     depends_on:
       - nacos
-      - db
-      - redis
       - badger
+      - mongo
 
   # --third party service-----------------------------------------
   badger:
@@ -171,7 +173,7 @@ services:
 
   nacos:
     image: nacos/nacos-server:2.0.2
-    # restart: always
+    # restart: on-failure
     container_name: nacos-standalone
     environment:
       - PREFER_HOST_MODE=hostname

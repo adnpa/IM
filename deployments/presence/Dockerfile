@@ -22,6 +22,6 @@ COPY --from=builder /build/presence-srv ./presence-srv
 # 复制配置文件（可选）
 COPY app/presence/presence-srv.yaml ./
 
-EXPOSE 50053
+EXPOSE 50055 50056
 
 CMD ["./presence-srv"]

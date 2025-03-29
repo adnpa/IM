@@ -10,14 +10,6 @@ type NacosConfig struct {
 	Group     string `mapstructure:"group"`
 }
 
-type MysqlConfig struct {
-	Host     string `mapstructure:"host" json:"host"`
-	Port     int    `mapstructure:"port" json:"port"`
-	Name     string `mapstructure:"db" json:"db"`
-	User     string `mapstructure:"user" json:"user"`
-	Password string `mapstructure:"password" json:"password"`
-}
-
 type AliOssConfig struct {
 	BucketName string `mapstructure:"bucket_name" json:"bucket_name,omitempty"`
 	Region     string `mapstructure:"region" json:"region,omitempty"`
@@ -31,7 +23,6 @@ type ConsulConfig struct {
 
 type ServerConfig struct {
 	Name       string       `mapstructure:"name" json:"name,omitempty"`
-	MysqlInfo  MysqlConfig  `mapstructure:"mysql" json:"mysql,omitempty"`
 	ConsulInfo ConsulConfig `mapstructure:"consul" json:"consul,omitempty"`
 	OssInfo    AliOssConfig `mapstructure:"oss" json:"oss,omitempty"`
 }

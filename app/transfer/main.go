@@ -1,19 +1,26 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
+	"github.com/adnpa/IM/app/transfer/global"
 	"github.com/adnpa/IM/app/transfer/initialize"
 	"github.com/adnpa/IM/app/transfer/service"
+	"github.com/adnpa/IM/pkg/logger"
 	amqp "github.com/rabbitmq/amqp091-go"
+	"go.uber.org/zap"
 )
 
 func main() {
 	// 初始化
 	initialize.InitConfig()
-	initialize.InitSrvConn()
+	logger.Info("", zap.Any("", global.ServerConfig.ConsulInfo))
 
-	conn, err := amqp.Dial("amqp://admin:password@localhost:5672/")
+	initialize.InitSrvConn()
+	
+	rabbitCfg := global.ServerConfig.RabbitMQInfo
+	conn, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s:%d/", rabbitCfg.User, rabbitCfg.Password, rabbitCfg.Host, rabbitCfg.Port))
 	if err != nil {
 		panic(err)
 	}

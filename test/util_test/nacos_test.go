@@ -1,22 +1,38 @@
 package util_test
 
 import (
+	"fmt"
+	"os"
 	"testing"
 
+	"github.com/adnpa/IM/app/oss/global"
 	"github.com/nacos-group/nacos-sdk-go/v2/clients"
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
+	"github.com/spf13/viper"
 )
 
 func TestGetConfig(t *testing.T) {
+	p, _ := os.Getwd()
+	configFileName := "user-srv.yaml"
+
+	v := viper.New()
+	v.SetConfigFile(configFileName)
+	if err := v.ReadInConfig(); err != nil {
+		panic(fmt.Errorf("err:%w config file:%s/%s, ", err, p, configFileName))
+	}
+	if err := v.Unmarshal(&global.NacosConfig); err != nil {
+		panic(err)
+	}
+	t.Log(global.NacosConfig)
 	sc := constant.ServerConfig{
-		IpAddr: "127.0.0.1", // Nacos的服务地址
-		Port:   8848,        // Nacos的服务端口
+		IpAddr: global.NacosConfig.Host, // Nacos的服务地址
+		Port:   global.NacosConfig.Port, // Nacos的服务端口
 	}
 
 	cc := constant.ClientConfig{
 		// Endpoint:    "acm.aliyun.com:8080",
-		NamespaceId: "9ce6c088-a8e9-4867-a14f-94fe0937056b",
+		NamespaceId: global.NacosConfig.Namespace,
 		// RegionId:    "cn-shanghai",
 		// AccessKey:   "LTAI4G8KxxxxxxxxxxxxxbwZLBr",
 		// SecretKey:   "n5jTL9YxxxxxxxxxxxxaxmPLZV9",
@@ -25,17 +41,22 @@ func TestGetConfig(t *testing.T) {
 		LogLevel:  "debug",
 	}
 
-	client, _ := clients.NewConfigClient(
+	client, err := clients.NewConfigClient(
 		vo.NacosClientParam{
 			ClientConfig:  &cc,
 			ServerConfigs: []constant.ServerConfig{sc},
 		},
 	)
-
-	content, _ := client.GetConfig(vo.ConfigParam{
-		DataId: "user-srv.yaml",
-		Group:  "dev",
+	if err != nil {
+		t.Error(err)
+	}
+	content, err := client.GetConfig(vo.ConfigParam{
+		DataId: global.NacosConfig.DataId,
+		Group:  global.NacosConfig.Group,
 	})
-
+	if err != nil {
+		t.Error(err)
+	}
 	t.Log(content)
+	t.Log("111")
 }

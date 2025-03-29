@@ -1,6 +1,8 @@
 package initialize
 
 import (
+	"fmt"
+
 	"github.com/adnpa/IM/app/presence/global"
 	"github.com/adnpa/IM/pkg/common/mq/rabbitmq"
 	"github.com/adnpa/IM/pkg/logger"
@@ -10,7 +12,8 @@ import (
 )
 
 func InitProducer() {
-	conn, err := amqp.Dial("amqp://admin:password@localhost:5672/")
+	rabbitCfg := global.ServerConfig.RabbitMQInfo
+	conn, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s:%d/", rabbitCfg.User, rabbitCfg.Password, rabbitCfg.Host, rabbitCfg.Port))
 	if err != nil {
 		logger.Panic("Failed to connect to RabbitMQ", zap.Error(err))
 	}

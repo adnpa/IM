@@ -22,6 +22,8 @@ COPY --from=builder /build/oss-srv ./oss-srv
 # 复制配置文件（可选）
 COPY app/oss/oss.yaml ./
 
-EXPOSE 50053
+COPY app/oss/.env ./
+
+EXPOSE 50057
 
 CMD ["./oss-srv"]

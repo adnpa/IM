@@ -11,7 +11,7 @@ import (
 )
 
 func TestGetOfflineMsg(t *testing.T) {
-	conn, err := grpc.NewClient("localhost:50054", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("172.19.0.10:50054", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		t.Fatalf("did not connect: %v", err)
 	}

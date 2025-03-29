@@ -22,6 +22,4 @@ COPY --from=builder /build/transfer-srv ./transfer-srv
 # 复制配置文件（可选）
 COPY app/transfer/transfer-srv.yaml ./
 
-EXPOSE 50053
-
 CMD ["./transfer-srv"]

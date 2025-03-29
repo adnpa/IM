@@ -2,7 +2,7 @@ package global
 
 import (
 	"github.com/adnpa/IM/api/pb"
-	"github.com/adnpa/IM/app/user/config"
+	"github.com/adnpa/IM/app/transfer/config"
 )
 
 var (
