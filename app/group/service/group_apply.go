@@ -23,6 +23,15 @@ func GroupApplyModel2PB(g model.GroupApply) *pb.GroupApply {
 }
 
 // 申请管理
+func (s *GroupService) GetGroupApplyByGroupId(_ context.Context, _ *pb.GetGroupApplyByGroupIdReq) (*pb.GetGroupApplyByGroupIdResp, error) {
+	panic("not implemented") // TODO: Implement
+}
+
+func (s *GroupService) GetGroupApplyByUserId(_ context.Context, _ *pb.GetGroupApplyByUserIdReq) (*pb.GetGroupApplyByUserIdResp, error) {
+	panic("not implemented") // TODO: Implement
+}
+
+// 申请管理
 func (s *GroupService) GetGroupApplyById(_ context.Context, in *pb.GetGroupApplyByGroupIdReq) (*pb.GetGroupApplyByGroupIdResp, error) {
 	var applies []model.GroupApply
 	result := global.DB.Where("group_id = ?", in.GroupId).Find(&applies)

@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	Group_GetUserGroups_FullMethodName          = "/Group/GetUserGroups"
 	Group_GetGroupInfoById_FullMethodName       = "/Group/GetGroupInfoById"
 	Group_CreateGroupInfo_FullMethodName        = "/Group/CreateGroupInfo"
 	Group_UpdateGroupInfo_FullMethodName        = "/Group/UpdateGroupInfo"
@@ -38,6 +39,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GroupClient interface {
+	GetUserGroups(ctx context.Context, in *GetUserGroupsReq, opts ...grpc.CallOption) (*GetUserGroupsResp, error)
 	// 群聊基础信息管理
 	GetGroupInfoById(ctx context.Context, in *GetGroupInfoByIdReq, opts ...grpc.CallOption) (*GetGroupInfoByIdResp, error)
 	CreateGroupInfo(ctx context.Context, in *CreateGroupInfoReq, opts ...grpc.CallOption) (*CreateGroupInfoResp, error)
@@ -62,6 +64,16 @@ type groupClient struct {
 
 func NewGroupClient(cc grpc.ClientConnInterface) GroupClient {
 	return &groupClient{cc}
+}
+
+func (c *groupClient) GetUserGroups(ctx context.Context, in *GetUserGroupsReq, opts ...grpc.CallOption) (*GetUserGroupsResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserGroupsResp)
+	err := c.cc.Invoke(ctx, Group_GetUserGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *groupClient) GetGroupInfoById(ctx context.Context, in *GetGroupInfoByIdReq, opts ...grpc.CallOption) (*GetGroupInfoByIdResp, error) {
@@ -198,6 +210,7 @@ func (c *groupClient) DeleteGroupApply(ctx context.Context, in *DeleteGroupApply
 // All implementations must embed UnimplementedGroupServer
 // for forward compatibility.
 type GroupServer interface {
+	GetUserGroups(context.Context, *GetUserGroupsReq) (*GetUserGroupsResp, error)
 	// 群聊基础信息管理
 	GetGroupInfoById(context.Context, *GetGroupInfoByIdReq) (*GetGroupInfoByIdResp, error)
 	CreateGroupInfo(context.Context, *CreateGroupInfoReq) (*CreateGroupInfoResp, error)
@@ -224,6 +237,9 @@ type GroupServer interface {
 // pointer dereference when methods are called.
 type UnimplementedGroupServer struct{}
 
+func (UnimplementedGroupServer) GetUserGroups(context.Context, *GetUserGroupsReq) (*GetUserGroupsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserGroups not implemented")
+}
 func (UnimplementedGroupServer) GetGroupInfoById(context.Context, *GetGroupInfoByIdReq) (*GetGroupInfoByIdResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGroupInfoById not implemented")
 }
@@ -282,6 +298,24 @@ func RegisterGroupServer(s grpc.ServiceRegistrar, srv GroupServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Group_ServiceDesc, srv)
+}
+
+func _Group_GetUserGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserGroupsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServer).GetUserGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Group_GetUserGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServer).GetUserGroups(ctx, req.(*GetUserGroupsReq))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Group_GetGroupInfoById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -525,6 +559,10 @@ var Group_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "Group",
 	HandlerType: (*GroupServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetUserGroups",
+			Handler:    _Group_GetUserGroups_Handler,
+		},
 		{
 			MethodName: "GetGroupInfoById",
 			Handler:    _Group_GetGroupInfoById_Handler,

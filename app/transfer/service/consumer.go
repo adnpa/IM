@@ -94,7 +94,7 @@ func (c *Consumer) handleMsg(data []byte) error {
 	case model.TypSingle:
 		return c.handleSingle(&msg.ChatMsg)
 	case model.TypGroup:
-		// return c.handleGroup(msg)
+		return c.handleGroup(&msg.ChatMsg)
 	case model.TypMsgAckFromClient:
 		msg.Cmd = model.TypMsgAckFromServerForRecver
 		_, err = global.PresenceCli.SendMsg(context.Background(),
@@ -158,9 +158,14 @@ func (c *Consumer) handleSingle(msg *model.Message) error {
 }
 
 func (c *Consumer) handleGroup(msg *model.Message) error {
+	if msg.To == 0 || msg.From == 0 || msg.To == msg.From {
+		logger.Warn("error format", zap.Any("msg", msg))
+		return fmt.Errorf("bad msg format")
+	}
+
 	msg.Id = utils.NowMilliSecond()
 
-	pbMsg := &pb.ChatMsg{}
+	pbMsg := &pb.ChatMsg{Typ: int32(msg.Cmd)}
 	copier.Copy(pbMsg, msg)
 
 	resp, err := global.GroupCli.GetGroupMemberById(context.Background(), &pb.GetGroupMemberByIdReq{GroupId: msg.To})
@@ -170,19 +175,38 @@ func (c *Consumer) handleGroup(msg *model.Message) error {
 	// logger.Infof("send to all group members", "members", users)
 	// 对群里所有用户 复制一条消息到队列
 	for _, member := range resp.Members {
+		if member.UserId == pbMsg.From {
+			continue
+		}
+
+		logger.Info("send to member", zap.Any("user id", member.UserId), zap.Any("msg", pbMsg))
+
 		_, err := global.OffineCli.PutMsg(context.Background(), &pb.PutMsgReq{UserId: member.UserId, Msg: pbMsg})
 		if err != nil {
+			logger.Error("call offline fail", zap.Error(err))
 			return err
 		}
 
 		preResp, err := global.PresenceCli.IsOnline(context.Background(), &pb.IsOnlineReq{UserId: member.UserId})
 		if err != nil {
+			logger.Error("call presence fail", zap.Error(err))
 			return err
 		}
 		if preResp.IsOnline {
-			global.PresenceCli.SendMsg(context.Background(), &pb.SendMsgReq{Msg: pbMsg})
+			logger.Info("member online", zap.Any("uid", member.UserId))
+			global.PresenceCli.SendMsg(context.Background(), &pb.SendMsgReq{UserId: member.UserId, Msg: pbMsg})
 		}
 	}
+
+	// 回复ack
+	_, err = global.PresenceCli.SendMsg(context.Background(),
+		&pb.SendMsgReq{UserId: int32(msg.From),
+			Msg: &pb.ChatMsg{Typ: int32(model.TypMsgAckFromServerForSender), Id: msg.Id, Seq: msg.Seq}})
+	if err != nil {
+		logger.Warn("call presence service fail", zap.Error(err))
+		return err
+	}
+
 	return nil
 }
 

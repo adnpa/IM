@@ -35,6 +35,21 @@ services:
       - db
       - badger
 
+  group-srv:
+    build:
+      context: .
+      dockerfile: deployments/group/Dockerfile
+    ports:
+      - "50052:50052"
+    networks:
+      - back-tier
+    volumes:
+      - ./app/group/group-srv.yaml:/build/group-srv.yaml
+    depends_on:
+      - nacos
+      - db
+      - badger
+
   oss-srv:
     build:
       context: .

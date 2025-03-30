@@ -34,6 +34,12 @@ func (ws *WSServer) SendMsg(_ context.Context, in *pb.SendMsgReq) (*pb.SendMsgRe
 		cmsg := model.Message{}
 		copier.Copy(&cmsg, in.Msg)
 		sendMsg.ChatMsg = cmsg
+	case int32(model.TypGroup):
+		cmsg := model.Message{}
+		copier.Copy(&cmsg, in.Msg)
+		sendMsg.ChatMsg = cmsg
+	default:
+		logger.Info("msg typ not recognized")
 	}
 	data, err := json.Marshal(sendMsg)
 	if err != nil {

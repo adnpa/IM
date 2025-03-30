@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/adnpa/IM/api/pb"
+	"github.com/adnpa/IM/app/group/constant"
 	"github.com/adnpa/IM/app/group/global"
 	"github.com/adnpa/IM/app/group/model"
 	"google.golang.org/grpc/codes"
@@ -26,6 +27,20 @@ type GroupService struct {
 	pb.UnimplementedGroupServer
 }
 
+func (s *GroupService) GetUserGroups(_ context.Context, in *pb.GetUserGroupsReq) (*pb.GetUserGroupsResp, error) {
+	var groups []model.GroupMember
+	var gids []int64
+	err := global.DB.Where(&model.GroupMember{UserID: in.UserId}).Find(&groups).Error
+	if err != nil {
+		return nil, err
+	}
+
+	for _, g := range groups {
+		gids = append(gids, g.GroupID)
+	}
+	return &pb.GetUserGroupsResp{GroupIds: gids}, nil
+}
+
 // 群聊基础信息管理
 func (s *GroupService) GetGroupInfoById(_ context.Context, in *pb.GetGroupInfoByIdReq) (*pb.GetGroupInfoByIdResp, error) {
 	var group model.Group
@@ -43,14 +58,36 @@ func (s *GroupService) GetGroupInfoById(_ context.Context, in *pb.GetGroupInfoBy
 
 func (s *GroupService) CreateGroupInfo(_ context.Context, in *pb.CreateGroupInfoReq) (*pb.CreateGroupInfoResp, error) {
 	g := model.Group{
-		GroupID:   in.GroupInfo.GroupId,
-		GroupName: in.GroupInfo.GroupName,
-		CreatorID: in.GroupInfo.CreatorId,
+		GroupID:     in.GroupInfo.GroupId,
+		GroupName:   in.GroupInfo.GroupName,
+		CreatorID:   in.GroupInfo.CreatorId,
+		AvatarURL:   in.GroupInfo.AvatarUrl,
+		Description: in.GroupInfo.Description,
+		MaxMembers:  in.GroupInfo.MaxMembers,
 	}
 
-	result := global.DB.Create(&g)
-	if result.Error != nil {
-		return nil, status.Errorf(codes.Internal, result.Error.Error())
+	gm := model.GroupMember{
+		GroupID: in.GroupInfo.GroupId,
+		UserID:  in.GroupInfo.CreatorId,
+		Role:    constant.RoleOwner,
+	}
+
+	err := global.DB.Transaction(func(tx *gorm.DB) error {
+		// do some database operations in the transaction (use 'tx' from this point, not 'db')
+		if err := tx.Create(&g).Error; err != nil {
+			return err
+		}
+
+		gm.GroupID = g.GroupID
+		if err := tx.Create(&gm).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "create group fail:%v", err)
 	}
 	return &pb.CreateGroupInfoResp{
 		GroupId: g.GroupID,

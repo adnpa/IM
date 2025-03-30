@@ -35,10 +35,10 @@ func InitSrvConn() {
 	}
 	global.OssCli = pb.NewOSSClient(ossConn)
 
-	// groupConn, err := discovery.GetGrpcConn(consulCli, "group-srv")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// global.GroupCli = pb.NewGroupClient(groupConn)
+	groupConn, err := discovery.GetGrpcConn(consulCli, "group-srv")
+	if err != nil {
+		panic(err)
+	}
+	global.GroupCli = pb.NewGroupClient(groupConn)
 
 }
