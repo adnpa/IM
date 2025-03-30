@@ -27,16 +27,22 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	userRouterGroup := r.Group("/user")
+	authRouterGroup := r.Group("/auth")
 	{
-		userRouterGroup.POST("/register", handler.Register)
-		userRouterGroup.POST("/pwd_login", handler.PasswordLogin)
+		authRouterGroup.POST("/register", handler.Register)
+		authRouterGroup.POST("/pwd_login", handler.PasswordLogin)
+	}
 
+	
+	userRouterGroup := r.Group("/user", middlewares.JWTAuth())
+	{
+		userRouterGroup.GET("self_profile", handler.GetSelfProfile)
+		userRouterGroup.POST("update_self_profile", handler.UpdateSelfProfile)
 		// authRouterGroup.GET("detail", middlewares.JWTAuth(), handler.GetUserDetail)
 		// authRouterGroup.PATCH("update", middlewares.JWTAuth(), handler.UpdateUser)
 	}
 
-	ossRouterGroup := r.Group("/oss")
+	ossRouterGroup := r.Group("/oss", middlewares.JWTAuth())
 	{
 		ossRouterGroup.POST("/upload", handler.Upload)
 		// ossRouterGroup.POST("/download")

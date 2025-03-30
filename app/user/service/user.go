@@ -5,6 +5,8 @@ import (
 
 	"github.com/adnpa/IM/app/user/global"
 	"github.com/adnpa/IM/app/user/model"
+	"github.com/adnpa/IM/pkg/logger"
+	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -20,7 +22,10 @@ func Model2PB(u model.User) *pb.UserInfo {
 		Mobile:   u.Mobile,
 		Email:    u.Email,
 		Nickname: u.Nickname,
+		Sex:      u.Sex,
+		Birthday: u.Birthday.Local().String(),
 		Avatar:   u.Avatar,
+		Memo:     u.Memo,
 	}
 }
 
@@ -128,13 +133,34 @@ func (s *UserService) UpdateUser(_ context.Context, in *pb.UpdateUserReq) (*pb.U
 		return nil, status.Errorf(codes.NotFound, "用户不存在")
 	}
 
-	user.Nickname = in.Nickname
-	user.Sex = in.Sex
-
-	result = global.DB.Save(&user)
-	if result.Error != nil {
-		return nil, status.Errorf(codes.Internal, result.Error.Error())
+	updates := make(map[string]interface{})
+	if in.Nickname != "" {
+		updates["nickname"] = in.Nickname
 	}
+	if in.Gender != 0 {
+		updates["sex"] = in.Gender
+	}
+	if in.BirthDay != 0 {
+		updates["birthday"] = in.BirthDay
+	}
+	if in.Avatar != "" {
+		updates["avatar"] = in.Avatar
+	}
+	if in.Memo != "" {
+		updates["memo"] = in.Memo
+	}
+	logger.Info("update", zap.Any("", updates))
+	// 无更新字段处理
+	if len(updates) == 0 {
+		return nil, status.Error(codes.InvalidArgument, "未提供更新字段")
+	}
+
+	// 执行部分更新
+	result = global.DB.Model(&user).Updates(updates)
+	if result.Error != nil {
+		return nil, status.Errorf(codes.Internal, "更新失败: %v", result.Error)
+	}
+
 	return &pb.UpdateUserResp{}, nil
 }
 

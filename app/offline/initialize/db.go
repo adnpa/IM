@@ -13,16 +13,25 @@ import (
 func InitDB() {
 	c := global.ServerConfig.MongoInfo
 	var err error
-	ctx, cancelFunc := context.WithTimeout(context.Background(), 2*time.Second)
+	ctx, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelFunc()
 
-	uri := fmt.Sprintf("mongodb://%s:%s@%s:%d",
-		c.Name,
+	uri := fmt.Sprintf("mongodb://%s:%s@%s:%d/?authSource=admin&connectTimeoutMS=3000",
+		c.User,
 		c.Password,
 		c.Host,
 		c.Port)
-	global.DB, err = mongo.Connect(ctx, options.Client().ApplyURI(uri))
+
+	opts := options.Client().ApplyURI(uri).
+		SetConnectTimeout(3 * time.Second).
+		SetServerSelectionTimeout(3 * time.Second)
+	global.DB, err = mongo.Connect(ctx, opts)
+
 	if err != nil {
+		panic(err)
+	}
+
+	if err = global.DB.Ping(context.Background(), nil); err != nil {
 		panic(err)
 	}
 }

@@ -7,34 +7,54 @@ import (
 	"testing"
 
 	"github.com/adnpa/IM/api/pb"
+	"github.com/adnpa/IM/pkg/common/discovery"
+	"github.com/hashicorp/consul/api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
 func TestGetUser(t *testing.T) {
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	consulCli, _ := api.NewClient(api.DefaultConfig())
+	conn, err := discovery.GetGrpcConn(consulCli, "user-srv")
 	if err != nil {
-		t.Fatalf("did not connect: %v", err)
+		panic(err)
 	}
-	defer conn.Close()
-
 	c := pb.NewUserClient(conn)
-	resp, err := c.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: 1})
+
+	resp, err := c.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: 101})
 	if err != nil {
 		t.Error(err)
 	}
 	fmt.Println(resp.Usr)
+	t.Log(resp.Usr.Sex)
+	t.Log(resp.Usr.Memo)
+	t.Log("ff")
 }
 
 func TestCreateUser(t *testing.T) {
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	consulCli, _ := api.NewClient(api.DefaultConfig())
+	conn, err := discovery.GetGrpcConn(consulCli, "user-srv")
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		panic(err)
 	}
-	defer conn.Close()
-
 	c := pb.NewUserClient(conn)
+
 	c.CreateUser(context.Background(), &pb.CreateUserReq{})
+}
+
+func TestUpdateUser(t *testing.T) {
+	consulCli, _ := api.NewClient(api.DefaultConfig())
+	conn, err := discovery.GetGrpcConn(consulCli, "user-srv")
+	if err != nil {
+		panic(err)
+	}
+	c := pb.NewUserClient(conn)
+
+	c.UpdateUser(context.Background(), &pb.UpdateUserReq{
+		Id:       101,
+		Nickname: "new name",
+	})
+	t.Log("22")
 }
 
 func TestMatch(t *testing.T) {

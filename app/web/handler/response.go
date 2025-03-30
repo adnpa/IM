@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// -- helper
+
 func ErrInfo(code constant.ErrCode) gin.H {
 	return gin.H{"errCode": code, "errMsg": constant.StatusText(code)}
 }

@@ -46,8 +46,8 @@ services:
     volumes:
       - ./app/oss/oss.yaml:/build/oss.yaml
     environment:
-      OSS_ACCESS_KEY_ID: xxxx
-      OSS_ACCESS_KEY_SECRET: xxxx
+      OSS_ACCESS_KEY_ID: ${OSS_ACCESS_KEY_ID}
+      OSS_ACCESS_KEY_SECRET: ${OSS_ACCESS_KEY_SECRET}
     depends_on:
       - nacos
       - db
@@ -87,7 +87,6 @@ services:
       - presence-srv
       - offline-srv
 
-      
   offline-srv:
     build:
       context: .

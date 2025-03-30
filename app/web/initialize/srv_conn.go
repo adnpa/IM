@@ -1,6 +1,8 @@
 package initialize
 
 import (
+	"fmt"
+
 	"github.com/adnpa/IM/api/pb"
 	"github.com/adnpa/IM/app/web/global"
 	"github.com/adnpa/IM/pkg/common/discovery"
@@ -8,7 +10,9 @@ import (
 )
 
 func InitSrvConn() {
-	consulCli, err := api.NewClient(api.DefaultConfig())
+	cfg := api.DefaultConfig()
+	cfg.Address = fmt.Sprintf("%s:%d", global.ServerConfig.ConsulInfo.Host, global.ServerConfig.ConsulInfo.Port)
+	consulCli, err := api.NewClient(cfg)
 	if err != nil {
 		panic(err)
 	}

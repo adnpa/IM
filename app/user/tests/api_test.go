@@ -33,7 +33,6 @@ func TestCreateUser(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-
 	userConn, err := discovery.GetGrpcConn(consulCli, "user-srv")
 	if err != nil {
 		panic(err)

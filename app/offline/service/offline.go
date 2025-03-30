@@ -2,8 +2,10 @@ package service
 
 import (
 	"context"
+	"time"
 
 	"github.com/adnpa/IM/api/pb"
+	"github.com/adnpa/IM/app/offline/global"
 	"github.com/adnpa/IM/internal/model"
 	"github.com/adnpa/IM/pkg/common/db/mongodb"
 	"github.com/jinzhu/copier"
@@ -12,23 +14,29 @@ import (
 
 // s *OfflineService pb.OfflineServer
 
-var COLL_NAME = "offline"
+const (
+	DB_Name   = "im"
+	COLL_NAME = "offline"
+)
 
 type OfflineService struct {
 	pb.UnimplementedOfflineServer
 }
 
 func (s *OfflineService) GetOfflineMsg(_ context.Context, in *pb.GetOfflineMsgReq) (*pb.GetOfflineMsgResp, error) {
-
+	// global.DB.
 	return &pb.GetOfflineMsgResp{}, nil
 }
 
 func (s *OfflineService) PutMsg(_ context.Context, in *pb.PutMsgReq) (*pb.PutMsgResp, error) {
 	var msg model.Message
 	copier.Copy(&msg, in.Msg)
-	// TODO inbox logic
-	// userId := in.UserId
-	err := mongodb.Insert(COLL_NAME, msg)
+
+	ctx, cancelFunc := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancelFunc()
+
+	coll := global.DB.Database(DB_Name).Collection(COLL_NAME)
+	_, err := coll.InsertOne(ctx, msg)
 	if err != nil {
 		return nil, err
 	}

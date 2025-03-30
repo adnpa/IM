@@ -38,7 +38,7 @@ func GetFriendList(c *gin.Context) {
 	resp, err := global.FriendCli.GetFriendsByUserId(context.Background(), &pb.GetFriendsByUserIdReq{Uid: int32(uid)})
 	if err != nil {
 		logger.Error("get friend list", zap.Error(err))
-		c.JSON(http.StatusOK, ErrInfo(code.ErrInternal))
+		c.JSON(http.StatusOK, ErrInfo(code.ErrUserNotFound))
 		return
 	}
 
@@ -47,8 +47,9 @@ func GetFriendList(c *gin.Context) {
 			FriendId: f.FriendId,
 		}
 
-		u, err := global.UserCli.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: f.UserId})
+		u, err := global.UserCli.GetUserById(context.Background(), &pb.GetUserByIdReq{Id: f.FriendId})
 		if err != nil {
+			logger.Info("", zap.Any("friendId", f.FriendId), zap.Error(err))
 			c.JSON(http.StatusOK, ErrInfo(code.ErrInternal))
 			return
 		}

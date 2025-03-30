@@ -1,5 +1,4 @@
 syntax = "proto3";
-
 option go_package = ".;pb";
 
 service User {
@@ -56,8 +55,10 @@ message CreateUserResp { int32 uid = 1; }
 message UpdateUserReq {
   int32 id = 1;
   string nickname = 2;
-  int32 sex = 3;
+  int32 gender = 3;
   uint64 birthDay = 4;
+  string avatar = 5;
+  string memo = 6;
 }
 
 message UpdateUserResp {}
@@ -83,6 +84,8 @@ message UserInfo {
   string mobile = 4;
   string email = 5;
   string nickname = 6;
+  int32 sex = 7;
+  string birthday = 8;
   string avatar = 9;
-  string sex = 7;
+  string memo = 10;
 }
