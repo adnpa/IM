@@ -23,7 +23,7 @@ message ack_2_recver{
 
 message chat_msg {
   int64 id = 1;         // 消息ID
-  int32 typ = 2;        // 消息类型
+  int32 type = 2;        // 消息类型
   int32 from = 3;       // 发送者ID
   int64 to = 4;         // 接收者ID或群组ID
   int32 media = 5;      // 媒体类型

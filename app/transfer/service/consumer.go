@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
+	"strconv"
 
 	"github.com/adnpa/IM/api/pb"
 	"github.com/adnpa/IM/app/transfer/global"
@@ -64,12 +66,16 @@ func (c *Consumer) Run() {
 				logger.Info("Message channel closed")
 				return
 			}
-			err := c.handleMsg(d.Body)
+			uid := d.Headers["uid"].(string)
+			err := c.handleMsg(uid, d.Body)
 			if err != nil {
 				logger.Error("handle msg fail, back to mq", zap.Error(err))
 				d.Nack(false, false)
 			} else {
 				d.Ack(false)
+				intUid, _ := strconv.ParseInt(uid, 10, 64)
+				global.PresenceCli.SendMsg(context.Background(),
+					&pb.SendMsgReq{UserId: int32(intUid), Type: int32(model.CmdAck)})
 			}
 			// time.Sleep(5 * time.Second)
 		case err := <-errChan:
@@ -81,7 +87,7 @@ func (c *Consumer) Run() {
 	}
 }
 
-func (c *Consumer) handleMsg(data []byte) error {
+func (c *Consumer) handleMsg(sourceId string, data []byte) error {
 	msg := &model.CommonMsg{}
 	err := json.Unmarshal(data, msg)
 	if err != nil {
@@ -91,26 +97,70 @@ func (c *Consumer) handleMsg(data []byte) error {
 	logger.Info("consume msg from mq", zap.Any("msg", msg))
 
 	switch msg.Cmd {
-	case model.TypSingle:
-		return c.handleSingle(&msg.ChatMsg)
-	case model.TypGroup:
-		return c.handleGroup(&msg.ChatMsg)
-	case model.TypMsgAckFromClient:
-		msg.Cmd = model.TypMsgAckFromServerForRecver
-		_, err = global.PresenceCli.SendMsg(context.Background(),
-			&pb.SendMsgReq{UserId: int32(msg.ChatMsg.From),
-				Msg: &pb.ChatMsg{Typ: int32(model.TypMsgAckFromServerForRecver), Id: msg.AckMsg.Id, Seq: int64(msg.AckMsg.Seq)}})
+	case model.CmdChat:
+		var chatMsg model.ChatMessage
+		err = json.Unmarshal(msg.Data, &chatMsg)
 		if err != nil {
-			logger.Warn("call presence service fail", zap.Error(err))
+			logger.Warn("msg body format error", zap.Error(err), zap.Any("data", msg.Data))
+			log.Fatal(err)
+		}
+		switch chatMsg.Type {
+		case model.ChatTypeSingle:
+			return c.handleSingle(&chatMsg)
+		case model.ChatTypeGroup:
+			return c.handleGroup(&chatMsg)
+		default:
+			logger.Warn("unreconigze chat type")
+		}
+	// case model.TypMsgAckFromClient:
+	// 	msg.Cmd = model.TypMsgAckFromServerForRecver
+	// 	_, err = global.PresenceCli.SendMsg(context.Background(),
+	// 		&pb.SendMsgReq{UserId: int32(msg.ChatMsg.From), Type: int32(model.TypMsgAckFromServerForRecver),
+	// 			Msg: &pb.ChatMsg{Typ: int32(model.TypMsgAckFromServerForRecver), Id: msg.AckMsg.Id, Seq: int64(msg.AckMsg.Seq)}})
+	// 	if err != nil {
+	// 		logger.Warn("call presence service fail", zap.Error(err))
+	// 		return err
+	// 	}
+	case model.CmdPullOfflineMsgs:
+		err = c.handlePullOffline(sourceId)
+		if err != nil {
+			logger.Warn("pull offline msg fail", zap.Error(err))
 			return err
 		}
+	// case model.TypAckPullOffline:
+	// 	global.OffineCli.RemoveMsg(context.Background(), &pb.RemoveMsgReq{Uid: int32(msg.PullOfflineRespAck.Uid)})
 	default:
-		logger.Warn("unrecognized cmd")
+		logger.Warn("unrecognized cmd", zap.Any("cmd", msg.Cmd))
 	}
 	return nil
 }
 
-func (c *Consumer) handleSingle(msg *model.Message) error {
+func (c *Consumer) handlePullOffline(uid string) error {
+	intUid, err := strconv.ParseInt(uid, 10, 32)
+	if err != nil {
+		return err
+	}
+	resp, err := global.OffineCli.GetOfflineMsg(context.Background(), &pb.GetOfflineMsgReq{Uid: int32(intUid)})
+	if err != nil {
+		return err
+	}
+
+	var msgs []model.ChatMessage
+	for _, pbMsg := range resp.Msgs {
+		msg := model.ChatMessage{}
+		copier.Copy(&msg, pbMsg)
+		msgs = append(msgs, msg)
+	}
+	data, err := json.Marshal(msgs)
+	if err != nil {
+		return err
+	}
+	_, err = global.PresenceCli.SendMsg(context.Background(), &pb.SendMsgReq{UserId: int32(intUid),
+		Type: int32(model.CmdPullOfflineMsgs), Body: data})
+	return err
+}
+
+func (c *Consumer) handleSingle(msg *model.ChatMessage) error {
 	if msg.To == 0 || msg.From == 0 || msg.To == msg.From {
 		logger.Warn("error format", zap.Any("msg", msg))
 		return fmt.Errorf("bad msg format")
@@ -121,7 +171,7 @@ func (c *Consumer) handleSingle(msg *model.Message) error {
 	// TODO: 分布式id服务
 	msg.Id = utils.NowMilliSecond()
 
-	pbMsg := &pb.ChatMsg{Typ: int32(msg.Cmd)}
+	pbMsg := &pb.ChatMsg{}
 	copier.Copy(pbMsg, msg)
 
 	resp, err := global.PresenceCli.IsOnline(context.Background(), &pb.IsOnlineReq{UserId: int32(msg.To)})
@@ -137,18 +187,22 @@ func (c *Consumer) handleSingle(msg *model.Message) error {
 		return err
 	}
 
-	// 回复ack
-	_, err = global.PresenceCli.SendMsg(context.Background(),
-		&pb.SendMsgReq{UserId: int32(msg.From),
-			Msg: &pb.ChatMsg{Typ: int32(model.TypMsgAckFromServerForSender), Id: msg.Id, Seq: msg.Seq}})
-	if err != nil {
-		logger.Warn("call presence service fail", zap.Error(err))
-		return err
-	}
+	// TODO:回复ack
+	// _, err = global.PresenceCli.SendMsg(context.Background(),
+	// 	&pb.SendMsgReq{UserId: int32(msg.From), Type: int32(model.TypMsgAckFromServerForSender),
+	// 		Msg: &pb.ChatMsg{Type: int32(model.TypMsgAckFromServerForSender), Id: msg.Id, Seq: msg.Seq}})
+	// if err != nil {
+	// 	logger.Warn("call presence service fail", zap.Error(err))
+	// 	return err
+	// }
 
 	if resp.IsOnline {
 		logger.Info("user online, send")
-		_, err := global.PresenceCli.SendMsg(context.Background(), &pb.SendMsgReq{UserId: int32(msg.To), Msg: pbMsg})
+		data, err := json.Marshal(msg)
+		if err != nil {
+			return err
+		}
+		_, err = global.PresenceCli.SendMsg(context.Background(), &pb.SendMsgReq{UserId: int32(msg.To), Type: int32(msg.Type), Body: data})
 		if err != nil {
 			logger.Warn("call presence service fail", zap.Error(err))
 			return err
@@ -157,7 +211,7 @@ func (c *Consumer) handleSingle(msg *model.Message) error {
 	return nil
 }
 
-func (c *Consumer) handleGroup(msg *model.Message) error {
+func (c *Consumer) handleGroup(msg *model.ChatMessage) error {
 	if msg.To == 0 || msg.From == 0 || msg.To == msg.From {
 		logger.Warn("error format", zap.Any("msg", msg))
 		return fmt.Errorf("bad msg format")
@@ -165,7 +219,7 @@ func (c *Consumer) handleGroup(msg *model.Message) error {
 
 	msg.Id = utils.NowMilliSecond()
 
-	pbMsg := &pb.ChatMsg{Typ: int32(msg.Cmd)}
+	pbMsg := &pb.ChatMsg{Type: int32(msg.Type)}
 	copier.Copy(pbMsg, msg)
 
 	resp, err := global.GroupCli.GetGroupMemberById(context.Background(), &pb.GetGroupMemberByIdReq{GroupId: msg.To})
@@ -194,18 +248,22 @@ func (c *Consumer) handleGroup(msg *model.Message) error {
 		}
 		if preResp.IsOnline {
 			logger.Info("member online", zap.Any("uid", member.UserId))
-			global.PresenceCli.SendMsg(context.Background(), &pb.SendMsgReq{UserId: member.UserId, Msg: pbMsg})
+			data, err := json.Marshal(msg)
+			if err != nil {
+				return err
+			}
+			global.PresenceCli.SendMsg(context.Background(), &pb.SendMsgReq{UserId: member.UserId, Type: pbMsg.Type, Body: data})
 		}
 	}
 
 	// 回复ack
-	_, err = global.PresenceCli.SendMsg(context.Background(),
-		&pb.SendMsgReq{UserId: int32(msg.From),
-			Msg: &pb.ChatMsg{Typ: int32(model.TypMsgAckFromServerForSender), Id: msg.Id, Seq: msg.Seq}})
-	if err != nil {
-		logger.Warn("call presence service fail", zap.Error(err))
-		return err
-	}
+	// _, err = global.PresenceCli.SendMsg(context.Background(),
+	// 	&pb.SendMsgReq{UserId: int32(msg.From), Type: int32(model.TypMsgAckFromServerForSender),
+	// 		Msg: &pb.ChatMsg{Type: int32(model.TypMsgAckFromServerForSender), Id: msg.Id, Seq: msg.Seq}})
+	// if err != nil {
+	// 	logger.Warn("call presence service fail", zap.Error(err))
+	// 	return err
+	// }
 
 	return nil
 }

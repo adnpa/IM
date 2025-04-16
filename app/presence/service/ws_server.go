@@ -116,9 +116,9 @@ func (ws *WSServer) tokenCheck(token string) (string, bool) {
 	return claims.UID, true
 }
 
-func (ws *WSServer) GetOfflineMsg(uid int64) ([]model.Message, error) {
+func (ws *WSServer) GetOfflineMsg(uid int64) ([]model.ChatMessage, error) {
 	// TODO: 离线服务获取消息
-	return []model.Message{}, nil
+	return []model.ChatMessage{}, nil
 }
 
 // -------------------------------------------------------

@@ -1,20 +1,29 @@
 syntax = "proto3";
 option go_package = ".;pb";
 
-import "message.proto";
+// import "message.proto";
 
 service Presence {
   rpc IsOnline(IsOnlineReq) returns (IsOnlineResp);
   rpc SendMsg(SendMsgReq) returns (SendMsgResp);
+  // rpc SendMsgs(SendMsgsReq) returns (SendMsgsResp);
 }
 
 message SendMsgReq {
   int32 user_id = 1;
-  msg.chat_msg msg = 2;
-  // bytes msg = 2;
+  int32 type = 2;
+  bytes body = 3;
+  // msg.chat_msg msg = 3;
+  // repeated msg.chat_msg msgs = 4;
 }
-
 message SendMsgResp { bool succ = 1; }
+
+// message SendMsgsReq {
+//   int32 user_id = 1;
+//   repeated msg.chat_msg msgs = 2;
+//   // bytes msg = 2;
+// }
+// message SendMsgsResp { bool succ = 1; }
 
 message IsOnlineReq { int32 user_id = 1; }
 

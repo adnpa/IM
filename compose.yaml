@@ -99,8 +99,8 @@ services:
       - nacos
       - badger
       - rabbitmq
-      - presence-srv
-      - offline-srv
+      # - presence-srv
+      # - offline-srv
 
   offline-srv:
     build:
@@ -125,13 +125,13 @@ services:
       - "8500:8500"
       - "8600:8600/udp"
     command: agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0
-    restart: always
+    # restart: always
     networks:
       - back-tier
 
   db:
     image: mysql
-    restart: always
+    # restart: always
     ports:
       - "3306:3306"
     environment:
@@ -141,7 +141,7 @@ services:
 
   mongo:
     image: mongo
-    restart: always
+    # restart: always
     ports:
       - "27017:27017"
     environment:
@@ -152,7 +152,7 @@ services:
 
   mongo-express:
     image: mongo-express
-    restart: always
+    # restart: always
     ports:
       - 8081:8081
     environment:
@@ -165,7 +165,7 @@ services:
 
   redis:
     image: "redis"
-    restart: always
+    # restart: always
     ports:
       - "6379:6379"
     networks:
@@ -181,7 +181,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: admin # 默认用户名
       RABBITMQ_DEFAULT_PASS: password # 默认密码
-    restart: always # 容器退出时自动重启
+    # restart: always # 容器退出时自动重启
     networks:
       - back-tier
 
@@ -213,7 +213,7 @@ services:
     depends_on:
       - nacos
     # restart: on-failure
-    restart: always
+    # restart: always
     networks:
       - back-tier
 
@@ -223,6 +223,6 @@ services:
     ports:
       - 3000:3000
     # restart: on-failure
-    restart: always
+    # restart: always
     networks:
       - back-tier

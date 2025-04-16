@@ -22,7 +22,7 @@ func NewProducer(conn *amqp.Connection, topic string) *Producer {
 	}
 }
 
-func (c *Producer) Send(name string, data []byte) error {
+func (c *Producer) Send(name string, uid string, data []byte) error {
 	ch, err := c.conn.Channel()
 	if err != nil {
 		return err
@@ -44,6 +44,8 @@ func (c *Producer) Send(name string, data []byte) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
+	headers := make(amqp.Table)
+	headers["uid"] = uid
 	return ch.PublishWithContext(ctx,
 		"",     // exchange
 		q.Name, // routing key
@@ -51,6 +53,7 @@ func (c *Producer) Send(name string, data []byte) error {
 		false,  // immediate
 		amqp.Publishing{
 			ContentType: "text/plain",
+			Headers:     headers,
 			Body:        data,
 		})
 }

@@ -1,0 +1,26 @@
+syntax = "proto3";
+option go_package = ".;pb";
+
+service Conversation {
+  rpc CreateConversation(CreateConversationReq)
+      returns (CreateConversationResp);
+
+  rpc GetSelfConversationList(GetSelfConversationListListReq)
+      returns (GetSelfConversationListListResp);
+}
+
+message GetSelfConversationListListReq {}
+
+message GetSelfConversationListListResp { repeated conversation convs = 1; }
+
+message CreateConversationReq { conversation conv = 1; }
+
+message CreateConversationResp {}
+
+// -------------------------------------------
+message conversation {
+  int32 typ = 1;
+  int64 target = 2;
+  // lastmsgs
+  int32 unread = 3;
+}

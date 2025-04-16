@@ -27,8 +27,7 @@ func (ws *WSServer) readMsg(conn *WsConn) {
 		if messageType == websocket.PingMessage {
 			log.Println("ping msg from client")
 		}
-		// ws.handleMsg(conn, data)
-		err = SendMq(data)
+		err = SendMq(ws.GetUid(conn), data)
 		if err != nil {
 			logger.Error("publish msg to mq fail", zap.Error(err))
 		}
@@ -40,6 +39,7 @@ func (ws *WSServer) readMsg(conn *WsConn) {
 // 	return global.Producer.Send("im_message", body)
 // }
 
-func SendMq(data []byte) error {
-	return global.Producer.Send("im_message", data)
+func SendMq(uid string, data []byte) error {
+	logger.Info("push to mq", zap.Any("uid", uid), zap.Any("", data))
+	return global.Producer.Send("im_message", uid, data)
 }

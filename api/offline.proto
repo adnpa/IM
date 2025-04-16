@@ -20,6 +20,9 @@ message PutMsgReq {
 
 message PutMsgResp { bool succ = 1; }
 
-message RemoveMsgReq { repeated int64 msg_ids = 1; }
+message RemoveMsgReq {
+  int32 uid = 1;
+  repeated int64 msg_ids = 2;
+}
 
 message RemoveMsgResp { bool succ = 1; }
